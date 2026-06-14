@@ -191,20 +191,15 @@
 	
 	\section{UVOD}
 	Moderno programsko inženjerstvo teži razvoju rješenja koja kombiniraju visoke performanse nativnih aplikacija i široku dostupnost klasičnih web platformi. U dinamičnim okruženjima, gdje stabilnost mrežne veze često varira, tradicionalne web aplikacije pokazuju značajne nedostatke zbog potencijalnog gubitka ili nestabilne veze sa poslužiteljem. Kao odgovor razvijen je koncept progresivnih web aplikacija (engl. \textit{Progressive Web Apps} – PWA) koji, korištenjem naprednih mehanizama poput servisnih radnika (engl. \textit{Service Workers}) i lokalnog predmemoriranja, omogućuje neometan rad aplikacije u izvanmrežnom načinu rada te naknadnu automatsku sinkronizaciju podataka.
-	
-	Sustav \textbf{"Allocento"} osmišljen je kao suvremeno klijent-poslužiteljsko rješenje koje adresira navedene probleme. Pozadinski dio sustava (engl. \textit{backend}) temelji se na razvojnom okviru Laravel koji omogućuje izgradnju sigurnog i skalabilnog REST API-ja te efikasno upravljanje relacijskom bazom podataka. Prednji dio sustava (engl. \textit{frontend}) implementiran je pomoću radnog okvira Angular, čija modularna arhitektura olakšava integraciju PWA modula i upravljanje složenim stanjima aplikacije na klijentskoj strani. Vizualni identitet i konzistentnost korisničkog sučelja definirani su primjenom dizajnerskih smjernica preuzetih iz platforme Logology, čime se osigurava moderno i responzivno korisničko iskustvo.
-	
-	\subsection{Motivacija i problem područja}
-	Glavna motivacija za razvoj sustava Allocento proizlazi iz potrebe za optimizacijom i osiguravanjem kontinuiteta upravljanja tokovima podataka u uvjetima nestabilne mrežne povezanosti. U klasičnim web sustavima, prekid internetske veze tijekom izvršavanja CRUD (engl. \textit{Create, Read, Update, Delete}) operacija redovito rezultira pogreškama u izvođenju i gubitkom unesenih informacija. Implementacijom PWA arhitekture unutar sustava Allocento, korisnicima se omogućuje nesmetano obavljanje poslovnih procesa i unos podataka bez obzira na trenutni status mreže, dok se složeni procesi sinkronizacije i razmjene podataka s centralnom bazom automatiziraju na razini pozadinskih servisa klijentske aplikacije.
-	
+
+	Glavna motivacija za razvoj sustava "Allocento" proizlazi iz potrebe za optimizacijom i osiguravanjem kontinuiteta upravljanja tokovima podataka u uvjetima nestabilne mrežne povezanosti. U klasičnim web sustavima, prekid internetske veze tijekom izvršavanja CRUD (engl. \textit{Create, Read, Update, Delete}) operacija redovito rezultira pogreškama u izvođenju i gubitkom unesenih informacija. Implementacijom PWA arhitekture unutar sustava Allocento, korisnicima se omogućuje nesmetano obavljanje poslovnih procesa i unos podataka bez obzira na trenutni status mreže, dok se složeni procesi sinkronizacije i razmjene podataka s centralnom bazom automatiziraju na razini pozadinskih servisa klijentske aplikacije.
+
+	Pozadinski dio sustava (engl. \textit{backend}) temelji se na razvojnom okviru Laravel koji omogućuje izgradnju sigurnog i skalabilnog REST API-ja te efikasno upravljanje relacijskom bazom podataka. Prednji dio sustava (engl. \textit{frontend}) implementiran je pomoću radnog okvira Angular, čija modularna arhitektura olakšava integraciju PWA modula i upravljanje složenim stanjima aplikacije na klijentskoj strani. Vizualni identitet i konzistentnost korisničkog sučelja definirani su primjenom dizajnerskih smjernica preuzetih iz platforme Logology, čime se osigurava moderno i responzivno korisničko iskustvo.
+
 	\subsection{Zadatak rada}
-	Službeno odobreni tekst zadatka unutar informacijskog sustava glasi:
-	
-	\begin{quote}
-		\textit{Web aplikacija omogućuje organizacijama i timovima strukturirano praćenje i upravljanje financijskim tokovima na razini projekata i odjela. Sustav podržava evidenciju prihoda i rashoda, kategorizaciju troškova, automatsku raspodjelu sredstava po projektima te generiranje detaljnih financijskih izvještaja i analiza. Aplikacija je implementirana kao progresivna web aplikacija koristeći Angular sučelje, Node.js backend s Express okvirom i PostgreSQL relacijsku bazu podataka. Sustav uključuje višerazinsku autentifikaciju korisnika s definiranjem uloga i prava pristupa te podršku za ponavljajuće financijske transakcije. Projekt koristi suvremene DevOps prakse kroz GitHub Actions za kontinuiranu integraciju i automatizaciju procesa implementacije.}
-	\end{quote}
-	
-	U sklopu praktične realizacije sustava "Allocento", u dogovoru s mentorom, arhitektura pozadinskog dijela aplikacije prilagođena je kroz primjenu razvojnog okvira Laravel i pripadajućeg ekosustava, dok su inicijalno definirani funkcionalni i projektni zahtjevi u potpunosti zadržani.
+	Web aplikacija omogućuje organizacijama i timovima strukturirano praćenje i upravljanje financijskim tokovima na razini projekata i odjela. Sustav podržava evidenciju prihoda i rashoda, kategorizaciju troškova, automatsku raspodjelu sredstava po projektima te generiranje detaljnih financijskih izvještaja i analiza. Aplikacija je implementirana kao progresivna web aplikacija koristeći Angular sučelje, backend s Laravel okvirom i PostgreSQL relacijsku bazu podataka. Sustav uključuje višerazinsku autentifikaciju korisnika s definiranjem uloga i prava pristupa te podršku za ponavljajuće financijske transakcije. Projekt koristi suvremene DevOps prakse kroz GitHub Actions za kontinuiranu integraciju i automatizaciju procesa implementacije. Tema rezervirana za: Mihael Lendvaj
+		
+
 	
 	
 	\newpage

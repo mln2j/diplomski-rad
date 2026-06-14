@@ -1,0 +1,299 @@
+% !TeX spellcheck = hr_HR-Croatian
+
+%Prva naredba uvijek definira klasu dokumenta. Mi koristimo 'article'
+
+\documentclass[a4paper,12pt,oneside]{article}
+
+
+
+
+%***********************************************************************************
+% Sada slijedi niz poziva Paketa funkcija cije ce se naredbe kasnije koristiti:
+%***********************************************************************************
+
+%Paket za upravljanje sa listama
+\usepackage{enumitem}
+
+% Paket za podesavanje brojeva stranica
+\usepackage{scrlayer-scrpage}
+\ifoot[]{}
+\cfoot[]{}
+\ofoot[\pagemark]{\pagemark}
+\pagestyle{scrplain}
+
+
+% Najcesce koristeni paketi za matematiku i formatiranje rada:
+\usepackage{xurl}
+\usepackage{url}
+\usepackage{amsmath, amsthm}
+\usepackage{mathtools}
+\usepackage{latexsym,amsfonts,amssymb,amsbsy,graphics}
+\usepackage{graphicx}
+\usepackage[croatian]{babel} %Omogucava pisanje hrvatskih znakova
+\usepackage{gensymb}
+\usepackage{pdfpages}  %Omogucava importiranje stranica pdf fila u dokument
+\usepackage{pdflscape} %Omogucava okretanje pojedine stranice landscape dok su ostale portrait
+
+
+% Paket za postavke naslova i podnaslova
+\usepackage{titlesec}
+\newcommand{\periodafter}[1]{#1.}
+\titleformat{\section}[hang]{\bf\large\uppercase}{\thesection.}{5pt}{}{}
+\titleformat{\subsection}[hang]{\bf\large}{\thesubsection.}{3pt}{}{}
+
+% Dva paketa za imenovanje slika i tablica
+\usepackage{subcaption}
+\usepackage[labelfont=bf,textfont=it,labelsep = colon]{caption}
+\captionsetup[figure]{name=SL.}
+\captionsetup[table]{name=Tab.}
+
+% Paket sa bojama za formatiranje svega gdje se mjenja boja
+\usepackage{xcolor}
+
+% Paket za omogucavanje importiranja programskih kodova u tekst
+\usepackage{listings}
+\lstset{
+	numbers=left,
+	numberstyle=\tiny,
+	columns=fullflexible,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+	xleftmargin=5.0ex
+}
+\renewcommand{\lstlistingname}{Primjer koda}% Listing -> Algorithm
+
+% Paket za formatiranje Sadrzaja
+\usepackage[dotinlabels]{titletoc}
+\dottedcontents{section}[5em]{\bfseries}{2em}{1pc}
+\dottedcontents{subsection}[7em]{}{2em}{1pc}
+
+
+
+% Najbolji paket u svemiru za matematicko pisanje tekstova
+\usepackage{physics}
+
+% Paket za postavljanje linkova na koje se moze klikat u pdfu (prema formuli broj x- click odvede na to)
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks,
+	linkcolor={red!50!black},
+	citecolor={blue!50!black},
+	urlcolor={blue!80!black}
+}
+
+
+% Postavke margina stranica - NE DIRAJ
+
+\setlength{\topmargin}{-0.7in}
+\setlength{\oddsidemargin}{-2mm}
+\setlength{\evensidemargin}{-2mm}
+\setlength{\textwidth}{170mm}
+\setlength{\textheight}{256mm}
+\setlength{\parindent}{1cm}
+
+
+%**************************************************************************************************************
+% Prostor za tvoje pakete je ovdje:
+%**************************************************************************************************************
+
+
+
+
+
+
+
+
+
+%**************************************************************************************************************
+
+
+
+
+
+%Kraj preamble naredbi, krece se sa pisanjem dokumenta
+%**************************************************************************************************************
+
+\begin{document}
+	
+	%**************************************************************************************************************
+	% Postavke za numeriranje, prorede i ostalo
+	%**************************************************************************************************************
+	
+	\setcounter{MaxMatrixCols}{20}                          %Postavka da matrica moze imati vise od 10 stupaca
+	\renewcommand{\baselinestretch}{1.5}                    %postavke za prored 1.5%
+	\renewcommand{\thefigure}{\thesection.\arabic{figure}}  %postavke za imenovanje slika po poglavljima%
+	\renewcommand{\thetable}{\thesection.\arabic{table}}   %postavke za imenovanje tablica po poglavljima%
+	\renewcommand{\theequation}{\thesection-\arabic{equation}} %postavke za brojanje jednadzbi po poglavljima%
+	\renewcommand{\refname}{LITERATURA}						% Uppercase Literatura
+	
+	%**************************************************************************************************************
+	
+	
+	
+	
+	%**************************************************************************************************************
+	% NASLOVNA STRANICA
+	%**************************************************************************************************************
+	
+	\begin{titlepage}
+		
+		\begin{center}{\sc\Large sveučilište josipa jurja strossmayera u osijeku}\\{\sc\Large fakultet elektrotehnike, računarstva i informacijskih tehnologija osijek}\\
+			\bigskip
+			
+			\vspace*{2cm}
+			{\large Sveučilišni diplomski studij Računarstvo}\\
+			
+			\vspace*{5cm}
+			
+			{\sc\LARGE web aplikacija za upravljanje financijskim resursima i projektima u timovima}
+			
+			\vspace*{1cm}
+			{\large Diplomski rad}\\
+			\vspace*{3cm}
+			{\Large Mihael Lendvaj}\\
+			\vspace*{8cm}
+			{\normalsize Osijek, 2026.}
+		\end{center}
+		
+	\end{titlepage}
+	
+	
+	
+	%**************************************************************************************************************
+	% OBRASCI I FORMULARI
+	%**************************************************************************************************************
+	
+	% Ubaciti pdf verzije D1 obrazca i izjave o originalnosti.
+	
+	
+	%\newpage
+	%\includepdf{D1_obrazac.pdf}
+	%\newpage
+	%\includepdf{Originalnost.pdf}
+	%\newpage
+	
+	
+	
+	
+	%**************************************************************************************************************
+	% TABLE OF CONTENTS
+	%**************************************************************************************************************
+	
+	{
+		\hypersetup{linkcolor=black}
+		\tableofcontents
+	}
+	%**************************************************************************************************************
+	
+	
+	
+	\newpage
+	
+	\section{UVOD}
+	Moderno programsko inženjerstvo teži razvoju rješenja koja kombiniraju visoke performanse nativnih aplikacija i široku dostupnost klasičnih web platformi. U dinamičnim okruženjima, gdje stabilnost mrežne veze često varira, tradicionalne web aplikacije pokazuju značajne nedostatke zbog potencijalnog gubitka ili nestabilne veze sa poslužiteljem. Kao odgovor razvijen je koncept progresivnih web aplikacija (engl. \textit{Progressive Web Apps} – PWA) koji, korištenjem naprednih mehanizama poput servisnih radnika (engl. \textit{Service Workers}) i lokalnog predmemoriranja, omogućuje neometan rad aplikacije u izvanmrežnom načinu rada te naknadnu automatsku sinkronizaciju podataka.
+	
+	Sustav \textbf{"Allocento"} osmišljen je kao suvremeno klijent-poslužiteljsko rješenje koje adresira navedene probleme. Pozadinski dio sustava (engl. \textit{backend}) temelji se na razvojnom okviru Laravel koji omogućuje izgradnju sigurnog i skalabilnog REST API-ja te efikasno upravljanje relacijskom bazom podataka. Prednji dio sustava (engl. \textit{frontend}) implementiran je pomoću radnog okvira Angular, čija modularna arhitektura olakšava integraciju PWA modula i upravljanje složenim stanjima aplikacije na klijentskoj strani. Vizualni identitet i konzistentnost korisničkog sučelja definirani su primjenom dizajnerskih smjernica preuzetih iz platforme Logology, čime se osigurava moderno i responzivno korisničko iskustvo.
+	
+	\subsection{Motivacija i problem područja}
+	Glavna motivacija za razvoj sustava Allocento proizlazi iz potrebe za optimizacijom i osiguravanjem kontinuiteta upravljanja tokovima podataka u uvjetima nestabilne mrežne povezanosti. U klasičnim web sustavima, prekid internetske veze tijekom izvršavanja CRUD (engl. \textit{Create, Read, Update, Delete}) operacija redovito rezultira pogreškama u izvođenju i gubitkom unesenih informacija. Implementacijom PWA arhitekture unutar sustava Allocento, korisnicima se omogućuje nesmetano obavljanje poslovnih procesa i unos podataka bez obzira na trenutni status mreže, dok se složeni procesi sinkronizacije i razmjene podataka s centralnom bazom automatiziraju na razini pozadinskih servisa klijentske aplikacije.
+	
+	\subsection{Zadatak rada}
+	Službeno odobreni tekst zadatka unutar informacijskog sustava glasi:
+	
+	\begin{quote}
+		\textit{Web aplikacija omogućuje organizacijama i timovima strukturirano praćenje i upravljanje financijskim tokovima na razini projekata i odjela. Sustav podržava evidenciju prihoda i rashoda, kategorizaciju troškova, automatsku raspodjelu sredstava po projektima te generiranje detaljnih financijskih izvještaja i analiza. Aplikacija je implementirana kao progresivna web aplikacija koristeći Angular sučelje, Node.js backend s Express okvirom i PostgreSQL relacijsku bazu podataka. Sustav uključuje višerazinsku autentifikaciju korisnika s definiranjem uloga i prava pristupa te podršku za ponavljajuće financijske transakcije. Projekt koristi suvremene DevOps prakse kroz GitHub Actions za kontinuiranu integraciju i automatizaciju procesa implementacije.}
+	\end{quote}
+	
+	U sklopu praktične realizacije sustava "Allocento", u dogovoru s mentorom, arhitektura pozadinskog dijela aplikacije prilagođena je kroz primjenu razvojnog okvira Laravel i pripadajućeg ekosustava, dok su inicijalno definirani funkcionalni i projektni zahtjevi u potpunosti zadržani.
+	
+	
+	\newpage
+	\section{ANALIZA PODRUČJA I DEFINICIJA ZAHTJEVA}
+		\subsection{Pregled srodnih web aplikacija}
+		
+		\subsection{Koncept Progressive Web aplikacija}
+		
+		\subsection{Funkcionalni zahtjevi za sustav "Allocento"}
+		
+		\subsection{Nefunkcionalni zahtjevi sustava}
+	
+	
+	\newpage
+	\section{TEHNOLOGIJE, ALATI I RAZVOJNO OKRUŽENJE}
+		\subsection{Tehnologije na strani poslužitelja}
+		
+		\subsection{Tehnologije na strani klijenta}
+		
+		\subsection{Alat za definiciju vizualnog identiteta i brenda aplikacije}
+		
+		\subsection{Sustav za upravljanje relacijskim bazama podataka i web poslužitelj}
+	
+	
+	\newpage
+	\section{ARHITEKTURA I DIZAJN SUSTAVA}
+		\subsection{Konceptualna arhitektura}
+		
+		\subsection{Arhitektura klijentskog dijela}
+		
+		\subsection{Arhitektura poslužiteljskog dijela}
+		
+		\subsection{Model baze podataka}
+	
+	
+	\newpage
+	\section{IMPLEMENTACIJA SUSTAVA "ALLOCENTO"}
+		\subsection{Implementacija REST API-ja i upravljanje tokovima podataka}
+		
+		\subsection{Primjena vizualnog identiteta}
+		
+		\subsection{Strukturiranje klijentskih komponenti i upravljanje stanjima}
+		
+		\subsection{Konfiguracija PWA funkcionalnosti}
+		
+		\subsection{Prikaz ključnih segmenata programskog koda}
+	
+	
+	\newpage
+	\section{KORISNIČKO SUČELJE I PRIKAZ RADA APLIKACIJE}
+		\subsection{Registracija, autentifikacija i sigurnost korisnika}
+		
+		\subsection{Glavna nadzorna ploča i upravljanje funkcionalnostima}
+		
+		\subsection{Prikaz rada u izvanmrežnom načinu rada sustava}
+		
+	
+	\newpage
+	\section{ZAKLJUČAK I BUDUĆI RAD}
+	
+	
+	\newpage
+	\bibliographystyle{unsrt}
+	\bibliography{bibtex_baza}
+	
+	
+	\newpage
+	\section*{SAŽETAK}
+	\addcontentsline{toc}{section}{Sažetak}
+	
+	\bigskip
+	\noindent\textbf{Ključne riječi:}
+	
+	
+	\newpage
+	\section*{Abstract}
+	\addcontentsline{toc}{section}{Abstract}
+	
+	\bigskip
+	\noindent\textbf{Keywords:}
+	
+	
+	\newpage
+	\section*{Životopis}
+	\addcontentsline{toc}{section}{Životopis}
+	
+	
+	\newpage
+	\section*{Prilozi}
+	\addcontentsline{toc}{section}{Prilozi}
+	
+	\end{document}

@@ -197,11 +197,19 @@
 	\newpage
 	
 	\section{UVOD}
-	Moderno programsko inženjerstvo teži razvoju rješenja koja kombiniraju visoke performanse nativnih aplikacija i široku dostupnost klasičnih web platformi. U dinamičnim okruženjima, gdje stabilnost mrežne veze često varira, tradicionalne web aplikacije pokazuju značajne nedostatke zbog potencijalnog gubitka ili nestabilne veze sa poslužiteljem. Kao odgovor razvijen je koncept progresivnih web aplikacija (engl. \textit{Progressive Web Apps} – PWA) koji, korištenjem naprednih mehanizama poput servisnih radnika (engl. \textit{Service Workers}) i lokalnog predmemoriranja, omogućuje neometan rad aplikacije u izvanmrežnom načinu rada te naknadnu automatsku sinkronizaciju podataka.
+	Moderno programsko inženjerstvo kontinuirano teži razvoju softverskih rješenja koja uspješno kombiniraju visoke performanse i prilagodljivost nativnih mobilnih aplikacija sa širokom dostupnošću klasičnih web platformi \cite{w_angular}. U dinamičnim okruženjima, u kojima kvaliteta i stabilnost mrežne veze često variraju, tradicionalne web aplikacije pokazuju značajne nedostatke, ponajprije zbog potencijalnog gubitka podataka ili potpunog prekida rada uzrokovanog nestabilnom vezom s udaljenim poslužiteljem. Kao odgovor na navedene izazove, razvijen je koncept progresivnih web aplikacija (engl. \textit{Progressive Web Apps} – PWA) \cite{w_pwa_alex_russell}. Ovaj koncept, korištenjem naprednih mehanizama poput servisnih radnika (engl. \textit{Service Workers}) \cite{w_mdn_serviceworker} i naprednog lokalnog predmemoriranja putem IndexedDB baze \cite{w_mdn_indexeddb}, omogućuje neometan rad aplikacije u izvanmrežnom načinu rada (engl. \textit{offline mode}) te naknadnu automatsku asinkronu sinkronizaciju podataka.
 
-	Glavna motivacija za razvoj sustava "Allocento" proizlazi iz potrebe za optimizacijom i osiguravanjem kontinuiteta upravljanja tokovima podataka u uvjetima nestabilne mrežne povezanosti. U klasičnim web sustavima, prekid internetske veze tijekom izvršavanja CRUD (engl. \textit{Create, Read, Update, Delete}) operacija redovito rezultira pogreškama u izvođenju i gubitkom unesenih informacija. Implementacijom PWA arhitekture unutar sustava Allocento, korisnicima se omogućuje nesmetano obavljanje poslovnih procesa i unos podataka bez obzira na trenutni status mreže, dok se složeni procesi sinkronizacije i razmjene podataka s centralnom bazom automatiziraju na razini pozadinskih servisa klijentske aplikacije.
+	Glavna motivacija za razvoj financijskog sustava "Allocento" proizlazi iz potrebe za optimizacijom i osiguravanjem kontinuiteta upravljanja tokovima podataka u uvjetima nestabilne mrežne povezanosti, a pri čemu sustav mora ostati kolaborativan i višeslojan. U klasičnim klijent-poslužitelj web sustavima, prekid internetske veze tijekom izvršavanja temeljnih CRUD (engl. \textit{Create, Read, Update, Delete}) operacija redovito rezultira pogreškama u izvođenju i, u najgorem slučaju, nepovratnim gubitkom unesenih financijskih informacija \cite{w_rest_api}. Implementacijom inovativne PWA arhitekture temeljene na tzv. \textit{offline-first} (prvo izvanmrežno) pristupu unutar sustava Allocento, korisnicima se omogućuje nesmetano obavljanje poslovnih procesa i unos novih transakcija bez obzira na trenutni status mreže. Složeni procesi sinkronizacije, upravljanje sukobima i razmjena podataka s centralnom relacijskom bazom potpuno se automatiziraju na razini pozadinskih servisa klijentske aplikacije.
 
-	Pozadinski dio sustava (engl. \textit{backend}) temelji se na razvojnom okviru Laravel koji omogućuje izgradnju sigurnog i skalabilnog REST API-ja te efikasno upravljanje relacijskom bazom podataka. Prednji dio sustava (engl. \textit{frontend}) implementiran je pomoću radnog okvira Angular, čija modularna arhitektura olakšava integraciju PWA modula i upravljanje složenim stanjima aplikacije na klijentskoj strani. Vizualni identitet i konzistentnost korisničkog sučelja definirani su primjenom dizajnerskih smjernica preuzetih iz platforme Logology, čime se osigurava moderno i responzivno korisničko iskustvo.
+	Arhitektura sustava pomno je osmišljena kako bi podržala opisane zahtjeve. Pozadinski dio sustava (engl. \textit{backend}) temelji se na razvojnom okviru Laravel \cite{w_laravel} koji omogućuje izgradnju sigurnog i visoko skalabilnog REST API-ja te efikasno upravljanje robusnom relacijskom bazom podataka PostgreSQL \cite{w_postgresql}. Prednji dio sustava (engl. \textit{frontend}) implementiran je pomoću radnog okvira Angular \cite{w_angular}, čija napredna modularna arhitektura olakšava integraciju PWA modula, složeno upravljanje stanjima putem novog reaktivnog modela Signala te dinamičko lokalizirano formatiranje financijskih podataka. Vizualni identitet i konzistentnost korisničkog sučelja strogo su definirani primjenom dizajnerskih smjernica preuzetih iz platforme Logology \cite{w_logology}, čime se osigurava moderno i responzivno korisničko iskustvo na svim uređajima.
+
+	Struktura ovog diplomskog rada koncipirana je na sljedeći način:
+	U \textbf{drugom poglavlju} daje se pregled i analiza srodnih web aplikacija na tržištu, detaljno se objašnjava koncept progresivnih web aplikacija s fokusom na različite strategije predmemoriranja te se jasno definiraju funkcionalni i nefunkcionalni zahtjevi postavljeni pred sustav Allocento. 
+	U \textbf{trećem poglavlju} taksativno su navedene i obrazložene tehnologije na strani klijenta i poslužitelja, alati za kontinuiranu integraciju te odabrani sustavi relacijskih baza podataka.
+	\textbf{Četvrto poglavlje} posvećeno je detaljnoj razradi arhitekture i dizajna sustava, uključujući konceptualnu arhitekturu, podjelu aplikacijskih slojeva te model baze podataka s pripadajućim entitetima i atributima.
+	\textbf{Peto poglavlje} opisuje samu tehničku implementaciju sustava Allocento, uključujući specifičnosti izrade REST API-ja, PWA konfiguraciju sa sinkronizacijskim algoritmima za izvanmrežni rad, sustav lokalizacije, te implementaciju automatiziranog CI/CD cjevovoda.
+	U \textbf{šestom poglavlju} pružen je pregled korisničkog sučelja i ključnih funkcionalnosti rada same aplikacije kroz primjere iz grafičkog sučelja.
+	Rad se zaključuje \textbf{sedmim poglavljem} u kojem je dan sažeti osvrt na provedeni projekt te smjernice za budući razvoj i nadogradnju sustava.
 
 	\subsection{Zadatak rada}
 	Web aplikacija omogućuje organizacijama i timovima strukturirano praćenje i upravljanje financijskim tokovima na razini projekata i odjela. Sustav podržava evidenciju prihoda i rashoda, kategorizaciju troškova, automatsku raspodjelu sredstava po projektima te generiranje detaljnih financijskih izvještaja i analiza. Aplikacija je implementirana kao progresivna web aplikacija koristeći Angular sučelje, backend s Laravel okvirom i PostgreSQL relacijsku bazu podataka. Sustav uključuje višerazinsku autentifikaciju korisnika s definiranjem uloga i prava pristupa te podršku za ponavljajuće financijske transakcije. Projekt koristi suvremene DevOps prakse kroz GitHub Actions za kontinuiranu integraciju i automatizaciju procesa implementacije. Tema rezervirana za: Mihael Lendvaj
@@ -229,21 +237,30 @@
 		\newpage
 		
 		\subsection{Koncept Progressive Web aplikacija}
-		Progresivne web aplikacije (engl. \textit{Progressive Web Apps} – PWA) predstavljaju softversku metodologiju i skup tehnologija koje klasičnim web aplikacijama omogućuju pružanje korisničkog iskustva sličnog nativnim mobilnim ili stolnim aplikacijama. Koncept su 2015. godine osmislili Alex Russell i Frances Berriman iz tvrtke Google, s ciljem premošćivanja jaza između performansi nativnog softvera i široke dostupnosti weba.
+		Progresivne web aplikacije (engl. \textit{Progressive Web Apps} – PWA) predstavljaju softversku metodologiju i skup tehnologija koje klasičnim web aplikacijama omogućuju pružanje korisničkog iskustva sličnog nativnim mobilnim ili stolnim aplikacijama. Koncept su 2015. godine osmislili Alex Russell i Frances Berriman iz tvrtke Google, s ciljem premošćivanja jaza između performansi nativnog softvera i široke dostupnosti weba \cite{w_pwa_alex_russell}.
 
-		PWA se temelji na načelu progresivnog poboljšanja (engl. \textit{progressive enhancement}). To znači da se aplikacija ponaša kao standardna web stranica u starijim preglednicima koji ne podržavaju moderne PWA tehnologije, dok na naprednijim platformama automatski otključava dodatne mogućnosti poput rada u izvanmrežnom načinu rada, instalacije na uređaj i primanja push obavijesti.
+		PWA se temelji na načelu progresivnog poboljšanja (engl. \textit{progressive enhancement}). To znači da se aplikacija ponaša kao standardna web stranica u starijim preglednicima koji ne podržavaju moderne PWA tehnologije, dok na naprednijim platformama automatski otključava dodatne mogućnosti poput rada u izvanmrežnom načinu rada, instalacije na uređaj i primanja pozadinskih obavijesti.
 
 		Ključne tehničke komponente koje čine temelj svake progresivne web aplikacije su:
 		
 		\begin{itemize}
-			\item \textbf{Servisni radnik (engl. \textit{Service Worker}):} Skripta pisana u jeziku JavaScript koju preglednik izvršava u pozadini, odvojeno od glavne dretve korisničkog sučelja web stranice. Servisni radnik djeluje kao posrednik (engl. \textit{network proxy}) između klijentske aplikacije, mrežnih poslužitelja i lokalnog spremnika. On presreće sve mrežne zahtjeve, omogućujući implementaciju naprednih strategija predmemoriranja i potpunu funkcionalnost aplikacije bez pristupa internetu.
+			\item \textbf{Servisni radnik (engl. \textit{Service Worker}):} Skripta pisana u jeziku JavaScript koju preglednik izvršava u pozadini, potpuno odvojeno od glavne dretve korisničkog sučelja web stranice \cite{w_mdn_serviceworker}. Servisni radnik djeluje kao mrežni posrednik (engl. \textit{network proxy}) između klijentske aplikacije, mrežnih poslužitelja i lokalnog spremnika. On ima mogućnost presretanja svih mrežnih zahtjeva (HTTP zahtjeva), čime omogućuje implementaciju naprednih strategija predmemoriranja i potpunu funkcionalnost aplikacije bez pristupa internetu.
 			
-			\item \textbf{Manifest web aplikacije (engl. \textit{Web App Manifest}):} Datoteka u formatu JSON (najčešće \texttt{manifest.webmanifest} ili \texttt{manifest.json}) koja sadrži metapodatke o aplikaciji. U njoj se definiraju naziv aplikacije, ikone različitih razlučivosti, početna adresa (\textit{start URL}), boja teme te način prikaza (npr. \textit{standalone} način rada koji uklanja elemente preglednika poput adresne trake i daje aplikaciji nativni izgled).
+			\item \textbf{Manifest web aplikacije (engl. \textit{Web App Manifest}):} Datoteka u formatu JSON (najčešće \texttt{manifest.webmanifest} ili \texttt{manifest.json}) koja sadrži metapodatke o aplikaciji. U njoj se definiraju naziv aplikacije, ikone različitih razlučivosti, početna adresa (\textit{start URL}), boja teme te način prikaza (npr. \textit{standalone} način rada koji uklanja elemente preglednika poput adresne trake i time daje aplikaciji nativni izgled).
 			
-			\item \textbf{Sigurnosni protokol HTTPS:} Servisni radnici posjeduju visoku razinu kontrole nad mrežnim zahtjevima i upravljanjem podacima. Zbog sprječavanja napada posredovanjem (engl. \textit{man-in-the-middle}), preglednici dopuštaju registraciju servisnih radnika isključivo preko šifriranih HTTPS veza (uz iznimku adrese \textit{localhost} tijekom lokalnog razvoja).
+			\item \textbf{Sigurnosni protokol HTTPS:} Servisni radnici posjeduju visoku razinu kontrole nad mrežnim zahtjevima i upravljanjem klijentskim podacima. Zbog sprječavanja napada posredovanjem (engl. \textit{man-in-the-middle}), svi moderni preglednici dopuštaju registraciju servisnih radnika isključivo preko sigurnih, šifriranih HTTPS veza (uz iznimku adrese \textit{localhost} tijekom lokalnog razvoja).
 		\end{itemize}
 
-		Jedan od najvećih izazova pri razvoju izvanmrežnih PWA aplikacija je odabir strategije predmemoriranja i upravljanja podacima. Dok se za statičke resurse (HTML, CSS, JavaScript datoteke, slike) koristi \textit{Cache API} koji je integriran sa servisnim radnikom, za strukturirane i transakcijske podatke (poput financijskih transakcija u sustavu Allocento) koristi se klijentska baza podataka \textbf{IndexedDB}. IndexedDB je transakcijska, NoSQL baza podataka ugrađena u preglednik, koja omogućuje pohranu velikih količina strukturiranih objekata na klijentu. Kombinacijom servisnog radnika za statičke resurse i IndexedDB-a za poslovne podatke, aplikacija postaje potpuno neovisna o trenutnom statusu mrežne veze.
+		Jedan od najvećih izazova pri razvoju izvanmrežnih PWA aplikacija je odabir ispravne strategije predmemoriranja i upravljanja podacima. U praksi se najčešće primjenjuje nekoliko osnovnih strategija:
+		\begin{itemize}
+			\item \textbf{Cache First (Prvo predmemorija):} Klijent prvo pokušava dohvatiti podatak iz lokalnog spremnika. Ako podatak postoji, odmah se vraća korisniku, a mrežni zahtjev se niti ne šalje. Ova strategija je idealna za statičke resurse (slike, fontove) koji se rijetko mijenjaju.
+			
+			\item \textbf{Network First (Prvo mreža):} Klijent prvo pokušava dohvatiti svježe podatke s poslužitelja. Ako mreža nije dostupna, kao rezervni plan vraća posljednju poznatu verziju iz predmemorije. Ovo je prikladno za podatke koji se često mijenjaju.
+			
+			\item \textbf{Stale-While-Revalidate (Stari podaci uz revalidaciju u pozadini):} Kombinirana strategija koja korisniku trenutno prikazuje starije podatke iz predmemorije (osiguravajući brzinu nativnih aplikacija), dok se u pozadini paralelno šalje mrežni zahtjev za dohvaćanje svježih podataka. Kada novi podaci stignu, predmemorija se tiho ažurira za sljedeći prikaz.
+		\end{itemize}
+
+		Dok se za statičke resurse (HTML, CSS, JavaScript datoteke, ikone) koristi \textit{Cache API} koji je direktno integriran sa servisnim radnikom, za strukturirane i transakcijske podatke (poput financijskih transakcija u sustavu Allocento) to nije adekvatno rješenje. Za takve dinamičke poslovne podatke koristi se klijentska relacijsko-objektna baza podataka \textbf{IndexedDB} \cite{w_mdn_indexeddb}. IndexedDB je snažna, asinkrona, transakcijska NoSQL baza podataka ugrađena u sve moderne preglednike, koja omogućuje pohranu velikih količina strukturiranih objekata izravno na klijentu uz napredno filtriranje preko indeksa. Kombinacijom servisnog radnika za statičke resurse i IndexedDB-a za poslovne podatke, aplikacija ostvaruje arhitekturu \textit{offline-first} i postaje robusna na ispade mrežne veze.
 		
 		\newpage
 		
@@ -334,11 +351,11 @@
 		Na temelju dizajnerskog profila sustava Allocento, odabrana je paleta boja s naglašenim tamnim i svijetlim tonovima te specifični fontovi (Space Mono i Outfit). Ove su smjernice potom prenesene u razvojni sustav klijentske aplikacije u obliku globalnih CSS varijabli (engl. \textit{CSS custom properties}), čime se postigla vizualna konzistentnost, responzivnost i moderan izgled sučelja (engl. \textit{premium UX}).
 
 		\subsection{Sustav za upravljanje relacijskim bazama podataka i web poslužitelj}
-		Upravljanje podacima na strani poslužitelja organizirano je kroz kombinaciju dvaju relacijskih sustava za upravljanje bazama podataka (SUBP) ovisno o okruženju, dok je za posluživanje aplikacije odabran Nginx.
+		Upravljanje podacima na strani poslužitelja organizirano je kroz hibridni pristup koji kombinira dva različita relacijska sustava za upravljanje bazama podataka (SUBP), odabrana ovisno o okruženju u kojem se aplikacija izvršava. Za posluživanje aplikacije i usmjeravanje prometa odabran je Nginx \cite{w_nginx}.
 
-		\textbf{SQLite} je lagana, ugrađena relacijska baza podataka otvorenog koda koja ne zahtijeva zasebni poslužiteljski proces jer se cijela baza pohranjuje u jednu datoteku na disku. U sustavu Allocento, SQLite se koristi isključivo u razvojnom okruženju (engl. \textit{development environment}) zbog jednostavnosti postavljanja, nultog konfiguracijskog napora i brzine izvršavanja testova.
+		\textbf{SQLite} je lagana, ugrađena relacijska baza podataka otvorenog koda koja ne zahtijeva zasebni poslužiteljski proces niti složenu mrežnu konfiguraciju \cite{w_sqlite}. Cjelokupna baza podataka, uključujući definicije tablica, indekse i same podatke, pohranjuje se u jednu datoteku na disku. U sustavu Allocento, SQLite se koristi isključivo u lokalnom razvojnom okruženju (engl. \textit{development environment}) te prilikom izvođenja automatiziranih testova. Glavna prednost ovakvog pristupa je ekstremna jednostavnost postavljanja, brza inicijalizacija i brzina izvršavanja lokalnih testova bez potrebe za održavanjem kompleksnog poslužitelja baze podataka.
 
-		\textbf{PostgreSQL} je napredni objektno-relacijski sustav upravljanja bazom podataka poznat po pouzdanosti, robusnosti i usklađenosti s ACID standardima. PostgreSQL se koristi u produkcijskom okruženju sustava Allocento, gdje osigurava visoku razinu performansi pri konkurentnom pristupu bazi podataka od strane više različitih korisnika, podržava napredne indeksacije te omogućuje sigurno skaliranje sustava.
+		\textbf{PostgreSQL} je napredni objektno-relacijski sustav upravljanja bazom podataka poznat po pouzdanosti, robusnosti i strogoj usklađenosti s ACID standardima \cite{w_postgresql}. PostgreSQL se koristi isključivo u produkcijskom okruženju sustava Allocento. Za razliku od SQLite baze koja primjenjuje zaključavanje cijele datoteke pri pisanju (čime narušava performanse kod velikog broja istovremenih korisnika), PostgreSQL koristi napredni sustav upravljanja konkurentnošću (\textit{Multiversion Concurrency Control} – MVCC). Time se osigurava visoka razina performansi pri konkurentnom pristupu bazi podataka od strane stotina različitih korisnika, podržavaju se napredne indeksacije (poput GIN i GiST indeksa) te se omogućuje sigurno horizontalno i vertikalno skaliranje cjelokupnog sustava bez degradacije performansi pri obradi tisuća financijskih transakcija u sekundi. Prebacivanje između ova dva sustava baza podataka izvedeno je besprijekorno kroz apstrakcijski sloj Eloquent ORM-a ugrađenog u radni okvir Laravel.
 
 		\textbf{Nginx} je visokoperformantni web poslužitelj s asinkronom arhitekturom upravljanom događajima (engl. \textit{event-driven architecture}). U ovom projektu Nginx ima ulogu obrnutog proxyja (engl. \textit{reverse proxy}) koji zaprima sve klijentske HTTP zahtjeve, statički poslužuje izgrađenu Angular frontend aplikaciju, a zahtjeve namijenjene API-ju prosljeđuje PHP-FPM procesu Laravel backend aplikacije. Nginx je također konfiguriran za usmjeravanje svih SPA ruta prema početnoj \texttt{index.html} datoteci Angulara.
 
@@ -477,22 +494,66 @@
 		\newpage
 
 		\subsection{Model baze podataka}
-		Baza podataka je relacijskog karaktera i dizajnirana je tako da podržava rad s različitim valutama, višestrukim prostorima i granularnim pravima pristupa. Ključni entiteti i njihove relacije su:
+		Baza podataka je relacijskog karaktera i pomno dizajnirana tako da podržava rad s različitim valutama, višestrukim prostorima, offline-first sinkronizacijom i granularnim pravima pristupa. U nastavku su detaljno raspisani ključni entiteti i njihovi najvažniji atributi:
 		
 		\begin{itemize}
-			\item \textbf{Korisnik (\texttt{users}):} Sadrži osnovne podatke o korisniku (ime, e-mail, lozinka, fotografija profilna, aktivni radni prostor). Korisnik može kreirati više radnih prostora te sudjelovati u prostorima drugih korisnika.
+			\item \textbf{Korisnik (\texttt{users}):} Sadrži osnovne osobne i autentifikacijske podatke o korisniku. Korisnik može kreirati više radnih prostora te sudjelovati u prostorima drugih korisnika.
+			\begin{itemize}
+				\item \texttt{id} (Primarni ključ, UUID/BigInt)
+				\item \texttt{name}, \texttt{email}, \texttt{password} (Osnovni autentifikacijski podaci)
+				\item \texttt{active\_workspace\_id} (Strani ključ, referencira trenutni radni prostor korisnika)
+				\item \texttt{nav\_preferences} (JSON polje za postavke prikaza sučelja)
+			\end{itemize}
 			
-			\item \textbf{Radni prostor (\texttt{workspaces}):} Predstavlja izolirani financijski prostor (osobni, obiteljski, poslovni). Svi ostali entiteti (računi, kategorije, transakcije) vezani su uz određeni radni prostor.
+			\item \textbf{Radni prostor (\texttt{workspaces}):} Predstavlja izolirani financijski prostor, bilo da se radi o osobnom proračunu ili poslovnom subjektu. Svi ostali entiteti (računi, kategorije, transakcije) striktno su vezani uz određeni radni prostor.
+			\begin{itemize}
+				\item \texttt{id} (Primarni ključ)
+				\item \texttt{name} (Naziv radnog prostora)
+				\item \texttt{owner\_id} (Strani ključ koji upućuje na vlasnika/kreatora)
+				\item \texttt{enabled\_features} (JSON polje koje definira aktivne module unutar prostora)
+			\end{itemize}
 			
-			\item \textbf{ (Pivot tablica):} Povezuje korisnike i radne prostore u odnosu više-prema-više (N:M). Sadrži atribut uloge (\textit{role}) koji može biti \textit{owner} (vlasnik), \textit{manager} (upravitelj) ili \textit{member} (član), te status pozivnice (\textit{pending}, \textit{accepted}).
+			\item \textbf{Članstvo u prostoru (\texttt{workspace\_user}):} Pivot tablica koja povezuje korisnike i radne prostore u odnosu više-prema-više (N:M).
+			\begin{itemize}
+				\item \texttt{workspace\_id}, \texttt{user\_id} (Kompozitni primarni i strani ključevi)
+				\item \texttt{role} (Uloga: \textit{owner}, \textit{manager}, \textit{member})
+				\item \texttt{status} (Status pozivnice: \textit{pending}, \textit{accepted})
+			\end{itemize}
 			
-			\item \textbf{Račun / Projekt (\texttt{accounts}):} Predstavlja financijski račun koji pripada radnom prostoru. Sadrži naziv, valutu, vrstu, trenutno stanje (\textit{balance}) i početni budžet (\textit{opening\_balance}). U poslovnim prostorima ovi računi predstavljaju projekte i njihove proračune.
+			\item \textbf{Račun / Projekt (\texttt{accounts}):} Predstavlja financijski račun koji pripada radnom prostoru. U poslovnim prostorima ovi računi ujedno predstavljaju i projekte te njihove zadane proračune.
+			\begin{itemize}
+				\item \texttt{id} (Primarni ključ)
+				\item \texttt{workspace\_id} (Strani ključ)
+				\item \texttt{name}, \texttt{currency} (Naziv i valuta računa)
+				\item \texttt{type} (Tip: gotovina, banka, projekt)
+				\item \texttt{balance} (Trenutno raspoloživo stanje)
+				\item \texttt{opening\_balance} (Početni budžet ili inicijalno stanje)
+			\end{itemize}
 			
-			\item \textbf{Kategorija (\texttt{categories}):} Definira kategoriju troška ili prihoda. Kategorije mogu biti globalne (sistemske) ili lokalne (vezane uz radni prostor). Podržano je hijerarhijsko povezivanje preko polja \texttt{parent\_id} (kategorije i podkategorije).
+			\item \textbf{Kategorija (\texttt{categories}):} Definira kategoriju troška ili prihoda radi precizne financijske analitike.
+			\begin{itemize}
+				\item \texttt{id}, \texttt{workspace\_id} (Radni prostor, \textit{null} označava globalnu kategoriju)
+				\item \texttt{name}, \texttt{icon}, \texttt{color} (Vizualni atributi)
+				\item \texttt{type} (Prihod ili rashod)
+				\item \texttt{parent\_id} (Za omogućavanje podkategorija)
+			\end{itemize}
 			
-			\item \textbf{Transakcija (\texttt{transactions}):} Predstavlja osnovni zapis o financijskom toku. Povezana je s računom, kategorijom i korisnikom koji ju je unio. Sadrži tip (prihod, rashod, transfer), iznos, datum i opis.
+			\item \textbf{Transakcija (\texttt{transactions}):} Predstavlja osnovni, atomarni zapis o svakom pojedinom financijskom toku.
+			\begin{itemize}
+				\item \texttt{id} (Primarni ključ)
+				\item \texttt{account\_id}, \texttt{category\_id}, \texttt{user\_id} (Poveznice na račun, kategoriju i izvršitelja)
+				\item \texttt{type} (Prihod, rashod, prijenos)
+				\item \texttt{amount} (Točan iznos u najmanjoj valuti, npr. lipama/centima)
+				\item \texttt{transaction\_date} (Datum i vrijeme izvršenja)
+				\item \texttt{exclude\_from\_analytics} (Zastavica za izuzimanje internih prijenosa iz statistike)
+			\end{itemize}
 			
-			\item \textbf{RecurringTemplate (\texttt{recurring\_templates}):} Pohranjuje predloške za transakcije koje se automatski ponavljaju u određenim vremenskim intervalima (npr. mjesečno plaćanje režija).
+			\item \textbf{Ponavljajući predložak (\texttt{recurring\_templates}):} Pohranjuje predloške za transakcije koje se automatski ponavljaju pomoću pozadinskih poslova (CRON).
+			\begin{itemize}
+				\item \texttt{frequency} (Mjesečno, tjedno, godišnje)
+				\item \texttt{day\_of\_month} (Dan u mjesecu kada se transakcija izvršava)
+				\item \texttt{is\_active} (Status aktivnosti predloška)
+			\end{itemize}
 		\end{itemize}
 
 		\begin{figure}[h!]
@@ -538,6 +599,27 @@
 
 		Validacija podataka provodi se na razini kontrolera prije bilo kakvog unosa ili izmjene u bazi podataka. Laravel omogućuje strogu validaciju tipova podataka, formata datuma i provjeru postojanja stranih ključeva u povezanim tablicama (npr. provjera postoji li \texttt{category\_id} ili \texttt{project\_id} u bazi). U slučaju neuspjele validacije, sustav automatski odbija zahtjev i vraća odgovor s HTTP statusom \texttt{422 Unprocessable Entity} i opisom pogreške, dok se uspješne operacije potvrđuju odgovarajućim statusima (npr. \texttt{201 Created} za uspješan unos transakcije ili \texttt{204 No Content} za brisanje).
 
+		\subsubsection{Pregled ključnih API ruta}
+		Kako bi se omogućila besprijekorna komunikacija između klijentske aplikacije i poslužitelja, definiran je skup RESTful API ruta. U tablici \ref{tab:api_routes} prikazane su najvažnije rute zadužene za upravljanje financijskim transakcijama i sinkronizaciju podataka.
+		
+		\begin{table}[h!]
+			\centering
+			\caption{Pregled ključnih API ruta u sustavu Allocento}
+			\label{tab:api_routes}
+			\resizebox{\textwidth}{!}{
+				\begin{tabular}{|l|l|l|}
+					\hline
+					\textbf{HTTP Metoda} & \textbf{Krajnja točka (Endpoint)} & \textbf{Opis funkcionalnosti} \\ \hline
+					GET & \texttt{/api/transactions} & Dohvaća popis transakcija uz podršku za filtriranje i straničenje. \\ \hline
+					POST & \texttt{/api/transactions} & Kreira novu pojedinačnu financijsku transakciju. \\ \hline
+					PUT & \texttt{/api/transactions/\{id\}} & Ažurira podatke postojeće transakcije (npr. iznos ili kategoriju). \\ \hline
+					DELETE & \texttt{/api/transactions/\{id\}} & Trajno briše transakciju iz baze podataka. \\ \hline
+					POST & \texttt{/api/transactions/sync} & Obavlja skupnu sinkronizaciju operacija izvršenih izvanmrežno. \\ \hline
+					GET & \texttt{/api/analytics/summary} & Dohvaća agregirane analitičke podatke (prihodi, rashodi, bilanca). \\ \hline
+				\end{tabular}
+			}
+		\end{table}
+
 		\newpage
 		
 		\subsection{Primjena vizualnog identiteta}
@@ -561,7 +643,7 @@
 		
 		Usmjeravanje (engl. \textit{routing}) u aplikaciji definirano je u datoteci \texttt{app.routes.ts}. Za optimizaciju performansi učitavanja primijenjeno je lijeno učitavanje (engl. \textit{lazy loading}) putem funkcije \texttt{loadComponent}. To znači da preglednik preuzima programski kod za specifične stranice (npr. nadzornu ploču, izvještaje ili postavke) tek kada korisnik klikne na njih, čime se drastično smanjuje veličina početnog paketa aplikacije i ubrzava prvo učitavanje.
 
-		Upravljanje stanjem aplikacije i reaktivnost sučelja u potpunosti su implementirani pomoću **Angular Signala** (engl. \textit{Angular Signals}), novog reaktivnog primitiva koji donosi finu kontrolu nad promjenama stanja. U sustavu Allocento signali se koriste za:
+		Upravljanje stanjem aplikacije i reaktivnost sučelja u potpunosti su implementirani pomoću \textbf{Angular Signala} (engl. \textit{Angular Signals}), novog reaktivnog primitiva koji donosi finu kontrolu nad promjenama stanja. U sustavu Allocento signali se koriste za:
 		\begin{itemize}
 			\item \textbf{Praćenje aktivnog konteksta:} Servis \texttt{WorkspaceService} izlaže signal \texttt{activeWorkspace =} \allowbreak \texttt{signal<Workspace} \allowbreak \texttt{| null>(null)}. Kada se korisnik prebaci u drugi radni prostor, vrijednost signala se ažurira, a sve komponente koje ovise o tom signalu automatski se i trenutačno ponovno iscrtavaju s novim podacima.
 			
@@ -591,7 +673,7 @@
 		\subsubsection{Integracija i konfiguracija Web Push obavijesti}
 		Poticajne obavijesti (engl. \textit{Web Push Notifications}) omogućuju poslužitelju slanje informacija klijentu čak i kada aplikacija nije aktivna u pregledniku. Implementacija ovog sustava u Allocentu koristi Push API i Notification API standarde te se temelji na tri entiteta: klijentskom pregledniku, posredničkom Push servisu preglednika i Laravel poslužitelju aplikacije.
 
-		Za osiguravanje privatnosti i autentičnosti pošiljatelja koristi se protokol **VAPID** (engl. \textit{Voluntary Application Server Identification}). Na poslužitelju se generira par ključeva: javni i privatni VAPID ključ.
+		Za osiguravanje privatnosti i autentičnosti pošiljatelja koristi se protokol \textbf{VAPID} (engl. \textit{Voluntary Application Server Identification}). Na poslužitelju se generira par ključeva: javni i privatni VAPID ključ.
 		
 		Tijek registracije i slanja obavijesti odvija se na sljedeći način:
 		\begin{enumerate}
@@ -637,7 +719,7 @@
 		\subsection{Prikaz ključnih segmenata programskog koda}
 		U nastavku su prikazani ključni segmenti programskog koda koji ilustriraju rješenja opisana u ovom poglavlju. Primjer koda \ref{lst:resolve_workspace} prikazuje implementaciju middleware-a u Laravelu koji razrješava radni prostor na temelju zaglavlja HTTP zahtjeva i postavlja ga u kontekst aplikacije.
 
-\begin{lstlisting}[language=PHP, caption={Laravel middleware za razrjeđivanje aktivnog radnog prostora}, label={lst:resolve_workspace}]
+\begin{lstlisting}[language=PHP, caption={Laravel middleware za razrješavanje aktivnog radnog prostora}, label={lst:resolve_workspace}]
 class ResolveWorkspace
 {
     public function handle(Request $request, Closure $next): Response
@@ -806,21 +888,47 @@ public function sync(Request $request): JsonResponse
 		\subsection{Automatizacija implementacije aplikacije (CI/CD cjevovod)}
 		Uvođenje suvremenih DevOps praksi osigurano je pisanjem CI/CD cjevovoda (engl. \textit{CI/CD pipeline}) pomoću platforme GitHub Actions. Datoteka \texttt{deploy.yml} definira automatizirani proces isporuke koda na produkcijski poslužitelj čim se promjene spoje (engl. \textit{merge}) na glavnu granu (\texttt{main}) repozitorija.
 		
-		Cjevovod se sastoji od jednog posla (\textit{job}) pod nazivom \texttt{deploy} koji se izvodi u virtualnom okruženju \texttt{ubuntu-latest}. Radni tijek provodi sljedeće faze:
+		Cjevovod se sastoji od jednog posla (\textit{job}) pod nazivom \texttt{deploy} koji se izvodi u virtualnom okruženju \texttt{ubuntu-latest} osiguranom od strane GitHub-a. Radni tijek provodi sljedeće ključne faze isporuke:
 		\begin{enumerate}
-			\item \textbf{Preuzimanje koda (Checkout):} Koristi se akcija \texttt{actions/checkout} za preuzimanje izvornog koda iz Git repozitorija u radni prostor radnika.
+			\item \textbf{Preuzimanje koda (Checkout) i Uspostava SSH veze:} Koristi se akcija \texttt{actions/checkout} za preuzimanje izvornog koda iz Git repozitorija. Zatim se pokreće SSH agent pomoću akcije \texttt{webfactory/ssh-agent} i učitava se privatni SSH ključ pohranjen u sigurnim postavkama repozitorija (\textit{GitHub Secrets}). Time se omogućuje sigurna komunikacija s produkcijskim poslužiteljem bez izlaganja lozinki. Nakon toga, poslužitelj se dodaje u popis poznatih domaćina (\textit{known\_hosts}) kako bi se spriječili napadi presretanja (engl. \textit{man-in-the-middle}).
 			
-			\item \textbf{Uspostava SSH veze:} Pokreće se SSH agent i učitava se privatni SSH ključ pohranjen u sigurnim postavkama repozitorija (\textit{GitHub Secrets}). Time se omogućuje sigurna komunikacija s produkcijskim poslužiteljem bez izlaganja lozinki.
+			\item \textbf{Sinkronizacija koda na poslužitelju:} Putem SSH naredbi na udaljenom poslužitelju inicijalizira se Git repozitorij (ako već ne postoji) i povlače se najnovije promjene iz repozitorija na produkcijsku lokaciju (\texttt{/home/allocento/app}).
 			
-			\item \textbf{Sinkronizacija koda na poslužitelju:} Putem SSH naredbi na udaljenom poslužitelju povlače se najnovije promjene iz repozitorija na produkcijsku lokaciju.
+			\item \textbf{Konfiguracija i izgradnja pozadinskog dijela (Backend build):} Automatski se kreira i ažurira produkcijska konfiguracijska datoteka \texttt{.env} s osjetljivim postavkama PostgreSQL baze podataka, VAPID ključevima za poticajne obavijesti i SMTP postavkama za slanje elektroničke pošte. Zatim se pokreće instalacija PHP ovisnosti bez razvojnih paketa (\texttt{composer install --no-dev}) i primjenjuju se migracije baze podataka (\texttt{php artisan migrate}) kako bi se shema baze uskladila s kodom aplikacije. Nakon migracija, predmemoriraju se konfiguracija i rute (\texttt{php artisan config:cache}) radi boljih performansi, te se ponovno pokreće Laravel pozadinski servis i radnik za redove čekanja (engl. \textit{queue worker}).
 			
-			\item \textbf{Izgradnja pozadinskog dijela (Backend build):} Automatski se ažurira produkcijska konfiguracijska datoteka \texttt{.env} s postavkama PostgreSQL baze podataka i VAPID ključevima. Zatim se pokreće instalacija PHP ovisnosti (\texttt{composer install}) i primjenjuju se migracije baze podataka (\texttt{php artisan migrate}) kako bi se shema baze uskladila s kodom.
+			\item \textbf{Izgradnja klijentskog dijela (Frontend build):} Na poslužitelju se generiraju dinamičke konfiguracijske datoteke za okruženja (\texttt{environment.ts} i \texttt{environment.prod.ts}), instaliraju se klijentske ovisnosti pomoću naredbe \texttt{npm ci} te se prevodi klijentska Angular aplikacija u produkcijski statički paket naredbom \texttt{npm run build:prod}.
 			
-			\item \textbf{Izgradnja klijentskog dijela (Frontend build):} Na poslužitelju se instaliraju klijentske ovisnosti pomoću naredbe \texttt{npm ci} te se prevodi klijentska Angular aplikacija u produkcijski paket naredbom \texttt{npm run build:prod}. Izgrađeni statički resursi smještaju se u direktorij poslužitelja kojeg Nginx koristi za posluživanje weba.
+			\item \textbf{Završna faza:} Izgrađeni statički resursi smještaju se u direktorij poslužitelja kojeg Nginx koristi za posluživanje weba, a proces se zaključuje ponovnim učitavanjem (\textit{reload}) Nginx konfiguracije.
 		\end{enumerate}
 
-		Ovakav cjevovod smanjuje mogućnost ljudske pogreške pri ručnom prijenosu datoteka na poslužitelj i osigurava da je na produkciji uvijek aktivna verzija koda koja je uspješno prošla provjere.
-	
+		\begin{lstlisting}[language=bash, caption={Isječak koda CI/CD cjevovoda za izgradnju Angular aplikacije}, label={lst:github_actions}]
+      - name: Build frontend
+        env:
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+        run: |
+          ssh -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" << 'EOF'
+          set -e
+          cd /home/allocento/app/frontend
+          npm run build:prod
+          EOF
+		\end{lstlisting}
+
+		Ovakav cjevovod drastično smanjuje mogućnost ljudske pogreške pri ručnom prijenosu datoteka, postavljanju konfiguracijskih varijabli i migraciji baze na poslužitelj te osigurava da je na produkciji uvijek aktivna, provjerena i stabilna verzija koda.
+		
+		\subsection{Osiguranje kvalitete i testiranje koda}
+		Važan aspekt razvoja pouzdanih programskih rješenja je uspostava kvalitetnog procesa testiranja (engl. \textit{Quality Assurance} - QA). U sustavu Allocento, testiranje je prvenstveno fokusirano na pozadinski dio aplikacije, s obzirom na to da on obrađuje kritičnu poslovnu logiku, osigurava izolaciju radnih prostora (engl. \textit{tenant isolation}) te rukuje osjetljivim financijskim podacima.
+		
+		Testiranje u radnom okviru Laravel provodi se pomoću alata PHPUnit. Zbog upotrebe ugrađene SQLite memorijske baze podataka (kako je objašnjeno u arhitekturi baze), izvođenje stotina testova traje svega nekoliko sekundi, što omogućuje programerima vrlo brz povratni ciklus (engl. \textit{fast feedback loop}) prilikom pisanja novih funkcionalnosti \cite{w_laravel}.
+		
+		U sustavu su primijenjene dvije glavne razine testiranja:
+		\begin{itemize}
+			\item \textbf{Jedinično testiranje (engl. \textit{Unit testing}):} Provjerava ispravnost malih, izoliranih dijelova koda (obično pojedinačnih metoda unutar klasa), poput algoritama za formatiranje valuta, agregaciju statistika iz baze ili logiku izračuna datuma za ponavljajuće predloške transakcija.
+			\item \textbf{Testiranje funkcionalnosti (engl. \textit{Feature testing}):} Oponaša stvarne klijentske HTTP zahtjeve usmjerene prema REST API-ju aplikacije, provjeravajući pritom ponašanje cijelog sustava (uključujući usmjerivač, \textit{middleware}, kontroler, modele i bazu podataka). Ovi testovi pokrivaju ključne korisničke scenarije poput pokušaja neovlaštenog pristupa podacima tuđeg radnog prostora, registracije s neispravnim podacima ili pokušaja negativnog iznosa u transakciji koja to ne podržava.
+		\end{itemize}
+		
+		Svi testovi se automatski izvršavaju i na lokalnom računalu razvojnog inženjera, ali i kao integrirani korak unutar GitHub Actions CI/CD cjevovoda prije same izgradnje projekta, čime se sprječava da pogrešan (engl. \textit{buggy}) kod dospije u produkcijsko okruženje.
 	
 	\newpage
 	\section{KORISNIČKO SUČELJE I PRIKAZ RADA APLIKACIJE}
@@ -833,7 +941,7 @@ public function sync(Request $request): JsonResponse
 
 		\begin{figure}[h!]
 			\centering
-			\includegraphics[width=0.8\textwidth]{assets/login_registration.png}
+			\includegraphics[width=0.75\textwidth]{assets/login_registration.png}
 			\caption{Sučelje za prijavu i registraciju korisnika}
 			\label{fig:login-registration}
 		\end{figure}
@@ -852,7 +960,7 @@ public function sync(Request $request): JsonResponse
 
 		\begin{figure}[h!]
 			\centering
-			\includegraphics[width=0.8\textwidth]{assets/workspace_settings.png}
+			\includegraphics[width=0.75\textwidth]{assets/workspace_settings.png}
 			\caption{Upravljanje radnim prostorima i pozivanjem članova tima}
 			\label{fig:workspace-settings}
 		\end{figure}
@@ -874,24 +982,31 @@ public function sync(Request $request): JsonResponse
 			
 			\item \textbf{Grafički prikazi (Analitika):} Interaktivni linijski grafikon koji prikazuje kretanje prihoda i rashoda kroz mjesece te tortni grafikon (engl. \textit{pie chart}) koji prikazuje raspodjelu rashoda po kategorijama (npr. režije, plaće, marketing). Grafovi su implementirani pomoću reaktivnih Angular komponenti koje crtaju SVG elemente na temelju signala s podacima.
 			
-			\item \textbf{Popis zadnjih transakcija:} Tablični prikaz zadnjih 5 unesenih transakcija s ikonama kategorija i brzim opcijama za uređivanje i brisanje.
+			\item \textbf{Popis zadnjih transakcija:} Tablični prikaz zadnjih 5 unesenih transakcija s ikonama kategorija i brzim opcijama za uređivanje i brisanje. Ovdje korisnici mogu pregledavati uobičajene prihode i rashode, kao i \textbf{interne prijenose (transfere)} između dvaju računa u istom radnom prostoru.
 		\end{itemize}
 		Izgled glavne nadzorne ploče prikazan je na slici \ref{fig:dashboard}.
 
 		\begin{figure}[h!]
 			\centering
-			\includegraphics[width=0.9\textwidth]{assets/dashboard.png}
+			\includegraphics[width=0.75\textwidth]{assets/dashboard.png}
 			\caption{Glavna nadzorna ploča sustava Allocento}
 			\label{fig:dashboard}
 		\end{figure}
 
+		\subsubsection{Formatiranje iznosa i \texttt{AmountInputDirective}}
+		S obzirom na to da financijske aplikacije zahtijevaju visoku preciznost, implementirana je prilagođena Angular direktiva \texttt{AmountInputDirective}. Ova direktiva osigurava formatiranje unosa iznosa u stvarnom vremenu prilikom tipkanja. Pretvara unesene brojeve u standardizirani financijski format s dvije decimale te sprječava unos nevaljanih znakova, pružajući tako korisniku intuitivno iskustvo prilagođeno njegovim regionalnim postavkama (engl. \textit{locale}).
+
+		\subsubsection{Ponavljajući predlošci (Recurring Templates)}
+		Za korisnike koji imaju fiksne mjesečne ili godišnje troškove (npr. najamnine, pretplate), sustav nudi sučelje za definiranje \textbf{ponavljajućih predložaka}. Korisnik može odrediti iznos, kategoriju, račun i frekvenciju ponavljanja. Sustav u pozadini (putem Cron poslova) automatski stvara nove transakcije kada nastupi zadani datum, čime se značajno smanjuje potreba za ručnim unosom i smanjuje se broj administrativnih pogrešaka.
+
+		\subsubsection{Detaljni izvještaji i izvoz podataka}
 		Za detaljniju analizu razvijena je stranica za financijske izvještaje. Korisnik može filtrirati transakcije prema vremenskom razdoblju (npr. tekući mjesec, zadnjih 30 dana, zadnja godina ili prilagođeni raspon), odabranim računima/projektima te kategorijama. 
 		
-		Izvještaj generira detaljnu tablicu svih stavki i agregirane grafičke prikaze. Korisnik može izvesti generirani financijski izvještaj u PDF formatu klikom na gumb "Izvezi u PDF". Izvoz se provodi u potpunosti na klijentskoj strani pomoću knjižnice za generiranje PDF dokumenata, stvarajući čist i strukturiran dokument spreman za ispis ili slanje klijentima. Sučelje izvještaja i PDF izvoz prikazani su na slici \ref{fig:reports}.
+		Izvještaj generira detaljnu tablicu svih stavki i agregirane grafičke prikaze. Kako bi se zadovoljile potrebe poslovnih korisnika, sustav podržava izvoz generiranog financijskog izvještaja u \textbf{PDF formatu} (za vizualno privlačne dokumente namijenjene ispisu ili menadžmentu) te u \textbf{CSV formatu} (za naprednu analizu i obradu u alatima kao što su Microsoft Excel ili Google Sheets). Izvoz u PDF provodi se u potpunosti na klijentskoj strani pomoću namjenskih knjižnica, osiguravajući čist i strukturiran izgled dokumenta. Sučelje izvještaja prikazano je na slici \ref{fig:reports}.
 
 		\begin{figure}[h!]
 			\centering
-			\includegraphics[width=0.85\textwidth]{assets/reports.png}
+			\includegraphics[width=0.75\textwidth]{assets/reports.png}
 			\caption{Filtriranje financijskih izvještaja i izvoz u PDF format}
 			\label{fig:reports}
 		\end{figure}
@@ -911,7 +1026,7 @@ public function sync(Request $request): JsonResponse
  
 		\begin{figure}[h!]
 			\centering
-			\includegraphics[width=0.85\textwidth]{assets/offline_state.png}
+			\includegraphics[width=0.75\textwidth]{assets/offline_state.png}
 			\caption{Izgled sučelja i unos transakcije u izvanmrežnom načinu rada}
 			\label{fig:offline-state}
 		\end{figure}
@@ -926,14 +1041,14 @@ public function sync(Request $request): JsonResponse
 			
 			\item Korisniku se isporučuje Web Push obavijest koja potvrđuje uspješnu sinkronizaciju svih offline unosa, čak i ako je u tom trenutku minimizirao aplikaciju.
 		\end{itemize}
-		Prikaz uspješne sinkronizacije i primljene push obavijesti prikazan je na slici \ref{fig:sync-notification}.
+		Prikaz uspješne sinkronizacije i primljene push obavijesti integriran je u korisničko iskustvo, čime se završava opis izvanmrežnog procesa.
 
-		\begin{figure}[h!]
-			\centering
-			\includegraphics[width=0.8\textwidth]{assets/sync_notification.png}
-			\caption{Prikaz obavijesti nakon uspješne sinkronizacije podataka}
-			\label{fig:sync-notification}
-		\end{figure}
+		% \begin{figure}[h!]
+		% 	\centering
+		% 	\includegraphics[width=0.75\textwidth]{assets/sync_notification.png}
+		% 	\caption{Prikaz obavijesti nakon uspješne sinkronizacije podataka}
+		% 	\label{fig:sync-notification}
+		% \end{figure}
 	
 	\newpage
 	\section{ZAKLJUČAK I BUDUĆI RAD}
@@ -988,6 +1103,12 @@ public function sync(Request $request): JsonResponse
 	\bigskip
 	\noindent\textbf{Keywords:} progressive web application, Angular, Laravel, IndexedDB, data synchronization, Web Push notifications, financial management.
 	
+	
+	\newpage
+	\renewcommand\refname{Literatura}
+	\addcontentsline{toc}{section}{Literatura}
+	\bibliographystyle{unsrt}
+	\bibliography{bibtex_baza}
 	
 	\newpage
 	\section*{Životopis}

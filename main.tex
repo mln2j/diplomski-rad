@@ -201,7 +201,7 @@
 
 	Glavna motivacija za razvoj financijskog sustava "Allocento" proizlazi iz potrebe za optimizacijom i osiguravanjem kontinuiteta upravljanja tokovima podataka u uvjetima nestabilne mrežne povezanosti, a pri čemu sustav mora ostati kolaborativan i višeslojan. U klasičnim klijent-poslužitelj web sustavima, prekid internetske veze tijekom izvršavanja temeljnih CRUD (engl. \textit{Create, Read, Update, Delete}) operacija redovito rezultira pogreškama u izvođenju i, u najgorem slučaju, nepovratnim gubitkom unesenih financijskih informacija \cite{w_rest_api}. Implementacijom inovativne PWA arhitekture temeljene na tzv. \textit{offline-first} (prvo izvanmrežno) pristupu unutar sustava Allocento, korisnicima se omogućuje nesmetano obavljanje poslovnih procesa i unos novih transakcija bez obzira na trenutni status mreže. Složeni procesi sinkronizacije, upravljanje sukobima i razmjena podataka s centralnom relacijskom bazom potpuno se automatiziraju na razini pozadinskih servisa klijentske aplikacije.
 
-	Arhitektura sustava pomno je osmišljena kako bi podržala opisane zahtjeve. Pozadinski dio sustava (engl. \textit{backend}) temelji se na razvojnom okviru Laravel \cite{w_laravel} koji omogućuje izgradnju sigurnog i visoko skalabilnog REST API-ja te efikasno upravljanje robusnom relacijskom bazom podataka PostgreSQL \cite{w_postgresql}. Prednji dio sustava (engl. \textit{frontend}) implementiran je pomoću radnog okvira Angular \cite{w_angular}, čija napredna modularna arhitektura olakšava integraciju PWA modula, složeno upravljanje stanjima putem novog reaktivnog modela Signala te dinamičko lokalizirano formatiranje financijskih podataka. Vizualni identitet i konzistentnost korisničkog sučelja strogo su definirani primjenom dizajnerskih smjernica preuzetih iz platforme Logology \cite{w_logology}, čime se osigurava moderno i responzivno korisničko iskustvo na svim uređajima.
+	Arhitektura sustava pomno je osmišljena kako bi podržala opisane zahtjeve. Pozadinski dio sustava (engl. \textit{backend}) temelji se na razvojnom okviru Laravel \cite{w_laravel} koji omogućuje izgradnju sigurnog i visoko skalabilnog REST API-ja te efikasno upravljanje robusnom relacijskom bazom podataka PostgreSQL \cite{w_postgresql}. Prednji dio sustava (engl. \textit{frontend}) implementiran je pomoću radnog okvira Angular \cite{w_angular}, čija napredna modularna arhitektura olakšava integraciju PWA modula, složeno upravljanje stanjima putem novog reaktivnog modela Signala te dinamičko lokalizirano formatiranje financijskih podataka. Vizualni identitet i konzistentnost korisničkog sučelja definirani su primjenom CSS radnog okvira Tailwind CSS \cite{w_tailwind}, čime se osigurava moderno i responzivno korisničko iskustvo na svim uređajima uz visoku prilagodljivost.
 
 	Struktura ovog diplomskog rada koncipirana je na sljedeći način:
 	U \textbf{drugom poglavlju} daje se pregled i analiza srodnih web aplikacija na tržištu, detaljno se objašnjava koncept progresivnih web aplikacija s fokusom na različite strategije predmemoriranja te se jasno definiraju funkcionalni i nefunkcionalni zahtjevi postavljeni pred sustav Allocento. 
@@ -916,20 +916,6 @@ public function sync(Request $request): JsonResponse
 		\end{lstlisting}
 
 		Ovakav cjevovod drastično smanjuje mogućnost ljudske pogreške pri ručnom prijenosu datoteka, postavljanju konfiguracijskih varijabli i migraciji baze na poslužitelj te osigurava da je na produkciji uvijek aktivna, provjerena i stabilna verzija koda.
-		
-		\subsection{Osiguranje kvalitete i testiranje koda}
-		Važan aspekt razvoja pouzdanih programskih rješenja je uspostava kvalitetnog procesa testiranja (engl. \textit{Quality Assurance} - QA). U sustavu Allocento, testiranje je prvenstveno fokusirano na pozadinski dio aplikacije, s obzirom na to da on obrađuje kritičnu poslovnu logiku, osigurava izolaciju radnih prostora (engl. \textit{tenant isolation}) te rukuje osjetljivim financijskim podacima.
-		
-		Testiranje u radnom okviru Laravel provodi se pomoću alata PHPUnit. Zbog upotrebe ugrađene SQLite memorijske baze podataka (kako je objašnjeno u arhitekturi baze), izvođenje stotina testova traje svega nekoliko sekundi, što omogućuje programerima vrlo brz povratni ciklus (engl. \textit{fast feedback loop}) prilikom pisanja novih funkcionalnosti \cite{w_laravel}.
-		
-		U sustavu su primijenjene dvije glavne razine testiranja:
-		\begin{itemize}
-			\item \textbf{Jedinično testiranje (engl. \textit{Unit testing}):} Provjerava ispravnost malih, izoliranih dijelova koda (obično pojedinačnih metoda unutar klasa), poput algoritama za formatiranje valuta, agregaciju statistika iz baze ili logiku izračuna datuma za ponavljajuće predloške transakcija.
-			\item \textbf{Testiranje funkcionalnosti (engl. \textit{Feature testing}):} Oponaša stvarne klijentske HTTP zahtjeve usmjerene prema REST API-ju aplikacije, provjeravajući pritom ponašanje cijelog sustava (uključujući usmjerivač, \textit{middleware}, kontroler, modele i bazu podataka). Ovi testovi pokrivaju ključne korisničke scenarije poput pokušaja neovlaštenog pristupa podacima tuđeg radnog prostora, registracije s neispravnim podacima ili pokušaja negativnog iznosa u transakciji koja to ne podržava.
-		\end{itemize}
-		
-		Svi testovi se automatski izvršavaju i na lokalnom računalu razvojnog inženjera, ali i kao integrirani korak unutar GitHub Actions CI/CD cjevovoda prije same izgradnje projekta, čime se sprječava da pogrešan (engl. \textit{buggy}) kod dospije u produkcijsko okruženje.
-	
 	\newpage
 	\section{KORISNIČKO SUČELJE I PRIKAZ RADA APLIKACIJE}
 		U ovom poglavlju prikazan je praktični rad i vizualni izgled aplikacije Allocento kroz ključne korisničke tokove. Prikazi zaslona (engl. \textit{screenshots}) demonstriraju primjenu definiranog vizualnog identiteta i responzivnog dizajna prilagođenog različitim rezolucijama (računala i mobilnih uređaja).
@@ -1074,6 +1060,7 @@ public function sync(Request $request): JsonResponse
 		\end{enumerate}
 	
 	\newpage
+	\addcontentsline{toc}{section}{LITERATURA}
 	\bibliographystyle{unsrt}
 	\bibliography{bibtex_baza}
 	
@@ -1103,12 +1090,6 @@ public function sync(Request $request): JsonResponse
 	\bigskip
 	\noindent\textbf{Keywords:} progressive web application, Angular, Laravel, IndexedDB, data synchronization, Web Push notifications, financial management.
 	
-	
-	\newpage
-	\renewcommand\refname{Literatura}
-	\addcontentsline{toc}{section}{Literatura}
-	\bibliographystyle{unsrt}
-	\bibliography{bibtex_baza}
 	
 	\newpage
 	\section*{Životopis}

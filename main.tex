@@ -598,10 +598,10 @@
 			\draw [association] (user) -- node[pos=0.15, left, font=\scriptsize] {1} node[pos=0.85, left, font=\scriptsize] {0..*} (workspace);
 			\draw [association] (user) -- node[pos=0.15, above right, font=\scriptsize] {1} node[pos=0.85, above right, font=\scriptsize] {0..*} (member);
 			\draw [association] (workspace) -- node[pos=0.15, below right, font=\scriptsize] {1} node[pos=0.85, below right, font=\scriptsize] {0..*} (member);
-			\draw [association] (workspace) -- node[pos=0.15, above left, font=\scriptsize] {1} node[pos=0.85, above left, font=\scriptsize] {0..*} (account);
-			\draw [association] (workspace) -- node[pos=0.15, above right, font=\scriptsize] {1} node[pos=0.85, above right, font=\scriptsize] {0..*} (category);
-			\draw [association] (account) -- node[pos=0.15, below right, font=\scriptsize] {1} node[pos=0.85, below right, font=\scriptsize] {0..*} (transaction);
-			\draw [association] (category) -- node[pos=0.15, below left, font=\scriptsize] {1} node[pos=0.85, below left, font=\scriptsize] {0..*} (transaction);
+			\draw [association] (workspace) -- node[pos=0.35, above left, font=\scriptsize] {1} node[pos=0.85, above left, font=\scriptsize] {0..*} (account);
+			\draw [association] (workspace) -- node[pos=0.35, above right, font=\scriptsize] {1} node[pos=0.85, above right, font=\scriptsize] {0..*} (category);
+			\draw [association] (account) -- node[pos=0.15, below, font=\scriptsize] {1} node[pos=1, above, font=\scriptsize] {0..*} (transaction);
+			\draw [association] (category) -- node[pos=0.15, below, font=\scriptsize] {1} node[pos=1, above, font=\scriptsize] {0..*} (transaction);
 
 		\end{tikzpicture}
 		\caption{Pojednostavljeni ER dijagram baze podataka sustava Allocento}

@@ -383,27 +383,26 @@
 			\centering
 			\begin{tikzpicture}[node distance=2.2cm, auto]
 				% Styles
-				\tikzstyle{block} = [draw, fill=blue!10, rectangle, minimum height=2.5em, minimum width=8.5em, rounded corners, align=center, font=\small]
-				\tikzstyle{sw} = [draw, fill=orange!10, rectangle, minimum height=2.5em, minimum width=9.5em, rounded corners, align=center, font=\small]
-				\tikzstyle{storage} = [draw, fill=yellow!15, rectangle, minimum height=2.5em, minimum width=8.5em, rounded corners, align=center, font=\small]
-				\tikzstyle{server} = [draw, fill=purple!10, rectangle, minimum height=2.5em, minimum width=8.5em, rounded corners, align=center, font=\small]
-				\tikzstyle{db} = [draw, fill=green!10, rectangle, minimum height=2.5em, minimum width=8.5em, rounded corners, align=center, font=\small]
-				\tikzstyle{arrow} = [thick,->,>=stealth]
+				\tikzstyle{device} = [draw, fill=blue!5, rectangle, minimum height=3em, minimum width=9em, align=center, font=\small]
+				\tikzstyle{component} = [draw, fill=orange!5, rectangle, minimum height=3em, minimum width=9em, align=center, font=\small]
+				\tikzstyle{servernode} = [draw, fill=purple!5, rectangle, minimum height=3em, minimum width=9em, align=center, font=\small]
+				\tikzstyle{database} = [draw, fill=green!5, cylinder, shape border rotate=90, aspect=0.25, minimum height=3em, minimum width=6em, align=center, font=\small]
+				\tikzstyle{dependency} = [thick, dashed, ->, >=stealth]
 
 				% Nodes
-				\node (browser) [block] {Klijentski preglednik \\ (Korisnik)};
-				\node (sw) [sw, right=of browser, xshift=0.8cm] {Service Worker \\ (Mrežni posrednik)};
-				\node (cache) [storage, below=of sw, yshift=-0.3cm] {Lokalna baza \\ (IndexedDB / Cache)};
-				\node (nginx) [block, right=of sw, xshift=0.8cm] {Nginx poslužitelj \\ (Obrnuti proxy)};
-				\node (laravel) [server, below=of nginx, yshift=-0.3cm] {Laravel backend \\ (REST API)};
-				\node (db) [db, below=of laravel, yshift=-0.3cm] {PostgreSQL \\ (Glavna baza)};
+				\node (browser) [device] {\textbf{<<device>>} \\ Klijentski preglednik};
+				\node (sw) [component, right=of browser, xshift=1.2cm] {\textbf{<<component>>} \\ Service Worker};
+				\node (cache) [database, fill=yellow!10, below=of sw, yshift=-0.5cm] {\textbf{<<storage>>} \\ IndexedDB};
+				\node (nginx) [servernode, right=of sw, xshift=1.2cm] {\textbf{<<node>>} \\ Nginx Proxy};
+				\node (laravel) [component, below=of nginx, yshift=-0.5cm] {\textbf{<<component>>} \\ Laravel API};
+				\node (db) [database, below=of laravel, yshift=-0.5cm] {\textbf{<<database>>} \\ PostgreSQL};
 
 				% Connections
-				\draw [arrow] (browser) -- node {Zahtjev} (sw);
-				\draw [arrow] (sw) -- node [right] {Offline / Cache} (cache);
-				\draw [arrow] (sw) -- node {Mreža} (nginx);
-				\draw [arrow] (nginx) -- (laravel);
-				\draw [arrow] (laravel) -- (db);
+				\draw [dependency] (browser) -- node[above, font=\scriptsize] {HTTP/HTTPS} (sw);
+				\draw [dependency] (sw) -- node[right, font=\scriptsize] {čita/piše} (cache);
+				\draw [dependency] (sw) -- node[above, font=\scriptsize] {Mreža} (nginx);
+				\draw [dependency] (nginx) -- node[right, font=\scriptsize] {prosljeđuje} (laravel);
+				\draw [dependency] (laravel) -- node[right, font=\scriptsize] {SQL} (db);
 				
 			\end{tikzpicture}
 			\caption{Konceptualna arhitektura sustava Allocento i tokovi podataka}
@@ -426,24 +425,22 @@
 			\centering
 			\begin{tikzpicture}[node distance=1.5cm, auto]
 				% Styles
-				\tikzstyle{comp} = [draw, fill=blue!10, rectangle, minimum height=2.5em, minimum width=9.5em, rounded corners, align=center, font=\small]
-				\tikzstyle{serv} = [draw, fill=orange!10, rectangle, minimum height=2.5em, minimum width=9.5em, rounded corners, align=center, font=\small]
-				\tikzstyle{repo} = [draw, fill=purple!10, rectangle, minimum height=2.5em, minimum width=9.5em, rounded corners, align=center, font=\small]
-				\tikzstyle{storage} = [draw, fill=yellow!15, rectangle, minimum height=2.5em, minimum width=9.5em, rounded corners, align=center, font=\small]
-				\tikzstyle{arrow} = [thick,->,>=stealth]
+				\tikzstyle{layer} = [draw, rectangle, minimum height=3em, minimum width=14em, align=center, font=\small]
+				\tikzstyle{infrastructure} = [draw, rectangle, minimum height=3em, minimum width=6.5em, align=center, font=\small, fill=gray!10]
+				\tikzstyle{dependency} = [thick, dashed, ->, >=stealth]
 
 				% Nodes
-				\node (ui) [comp] {Angular UI sloj \\ (Stranice i komponente)};
-				\node (services) [serv, below=of ui] {Angular servisi \\ (Sync, Auth, Signals)};
-				\node (repos) [repo, below=of services] {Repozitoriji \\ (DAL apstrakcija)};
-				\node (localdb) [storage, below=of repos, xshift=-2.6cm] {Lokalna pohrana \\ (IndexedDB / LocalDb)};
-				\node (http) [comp, below=of repos, xshift=2.6cm, fill=gray!10] {HttpClient \\ (REST API)};
+				\node (ui) [layer, fill=blue!5] {\textbf{<<layer>>} \\ Prezentacijski sloj (Angular UI)};
+				\node (services) [layer, fill=orange!5, below=of ui] {\textbf{<<layer>>} \\ Sloj poslovne logike (Servisi)};
+				\node (repos) [layer, fill=purple!5, below=of services] {\textbf{<<layer>>} \\ Sloj pristupa podacima (Repozitoriji)};
+				\node (localdb) [infrastructure, below=of repos, xshift=-4em] {\textbf{<<infrastructure>>} \\ IndexedDB};
+				\node (http) [infrastructure, below=of repos, xshift=4em] {\textbf{<<infrastructure>>} \\ HttpClient};
 
 				% Connections
-				\draw [arrow] (ui) -- node {Signals} (services);
-				\draw [arrow] (services) -- (repos);
-				\draw [arrow] (repos) -- node [left] {Offline} (localdb);
-				\draw [arrow] (repos) -- node [right] {Online} (http);
+				\draw [dependency] (ui) -- node[right, font=\scriptsize] {koristi} (services);
+				\draw [dependency] (services) -- node[right, font=\scriptsize] {poziva} (repos);
+				\draw [dependency] (repos) -- node[left, font=\scriptsize] {Offline} (localdb);
+				\draw [dependency] (repos) -- node[right, font=\scriptsize] {Online} (http);
 				
 			\end{tikzpicture}
 			\caption{Arhitekturni slojevi klijentskog dijela u Angularu}
@@ -468,22 +465,22 @@
 			\centering
 			\begin{tikzpicture}[node distance=1.2cm, auto]
 				% Styles
-				\tikzstyle{box} = [draw, fill=purple!10, rectangle, minimum height=2.2em, minimum width=12em, rounded corners, align=center, font=\small]
-				\tikzstyle{db} = [draw, fill=green!10, rectangle, minimum height=2.2em, minimum width=12em, rounded corners, align=center, font=\small]
-				\tikzstyle{arrow} = [thick,->,>=stealth]
+				\tikzstyle{layer} = [draw, fill=purple!5, rectangle, minimum height=2.5em, minimum width=16em, align=center, font=\small]
+				\tikzstyle{database} = [draw, fill=green!5, cylinder, shape border rotate=90, aspect=0.15, minimum height=3em, minimum width=12em, align=center, font=\small]
+				\tikzstyle{dependency} = [thick, dashed, ->, >=stealth]
 
 				% Nodes
-				\node (route) [box] {Rute i Workspace Middleware};
-				\node (controller) [box, below=of route] {API Kontroleri \\ (Validacija zahtjeva)};
-				\node (service) [box, below=of controller] {Poslovni servisi \\ (Servisni sloj)};
-				\node (model) [box, below=of service] {Eloquent ORM Modeli \\ (Modeli baze podataka)};
-				\node (db) [db, below=of model] {Relacijska baza podataka \\ (PostgreSQL / SQLite)};
+				\node (route) [layer] {\textbf{<<layer>>} \\ Rute i Middleware};
+				\node (controller) [layer, below=of route] {\textbf{<<layer>>} \\ Prezentacijski API sloj (Kontroleri)};
+				\node (service) [layer, below=of controller] {\textbf{<<layer>>} \\ Sloj poslovne logike (Servisi)};
+				\node (model) [layer, below=of service] {\textbf{<<layer>>} \\ Sloj pristupa podacima (Eloquent ORM)};
+				\node (db) [database, below=of model, yshift=-0.3cm] {\textbf{<<database>>} \\ PostgreSQL / SQLite};
 
 				% Connections
-				\draw [arrow] (route) -- (controller);
-				\draw [arrow] (controller) -- (service);
-				\draw [arrow] (service) -- (model);
-				\draw [arrow] (model) -- (db);
+				\draw [dependency] (route) -- (controller);
+				\draw [dependency] (controller) -- (service);
+				\draw [dependency] (service) -- (model);
+				\draw [dependency] (model) -- (db);
 				
 			\end{tikzpicture}
 			\caption{Slojevita arhitektura poslužiteljskog dijela u Laravelu}
@@ -553,25 +550,25 @@
 			\centering
 			\begin{tikzpicture}[auto]
 				% Styles
-				\tikzstyle{entity} = [draw, fill=blue!10, rectangle, minimum height=2.2em, minimum width=8.5em, align=center, font=\small\bfseries, rounded corners=2pt]
-				\tikzstyle{arrow} = [thick,->,>=stealth]
+				\tikzstyle{class} = [draw, fill=blue!5, rectangle, minimum height=3em, minimum width=8em, align=center, font=\small\bfseries]
+				\tikzstyle{association} = [thick, -]
 
 				% Nodes with absolute coordinates (planar layout)
-				\node (user) [entity] at (0, 5.5) {User};
-				\node (member) [entity] at (4.2, 4.5) {WorkspaceUser \\ (Pivot N:M)};
-				\node (workspace) [entity] at (0, 3.5) {Workspace};
-				\node (account) [entity] at (-2.8, 1.5) {Account \\ (Project)};
-				\node (category) [entity] at (2.8, 1.5) {Category};
-				\node (transaction) [entity] at (0, -0.5) {Transaction};
+				\node (user) [class] at (0, 5.5) {User};
+				\node (member) [class] at (4.5, 4.5) {WorkspaceUser};
+				\node (workspace) [class] at (0, 3.5) {Workspace};
+				\node (account) [class] at (-3, 1.5) {Account};
+				\node (category) [class] at (3, 1.5) {Category};
+				\node (transaction) [class] at (0, -0.5) {Transaction};
 
 				% Connections
-				\draw [arrow] (user) -- node [left, font=\tiny] {1:N} (workspace);
-				\draw [arrow] (user) -- node [above right, font=\tiny] {1:N} (member);
-				\draw [arrow] (workspace) -- node [below right, font=\tiny] {1:N} (member);
-				\draw [arrow] (workspace) -- node [above left, font=\tiny] {1:N} (account);
-				\draw [arrow] (workspace) -- node [above right, font=\tiny] {1:N} (category);
-				\draw [arrow] (account) -- node [below left, font=\tiny] {1:N} (transaction);
-				\draw [arrow] (category) -- node [below right, font=\tiny] {1:N} (transaction);
+				\draw [association] (user) -- node[pos=0.1, left, font=\scriptsize] {1} node[pos=0.9, left, font=\scriptsize] {0..*} (workspace);
+				\draw [association] (user) -- node[pos=0.1, above, font=\scriptsize] {1} node[pos=0.9, above, font=\scriptsize] {0..*} (member);
+				\draw [association] (workspace) -- node[pos=0.1, below, font=\scriptsize] {1} node[pos=0.9, below, font=\scriptsize] {0..*} (member);
+				\draw [association] (workspace) -- node[pos=0.1, above left, font=\scriptsize] {1} node[pos=0.9, above left, font=\scriptsize] {0..*} (account);
+				\draw [association] (workspace) -- node[pos=0.1, above right, font=\scriptsize] {1} node[pos=0.9, above right, font=\scriptsize] {0..*} (category);
+				\draw [association] (account) -- node[pos=0.1, below left, font=\scriptsize] {1} node[pos=0.9, below left, font=\scriptsize] {0..*} (transaction);
+				\draw [association] (category) -- node[pos=0.1, below right, font=\scriptsize] {1} node[pos=0.9, below right, font=\scriptsize] {0..*} (transaction);
 
 			\end{tikzpicture}
 			\caption{Pojednostavljeni ER dijagram baze podataka sustava Allocento}

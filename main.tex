@@ -265,7 +265,7 @@
 		\newpage
 		
 		\subsection{Funkcionalni zahtjevi na sustav "Allocento"}
-		Funkcionalni zahtjevi definiraju specifične radnje, ponašanja i usluge koje sustav mora pružiti krajnjem korisniku. Na temelju analize poslovnih potreba i službenog zadatka rada, definirani su sljedeći ključni funkcionalni zahtjevi na sustav "Allocento":
+		Funkcionalni zahtjevi definiraju specifične radnje, ponašanja i usluge koje sustav mora pružiti krajnjem korisniku \cite{b_sommerville}. Na temelju analize poslovnih potreba i službenog zadatka rada, definirani su sljedeći ključni funkcionalni zahtjevi na sustav "Allocento":
 		
 		\begin{itemize}
 			\item \textbf{Upravljanje korisničkim računima i autentifikacija:} Sustav mora omogućiti registraciju novih korisnika, prijavu postojećih te siguran oporavak zaboravljene lozinke. Također, sustav mora podržavati verifikaciju adrese e-pošte slanjem verifikacijskih kodova na adresu korisnika.
@@ -276,7 +276,7 @@
 			
 			\item \textbf{Evidencija i kategorizacija financijskih transakcija:} Korisnici moraju moći unositi prihode, rashode i prijenose (transfere) s jednog računa na drugi. Svaka transakcija sadrži podatke o iznosu, datumu, opisu, pripadajućoj kategoriji te projektu. Sustav mora omogućiti naknadno uređivanje i brisanje transakcija.
 			
-			\item \textbf{Upravljanje kategorijama troškova:} Sustav mora podržavati definiranje i upravljanje kategorijama. Administratori radnog prostora moraju imati mogućnost spajanja (\textit{merge}) dviju kategorija u jednu, pri čemu se sve povezane transakcije automatski preusmjeravaju na novu ciljnu kategoriju.
+			\item \textbf{Upravljanje kategorijama troškova:} Sustav mora podržavati definiranje i upravljanje kategorijama. Administratori radnog prostora mogu dodavati nove kategorije te uređivati postojeće, prilagođavajući ih specifičnim potrebama tima ili organizacije.
 			
 			\item \textbf{Kolaboracija i sustav uloga:} Korisnici moraju imati mogućnost slanja pozivnica drugim osobama za pristup određenom radnom prostoru. Sustav mora podržavati uloge (vlasnik, upravitelj, član) s definiranim pravima pristupa i modifikacije podataka.
 			
@@ -318,7 +318,7 @@
 			
 			\item \textbf{Sustav migracija:} Omogućuje kontrolu verzija baze podataka i jednostavno dijeljenje sheme baze među članovima tima.
 			
-			\item \textbf{Laravel Queues:} Sustav redova čekanja za asinkronu obradu vremenski zahtjevnih zadataka (npr. slanje e-pošte ili obrada ponavljajućih transakcija).
+			\item \textbf{Laravel Queues:} Sustav redova čekanja za asinkronu obradu vremenski zahtjevnih zadataka (npr. slanje e-pošte ili asinkrona obrada većih količina podataka).
 			
 			\item \textbf{Middleware slojevi:} Filtri koji presreću HTTP zahtjeve i omogućuju kontrolu pristupa, validaciju radnih prostora i sigurnosne provjere.
 		\end{itemize}
@@ -460,7 +460,7 @@
 			
 			\item \textbf{Kontroleri (Controllers):} Odgovorni su za validaciju unesenih podataka iz HTTP zahtjeva, pozivanje odgovarajućih servisa poslovne logike te oblikovanje i vraćanje odgovora u formatu JSON.
 			
-			\item \textbf{Servisni sloj (Services):} Sadrži čistu poslovnu logiku aplikacije. Kontroleri prosljeđuju zahtjeve servisima koji provode složenije operacije (npr. spajanje kategorija, provjera budžeta, generiranje izvještaja) i time sprječavaju gomilanje logike u kontrolerima (koncept \textit{fat models, thin controllers} ili \textit{service layer pattern}).
+			\item \textbf{Servisni sloj (Services):} Sadrži čistu poslovnu logiku aplikacije. Kontroleri prosljeđuju zahtjeve servisima koji provode složenije operacije (npr. provjera budžeta, generiranje izvještaja) i time sprječavaju gomilanje logike u kontrolerima (koncept \textit{fat models, thin controllers} ili \textit{service layer pattern}).
 			
 			\item \textbf{Eloquent ORM Modeli:} Predstavljaju tablice u bazi podataka i definiraju veze među entitetima.
 		\end{itemize}
@@ -548,12 +548,6 @@
 				\item \texttt{exclude\_from\_analytics} (Zastavica za izuzimanje internih prijenosa iz statistike)
 			\end{itemize}
 			
-			\item \textbf{Ponavljajući predložak (\texttt{recurring\_templates}):} Pohranjuje predloške za transakcije koje se automatski ponavljaju pomoću pozadinskih poslova (CRON).
-			\begin{itemize}
-				\item \texttt{frequency} (Mjesečno, tjedno, godišnje)
-				\item \texttt{day\_of\_month} (Dan u mjesecu kada se transakcija izvršava)
-				\item \texttt{is\_active} (Status aktivnosti predloška)
-			\end{itemize}
 		\end{itemize}
 
 		\begin{figure}[h!]
@@ -938,9 +932,9 @@ public function sync(Request $request): JsonResponse
 		\begin{itemize}
 			\item \textbf{Vlasnik (Owner):} Korisnik koji je kreirao radni prostor. Ima puna prava upravljanja računima, kategorijama, projektima, članovima tima i ulogama te može obrisati radni prostor.
 			
-			\item \textbf{Član (Member):} Može unositi, mijenjati i brisati transakcije, pregledavati analitiku i izvještaje te dodavati nove kategorije i projekte. Ne može upravljati članovima tima niti brisati radni prostor.
+			\item \textbf{Upravitelj (Manager):} Može upravljati projektima, računima i kategorijama te pozivati nove članove. Ne može obrisati radni prostor niti upravljati drugim upraviteljima.
 			
-			\item \textbf{Gledatelj (Viewer):} Ima isključivo prava čitanja (engl. \textit{read-only}). Može pregledavati nadzornu ploču, izvještaje i popise transakcija, ali ne može unositi nove podatke niti raditi bilo kakve izmjene.
+			\item \textbf{Član (Member):} Može unositi, mijenjati i brisati transakcije te pregledavati analitiku i izvještaje. Ne može upravljati članovima niti pristupom projektima.
 		\end{itemize}
 		Sučelje za kreiranje radnog prostora i slanje pozivnica prikazano je na slici \ref{fig:workspace-settings}.
 
@@ -962,7 +956,7 @@ public function sync(Request $request): JsonResponse
 			
 			\item \textbf{Ukupni saldo (Balance):} Zbroj svih raspoloživih sredstava na računima unutar aktivnog radnog prostora. Ispod salda nalazi se brza akcija za dodavanje nove transakcije.
 			
-			\item \textbf{Prikaz projektnih budžeta:} Kod poslovnih radnih prostora (\textit{company}), računi predstavljaju projekte koji imaju dodijeljen limit proračuna (budžet). U sučelju se prikazuje vizualna traka napretka (engl. \textit{progress bar}) koja prikazuje koliki je postotak dodijeljenog budžeta potrošen za svaki projekt (izračunat kao odnos trenutnog stanja i početnog limita). Ako potrošnja prijeđe 80\%, traka mijenja boju u narančastu, a ako prijeđe 100\%, u crvenu, upozoravajući korisnika na prekoračenje.
+			\item \textbf{Prikaz projektnih budžeta:} Kod poslovnih radnih prostora (\textit{company}), računi predstavljaju projekte koji imaju dodijeljen limit proračuna (budžet). U sučelju se prikazuje vizualna traka napretka (engl. \textit{progress bar}) koja prikazuje koliki je postotak dodijeljenog budžeta potrošen za svaki projekt (izračunat kao odnos trenutnog stanja i početnog limita).
 			
 			\item \textbf{Kartice sa sažetkom:} Prikazuju ukupne prihode, ukupne rashode i neto novčani tijek (engl. \textit{net cash flow}) za tekući mjesec.
 			
@@ -982,8 +976,7 @@ public function sync(Request $request): JsonResponse
 		\subsubsection{Formatiranje iznosa i \texttt{AmountInputDirective}}
 		S obzirom na to da financijske aplikacije zahtijevaju visoku preciznost, implementirana je prilagođena Angular direktiva \texttt{AmountInputDirective}. Ova direktiva osigurava formatiranje unosa iznosa u stvarnom vremenu prilikom tipkanja. Pretvara unesene brojeve u standardizirani financijski format s dvije decimale te sprječava unos nevaljanih znakova, pružajući tako korisniku intuitivno iskustvo prilagođeno njegovim regionalnim postavkama (engl. \textit{locale}).
 
-		\subsubsection{Ponavljajući predlošci (Recurring Templates)}
-		Za korisnike koji imaju fiksne mjesečne ili godišnje troškove (npr. najamnine, pretplate), sustav nudi sučelje za definiranje \textbf{ponavljajućih predložaka}. Korisnik može odrediti iznos, kategoriju, račun i frekvenciju ponavljanja. Sustav u pozadini (putem Cron poslova) automatski stvara nove transakcije kada nastupi zadani datum, čime se značajno smanjuje potreba za ručnim unosom i smanjuje se broj administrativnih pogrešaka.
+
 
 		\subsubsection{Detaljni izvještaji i izvoz podataka}
 		Za detaljniju analizu razvijena je stranica za financijske izvještaje. Korisnik može filtrirati transakcije prema vremenskom razdoblju (npr. tekući mjesec, zadnjih 30 dana, zadnja godina ili prilagođeni raspon), odabranim računima/projektima te kategorijama. 
@@ -1027,14 +1020,14 @@ public function sync(Request $request): JsonResponse
 			
 			\item Korisniku se isporučuje Web Push obavijest koja potvrđuje uspješnu sinkronizaciju svih offline unosa, čak i ako je u tom trenutku minimizirao aplikaciju.
 		\end{itemize}
-		Prikaz uspješne sinkronizacije i primljene push obavijesti integriran je u korisničko iskustvo, čime se završava opis izvanmrežnog procesa.
+		Prikaz uspješne sinkronizacije i primljene push obavijesti integriran je u korisničko iskustvo, kao što je prikazano na slici \ref{fig:sync-notification}, čime se završava opis izvanmrežnog procesa.
 
-		% \begin{figure}[h!]
-		% 	\centering
-		% 	\includegraphics[width=0.75\textwidth]{assets/sync_notification.png}
-		% 	\caption{Prikaz obavijesti nakon uspješne sinkronizacije podataka}
-		% 	\label{fig:sync-notification}
-		% \end{figure}
+		\begin{figure}
+			\centering
+			\includegraphics[width=0.75\textwidth]{assets/sync_notification.png}
+			\caption{Prikaz obavijesti nakon uspješne sinkronizacije podataka}
+			\label{fig:sync-notification}
+		\end{figure}
 	
 	\newpage
 	\section{ZAKLJUČAK I BUDUĆI RAD}
@@ -1048,7 +1041,7 @@ public function sync(Request $request): JsonResponse
 
 		Iako sustav Allocento u trenutačnom stanju predstavlja potpuno funkcionalnu aplikaciju spremnu za rad, postoji nekoliko otvorenih smjernica za budući rad i nadogradnju:
 		\begin{enumerate}
-			\item \textbf{Korisničko sučelje za spajanje kategorija:} Iako backend sustava u potpunosti podržava spajanje kategorija transakcija (prenoseći sve povezane transakcije i predloške te brišući staru kategoriju unutar sigurne SQL transakcije), potrebno je razviti intuitivnu formu u klijentskom sučelju koja će korisnicima olakšati ovu operaciju pri reorganizaciji financijskih izvještaja.
+			\item \textbf{Korisničko sučelje za spajanje kategorija:} Iako backend sustava u potpunosti podržava logiku spajanja kategorija transakcija (prenoseći sve povezane transakcije te brišući staru kategoriju), potrebno je razviti intuitivnu formu u klijentskom sučelju koja će korisnicima olakšati ovu operaciju pri reorganizaciji financijskih izvještaja.
 			
 			\item \textbf{Sučelje za predloške transakcija:} Implementacija vizualnog editora za upravljanje predlošcima transakcija koje se ponavljaju (engl. \textit{RecurringTemplate}), omogućujući korisnicima lakše definiranje periodičkih troškova (npr. mjesečni najam, pretplate).
 			

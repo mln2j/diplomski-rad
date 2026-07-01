@@ -200,7 +200,7 @@
 
 	Glavna motivacija za razvoj financijskog sustava "Allocento" proizlazi iz potrebe za optimizacijom i osiguravanjem kontinuiteta upravljanja tokovima podataka u uvjetima nestabilne mrežne povezanosti, a pri čemu sustav mora ostati kolaborativan i višeslojan. U klasičnim klijent-poslužitelj web sustavima, prekid internetske veze tijekom izvršavanja temeljnih CRUD (engl. \textit{Create, Read, Update, Delete}) operacija redovito rezultira pogreškama u izvođenju i, u najgorem slučaju, nepovratnim gubitkom unesenih financijskih informacija \cite{w_rest_api}. Implementacijom inovativne PWA arhitekture temeljene na tzv. \textit{offline-first} (prvo izvanmrežno) pristupu unutar sustava Allocento, korisnicima se omogućuje nesmetano obavljanje poslovnih procesa i unos novih transakcija bez obzira na trenutni status mreže. Složeni procesi sinkronizacije, upravljanje sukobima i razmjena podataka s centralnom relacijskom bazom potpuno se automatiziraju na razini pozadinskih servisa klijentske aplikacije.
 
-	Arhitektura sustava pomno je osmišljena kako bi podržala opisane zahtjeve. Pozadinski dio sustava (engl. \textit{backend}) temelji se na razvojnom okviru Laravel \cite{w_laravel} koji omogućuje izgradnju sigurnog i visoko skalabilnog REST API-ja te efikasno upravljanje robusnom relacijskom bazom podataka PostgreSQL \cite{w_postgresql}. Prednji dio sustava (engl. \textit{frontend}) implementiran je pomoću radnog okvira Angular \cite{w_angular}, čija napredna modularna arhitektura olakšava integraciju PWA modula, složeno upravljanje stanjima putem novog reaktivnog modela Signala te dinamičko lokalizirano formatiranje financijskih podataka. Vizualni identitet i konzistentnost korisničkog sučelja definirani su primjenom CSS radnog okvira Tailwind CSS \cite{w_tailwind}, čime se osigurava moderno i responzivno korisničko iskustvo na svim uređajima uz visoku prilagodljivost.
+	Arhitektura sustava pomno je osmišljena kako bi podržala opisane zahtjeve. Pozadinski dio sustava (engl. \textit{backend}) temelji se na razvojnom okviru Laravel \cite{w_laravel,b_php_mvc} koji omogućuje izgradnju sigurnog i visoko skalabilnog REST API-ja te efikasno upravljanje robusnom relacijskom bazom podataka PostgreSQL \cite{w_postgresql}. Prednji dio sustava (engl. \textit{frontend}) implementiran je pomoću programskog jezika TypeScript \cite{w_typescript} i radnog okvira Angular \cite{w_angular,b_html5}, čija napredna modularna arhitektura olakšava integraciju PWA modula, složeno upravljanje stanjima putem novog reaktivnog modela Signala te dinamičko lokalizirano formatiranje financijskih podataka. Vizualni identitet i konzistentnost korisničkog sučelja definirani su primjenom CSS radnog okvira Tailwind CSS \cite{w_tailwind}, čime se osigurava moderno i responzivno korisničko iskustvo na svim uređajima uz visoku prilagodljivost.
 
 	Struktura ovog diplomskog rada koncipirana je na sljedeći način:
 	U \textbf{drugom poglavlju} daje se pregled i analiza srodnih web aplikacija na tržištu, detaljno se objašnjava koncept progresivnih web aplikacija s fokusom na različite strategije predmemoriranja te se jasno definiraju funkcionalni i nefunkcionalni zahtjevi postavljeni pred sustav Allocento. 
@@ -222,11 +222,11 @@
 		U današnje vrijeme na tržištu postoji velik broj aplikacija namijenjenih upravljanju financijama, proračunima i troškovima. Te se aplikacije u pravilu razlikuju prema ciljnoj skupini korisnika (osobne financije naspram poslovnih sustava), razini kompleksnosti te tehničkoj izvedbi. Kako bi se definirao položaj i opravdala potreba za sustavom "Allocento", u nastavku je pružen pregled i analiza nekoliko najznačajnijih srodnih rješenja.
 
 		\begin{enumerate}
-			\item \textbf{Splitwise} je jedna od najpopularnijih aplikacija za praćenje i raspodjelu zajedničkih troškova unutar grupa (prijatelji, cimeri, obitelj). Njezina glavna prednost leži u izuzetno jednostavnom korisničkom sučelju i automatskom izračunu tko kome duguje novac. Međutim, Splitwise je fokusiran isključivo na raspodjelu dugovanja te mu nedostaju napredne funkcionalnosti poput dugoročnog planiranja proračuna, kategorizacije prihoda i rashoda na razini cijele organizacije te praćenja projekata i odjela s definiranim budžetima.
+			\item \textbf{Splitwise} \cite{w_splitwise} je jedna od najpopularnijih aplikacija za praćenje i raspodjelu zajedničkih troškova unutar grupa (prijatelji, cimeri, obitelj). Njezina glavna prednost leži u izuzetno jednostavnom korisničkom sučelju i automatskom izračunu tko kome duguje novac. Međutim, Splitwise je fokusiran isključivo na raspodjelu dugovanja te mu nedostaju napredne funkcionalnosti poput dugoročnog planiranja proračuna, kategorizacije prihoda i rashoda na razini cijele organizacije te praćenja projekata i odjela s definiranim budžetima.
 			
 			\item \textbf{Hootz} je suvremeni sustav za praćenje osobnih financija koji se ističe naprednim mogućnostima povezivanja s bankovnim računima (engl. \textit{bank syncing}) i automatskom kategorizacijom transakcija pomoću umjetne inteligencije. Aplikacija pruža izvrsnu vizualizaciju neto vrijednosti i praćenje ciljeva štednje. Unatoč tome, Hootz je dizajniran prvenstveno za pojedinačne korisnike. Nedostaje mu podrška za višekorisnički rad u stvarnom vremenu s granularnim ulogama (vlasnik, upravitelj, član) te nije prilagođen projektnom praćenju financija unutar tvrtki ili organizacija.
 			
-			\item \textbf{Toshl Finance} nudi bogat skup alata za ručni unos i kategorizaciju troškova, praćenje višestrukih proračuna i izradu detaljnih izvještaja. Toshl je vizualno atraktivan i podržava rad s različitim valutama. Ipak, aplikacija je u osnovi orijentirana na osobnu upotrebu, a njezin kolaborativni aspekt je minimalan. Također, aplikacija zahtijeva stalnu vezu s internetom za većinu operacija sinkronizacije te ne nudi razvijen offline-first model ponašanja na klijentskoj strani.
+			\item \textbf{Toshl Finance} \cite{w_toshl} nudi bogat skup alata za ručni unos i kategorizaciju troškova, praćenje višestrukih proračuna i izradu detaljnih izvještaja. Toshl je vizualno atraktivan i podržava rad s različitim valutama. Ipak, aplikacija je u osnovi orijentirana na osobnu upotrebu, a njezin kolaborativni aspekt je minimalan. Također, aplikacija zahtijeva stalnu vezu s internetom za većinu operacija sinkronizacije te ne nudi razvijen offline-first model ponašanja na klijentskoj strani.
 			
 			\item \textbf{QuickBooks / Xero} predstavljaju industrijske standarde u području računovodstva i upravljanja financijama za mala i srednja poduzeća. Nude izuzetno širok spektar mogućnosti, uključujući fakturiranje, obračun poreza, upravljanje projektima i detaljne bilance. Glavni nedostatak ovih sustava je njihova visoka cijena, izrazito strma krivulja učenja te prevelika kompleksnost za timove koji trebaju samo brz, transparentan i lagan sustav za interno praćenje proračuna i projekata.
 		\end{enumerate}
@@ -365,7 +365,7 @@
 
 		\textbf{GitHub} je internetska usluga za udomljavanje repozitorija projekata koja koristi Git. GitHub služi kao centralno mjesto za pohranu koda sustava Allocento te olakšava timski rad i pregled koda (engl. \textit{code review}).
 		
-		\textbf{GitHub Actions} je platforma za automatizaciju procesa razvoja softvera koja se pokreće na GitHubovim poslužiteljima. U ovom projektu postavljen je automatizirani radni tijek (engl. \textit{workflow}) u datoteci \texttt{deploy.yml}. On se pokreće automatski prilikom svakog guranja (engl. \textit{push}) novog koda na glavnu granu. Radni tijek provodi prevođenje klijentske aplikacije (\texttt{npm run build:prod}), provjerava sintaksu i ispravnost backend koda, a zatim automatski prebacuje izgrađene datoteke na produkcijski poslužitelj, čime se osigurava brza, pouzdana i automatizirana isporuka softvera.
+		\textbf{GitHub Actions} je platforma za automatizaciju procesa razvoja softvera koja se pokreće na GitHubovim poslužiteljima \cite{w_github_actions}. U ovom projektu postavljen je automatizirani radni tijek (engl. \textit{workflow}) u datoteci \texttt{deploy.yml}. On se pokreće automatski prilikom svakog guranja (engl. \textit{push}) novog koda na glavnu granu. Radni tijek provodi prevođenje klijentske aplikacije (\texttt{npm run build:prod}), provjerava sintaksu i ispravnost backend koda, a zatim automatski prebacuje izgrađene datoteke na produkcijski poslužitelj, čime se osigurava brza, pouzdana i automatizirana isporuka softvera.
 	
 	
 	\newpage
@@ -419,7 +419,7 @@
 			
 			\item \textbf{Servisni sloj (Business Logic):} Sadrži globalne servise koji upravljaju zajedničkim stanjima aplikacije (npr. trenutno aktivni radni prostor, odabir jezika, status mrežne povezanosti, upravljanje push obavijestima). Servisi služe kao most između UI sloja i repozitorija.
 			
-			\item \textbf{Sloj repozitorija (Data Access Layer - DAL):} Repozitoriji (poput \texttt{TransactionRepository} ili \texttt{AccountRepository}) predstavljaju apstrakciju pristupa podacima. U ovom sloju se provodi logika offline rada: repozitorij provjerava status mreže te odlučuje hoće li upit proslijediti API servisu (koji koristi HTTP klijent) ili lokalnom repozitoriju (koji izravno komunicira s IndexedDB bazom podataka).
+			\item \textbf{Sloj repozitorija (Data Access Layer - DAL):} Repozitoriji (poput \texttt{TransactionRepository} ili \texttt{AccountRepository}) predstavljaju apstrakciju pristupa podacima \cite{b_martin}. U ovom sloju se provodi logika offline rada: repozitorij provjerava status mreže te odlučuje hoće li upit proslijediti API servisu (koji koristi HTTP klijent) ili lokalnom repozitoriju (koji izravno komunicira s IndexedDB bazom podataka).
 		\end{enumerate}
 
 		\begin{figure}[h!]
@@ -666,11 +666,11 @@
 		\subsubsection{Integracija i konfiguracija Web Push obavijesti}
 		Poticajne obavijesti (engl. \textit{Web Push Notifications}) omogućuju poslužitelju slanje informacija klijentu čak i kada aplikacija nije aktivna u pregledniku. Implementacija ovog sustava u Allocentu koristi Push API i Notification API standarde te se temelji na tri entiteta: klijentskom pregledniku, posredničkom Push servisu preglednika i Laravel poslužitelju aplikacije.
 
-		Za osiguravanje privatnosti i autentičnosti pošiljatelja koristi se protokol \textbf{VAPID} (engl. \textit{Voluntary Application Server Identification}). Na poslužitelju se generira par ključeva: javni i privatni VAPID ključ.
+		Za osiguravanje privatnosti i autentičnosti pošiljatelja koristi se protokol \textbf{VAPID} (engl. \textit{Voluntary Application Server Identification}) \cite{w_rfc8292_vapid}. Na poslužitelju se generira par ključeva: javni i privatni VAPID ključ.
 		
 		Tijek registracije i slanja obavijesti odvija se na sljedeći način:
 		\begin{enumerate}
-			\item Klijentska aplikacija u Angularu, koristeći servis \texttt{SwPush}, traži privolu korisnika za primanje obavijesti. Ako korisnik odobri, preglednik šalje zahtjev Push servisu (koji održava proizvođač preglednika, npr. Google za Chrome ili Apple za Safari) prilažući javni VAPID ključ.
+			\item Klijentska aplikacija u Angularu, koristeći servis \texttt{SwPush}, traži privolu korisnika za primanje obavijesti. Ako korisnik odobri, preglednik šalje zahtjev Push servisu \cite{w_w3c_push} (koji održava proizvođač preglednika, npr. Google za Chrome ili Apple za Safari) prilažući javni VAPID ključ.
 			
 			\item Push servis generira jedinstveni objekt pretplate (engl. \textit{subscription object}) koji sadrži jedinstvenu adresu (\textit{endpoint}) i ključeve za enkripciju podataka (\textit{p256dh} i \textit{auth}).
 			
@@ -949,7 +949,7 @@ public function sync(Request $request): JsonResponse
 			
 			\item \textbf{Kartice sa sažetkom:} Prikazuju ukupne prihode, ukupne rashode i neto novčani tijek (engl. \textit{net cash flow}) za tekući mjesec.
 			
-			\item \textbf{Grafički prikazi (Analitika):} Interaktivni linijski grafikon koji prikazuje kretanje prihoda i rashoda kroz mjesece te tortni grafikon (engl. \textit{pie chart}) koji prikazuje raspodjelu rashoda po kategorijama (npr. režije, plaće, marketing). Grafovi su implementirani pomoću reaktivnih Angular komponenti koje crtaju SVG elemente na temelju signala s podacima.
+			\item \textbf{Grafički prikazi (Analitika):} Interaktivni linijski grafikon koji prikazuje kretanje prihoda i rashoda kroz mjesece te tortni grafikon (engl. \textit{pie chart}) koji prikazuje raspodjelu rashoda po kategorijama (npr. režije, plaće, marketing). Grafovi su implementirani integracijom biblioteke Chart.js \cite{w_chartjs} pomoću reaktivnih Angular komponenti koje crtaju elemente na temelju signala s podacima.
 			
 			\item \textbf{Popis zadnjih transakcija:} Tablični prikaz zadnjih 5 unesenih transakcija s ikonama kategorija i brzim opcijama za uređivanje i brisanje. Ovdje korisnici mogu pregledavati uobičajene prihode i rashode, kao i \textbf{interne prijenose (transfere)} između dvaju računa u istom radnom prostoru.
 		\end{itemize}
@@ -1043,7 +1043,6 @@ public function sync(Request $request): JsonResponse
 	
 	\newpage
 	\addcontentsline{toc}{section}{LITERATURA}
-	\nocite{*}
 	\bibliographystyle{unsrt}
 	\bibliography{bibtex_baza}
 	

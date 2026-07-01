@@ -536,7 +536,7 @@
 			\item \texttt{id} (Primarni ključ)
 			\item \texttt{name} (Naziv radnog prostora)
 			\item \texttt{owner\_id} (Strani ključ koji upućuje na korisnika-vlasnika)
-			\item \texttt{enabled\_features} (JSON polje koje definira aktivne module unutar tog prostora)
+
 		\end{itemize}
 		
 		\item \textbf{Članstvo u prostoru (\texttt{workspace\_user}):} Pivot tablica koja povezuje korisnike i radne prostore u relacijskom odnosu više-prema-više (N:M).
@@ -561,9 +561,9 @@
 		\item \textbf{Kategorija (\texttt{categories}):} Definira kategoriju troška ili prihoda radi precizne financijske analitike i grupiranja podataka.
 		\begin{itemize}
 			\item \texttt{id}, \texttt{workspace\_id} (Pripadnost prostoru, vrijednost \textit{null} označava globalnu kategoriju)
-			\item \texttt{name}, \texttt{icon}, \texttt{color} (Vizualni atributi za prikaz u sučelju)
+			\item \texttt{name} (Naziv kategorije)
 			\item \texttt{type} (Klasifikacija: prihod ili rashod)
-			\item \texttt{parent\_id} (Samoreferencirajući ključ za omogućavanje podkategorija)
+
 		\end{itemize}
 		
 		\item \textbf{Transakcija (\texttt{transactions}):} Predstavlja osnovni, atomarni zapis o svakom pojedinom financijskom toku unutar sustava.

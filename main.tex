@@ -527,23 +527,21 @@
 		\begin{itemize}
 			\item \texttt{id} (Primarni ključ, UUID/BigInt)
 			\item \texttt{name}, \texttt{email}, \texttt{password} (Osnovni autentifikacijski podaci)
-			\item \texttt{active\_workspace\_id} (Strani ključ, referencira trenutno aktivni radni prostor korisnika)
-			\item \texttt{nav\_preferences} (JSON polje za korisničke postavke prikaza sučelja)
+			\item \texttt{favorite\_workspace\_id} (Strani ključ, referencira omiljeni radni prostor korisnika)
+			\item \texttt{nav\_preferences}, \texttt{preferred\_language} (Korisničke postavke prikaza sučelja i jezika)
+			\item \texttt{onboarding\_completed} (Zastavica koja označava završetak procesa upoznavanja s aplikacijom)
 		\end{itemize}
 		
 		\item \textbf{Radni prostor (\texttt{workspaces}):} Predstavlja izolirani financijski prostor (osobni proračun ili poslovni subjekt). Svi ostali entiteti (računi, kategorije, transakcije) striktno su vezani uz točno određeni radni prostor.
 		\begin{itemize}
 			\item \texttt{id} (Primarni ključ)
-			\item \texttt{name} (Naziv radnog prostora)
-			\item \texttt{owner\_id} (Strani ključ koji upućuje na korisnika-vlasnika)
-
+			\item \texttt{name}, \texttt{type}, \texttt{currency} (Naziv, tip prostora i zadana valuta)
 		\end{itemize}
 		
 		\item \textbf{Članstvo u prostoru (\texttt{workspace\_user}):} Pivot tablica koja povezuje korisnike i radne prostore u relacijskom odnosu više-prema-više (N:M).
 		\begin{itemize}
 			\item \texttt{workspace\_id}, \texttt{user\_id} (Kompozitni primarni i strani ključevi)
 			\item \texttt{role} (Dodijeljena uloga: \textit{owner}, \textit{manager}, \textit{member})
-			\item \texttt{status} (Status korisničke pozivnice: \textit{pending}, \textit{accepted})
 		\end{itemize}
 		
 		\item \textbf{Račun / Projekt (\texttt{accounts}):} Predstavlja financijski račun koji pripada radnom prostoru. U poslovnim prostorima ovi računi ujedno predstavljaju i projekte te njihove zadane proračunske okvire.
@@ -552,8 +550,9 @@
 			\item \texttt{workspace\_id} (Strani ključ)
 			\item \texttt{name}, \texttt{currency} (Naziv i valuta računa)
 			\item \texttt{type} (Tip računa: gotovina, banka, projekt)
-			\item \texttt{balance} (Trenutno raspoloživo stanje računa)
-			\item \texttt{opening\_balance} (Početni proračun ili inicijalno stanje)
+			\item \texttt{balance}, \texttt{opening\_balance} (Trenutno raspoloživo i početno stanje računa)
+			\item \texttt{created\_by\_user\_id} (Kreator računa)
+			\item \texttt{is\_primary}, \texttt{is\_archived} (Zastavice statusa računa)
 		\end{itemize}
 		
 	\newpage
@@ -569,10 +568,12 @@
 		\item \textbf{Transakcija (\texttt{transactions}):} Predstavlja osnovni, atomarni zapis o svakom pojedinom financijskom toku unutar sustava.
 		\begin{itemize}
 			\item \texttt{id} (Primarni ključ)
-			\item \texttt{account\_id}, \texttt{category\_id}, \texttt{user\_id} (Poveznice na pripadajući račun, kategoriju i izvršitelja transakcije)
+			\item \texttt{account\_id}, \texttt{target\_account\_id}, \texttt{category\_id}, \texttt{created\_by\_user\_id} (Poveznice na račune, kategoriju i izvršitelja transakcije)
 			\item \texttt{type} (Tip transakcije: prihod, rashod, prijenos)
 			\item \texttt{amount} (Točan iznos pohranjen u najnižoj denominaciji valute, npr. centima)
-			\item \texttt{transaction\_date} (Datum i vrijeme izvršenja transakcije)
+			\item \texttt{date} (Datum i vrijeme izvršenja transakcije)
+			\item \texttt{description}, \texttt{tags} (Opis i oznake)
+			\item \texttt{is\_recurring}, \texttt{recurring\_rule} (Konfiguracija ponavljajućih transakcija)
 			\item \texttt{exclude\_from\_analytics} (Zastavica za izuzimanje internih prijenosa iz opće statistike)
 		\end{itemize}
 		

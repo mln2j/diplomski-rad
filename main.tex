@@ -390,12 +390,12 @@
 				\tikzstyle{dependency} = [thick, dashed, ->, >=stealth]
 
 				% Nodes
-				\node (browser) [device] {\textit{\textless\textless uređaj\textgreater\textgreater} \\ Klijentski preglednik};
-				\node (sw) [component, right=of browser, xshift=1.2cm] {\textit{\textless\textless komponenta\textgreater\textgreater} \\ Service Worker};
-				\node (cache) [database, fill=yellow!10, below=of sw, yshift=-0.5cm] {\textit{\textless\textless pohrana\textgreater\textgreater} \\ IndexedDB};
-				\node (nginx) [servernode, right=of sw, xshift=1.2cm] {\textit{\textless\textless čvor\textgreater\textgreater} \\ Nginx Proxy};
-				\node (laravel) [component, below=of nginx, yshift=-0.5cm] {\textit{\textless\textless komponenta\textgreater\textgreater} \\ Laravel API};
-				\node (db) [database, below=of laravel, yshift=-0.5cm] {\textit{\textless\textless baza podataka\textgreater\textgreater} \\ PostgreSQL};
+				\node (browser) [device] {\textit{[uređaj]} \\ Klijentski preglednik};
+				\node (sw) [component, right=of browser, xshift=1.2cm] {\textit{[komponenta]} \\ Service Worker};
+				\node (cache) [database, fill=yellow!10, below=of sw, yshift=-0.5cm] {\textit{[pohrana]} \\ IndexedDB};
+				\node (nginx) [servernode, right=of sw, xshift=1.2cm] {\textit{[čvor]} \\ Nginx poslužitelj};
+				\node (laravel) [component, below=of nginx, yshift=-0.5cm] {\textit{[komponenta]} \\ Laravel API};
+				\node (db) [database, below=of laravel, yshift=-0.5cm] {\textit{[baza podataka]} \\ PostgreSQL};
 
 				% Connections
 				\draw [dependency] (browser) -- node[above, font=\scriptsize] {HTTP/HTTPS} (sw);
@@ -430,17 +430,17 @@
 				\tikzstyle{dependency} = [thick, dashed, ->, >=stealth]
 
 				% Nodes
-				\node (ui) [layer, fill=blue!5] {\textit{\textless\textless sloj\textgreater\textgreater} \\ Prezentacijski sloj (Angular UI)};
-				\node (services) [layer, fill=orange!5, below=of ui] {\textit{\textless\textless sloj\textgreater\textgreater} \\ Sloj poslovne logike (Servisi)};
-				\node (repos) [layer, fill=purple!5, below=of services] {\textit{\textless\textless sloj\textgreater\textgreater} \\ Sloj pristupa podacima (Repozitoriji)};
-				\node (localdb) [infrastructure, below=of repos, xshift=-2.6cm] {\textit{\textless\textless infrastruktura\textgreater\textgreater} \\ IndexedDB};
-				\node (http) [infrastructure, below=of repos, xshift=2.6cm] {\textit{\textless\textless infrastruktura\textgreater\textgreater} \\ HttpClient};
+				\node (ui) [layer, fill=blue!5] {\textit{[sloj]} \\ Prezentacijski sloj (Angular UI)};
+				\node (services) [layer, fill=orange!5, below=of ui] {\textit{[sloj]} \\ Sloj poslovne logike (Servisi)};
+				\node (repos) [layer, fill=purple!5, below=of services] {\textit{[sloj]} \\ Sloj pristupa podacima (Repozitoriji)};
+				\node (localdb) [infrastructure, below=of repos, xshift=-2.6cm] {\textit{[infrastruktura]} \\ IndexedDB};
+				\node (http) [infrastructure, below=of repos, xshift=2.6cm] {\textit{[infrastruktura]} \\ HttpClient};
 
 				% Connections
 				\draw [dependency] (ui) -- node[right, font=\scriptsize] {koristi} (services);
 				\draw [dependency] (services) -- node[right, font=\scriptsize] {poziva} (repos);
-				\draw [dependency] (repos) -- node[left, font=\scriptsize] {Offline} (localdb);
-				\draw [dependency] (repos) -- node[right, font=\scriptsize] {Online} (http);
+				\draw [dependency] (repos) -- node[left, font=\scriptsize] {Lokalno (Offline)} (localdb);
+				\draw [dependency] (repos) -- node[right, font=\scriptsize] {Mrežno (Online)} (http);
 				
 			\end{tikzpicture}
 			\caption{Arhitekturni slojevi klijentskog dijela u Angularu}
@@ -470,11 +470,11 @@
 				\tikzstyle{dependency} = [thick, dashed, ->, >=stealth]
 
 				% Nodes
-				\node (route) [layer] {\textit{\textless\textless sloj\textgreater\textgreater} \\ Rute i Middleware};
-				\node (controller) [layer, below=of route] {\textit{\textless\textless sloj\textgreater\textgreater} \\ Prezentacijski API sloj (Kontroleri)};
-				\node (service) [layer, below=of controller] {\textit{\textless\textless sloj\textgreater\textgreater} \\ Sloj poslovne logike (Servisi)};
-				\node (model) [layer, below=of service] {\textit{\textless\textless sloj\textgreater\textgreater} \\ Sloj pristupa podacima (Eloquent ORM)};
-				\node (db) [database, below=of model, yshift=-0.3cm] {\textit{\textless\textless baza podataka\textgreater\textgreater} \\ PostgreSQL / SQLite};
+				\node (route) [layer] {\textit{[sloj]} \\ Rute i posrednici (Middleware)};
+				\node (controller) [layer, below=of route] {\textit{[sloj]} \\ Prezentacijski API sloj (Kontroleri)};
+				\node (service) [layer, below=of controller] {\textit{[sloj]} \\ Sloj poslovne logike (Servisi)};
+				\node (model) [layer, below=of service] {\textit{[sloj]} \\ Sloj pristupa podacima (Eloquent ORM)};
+				\node (db) [database, below=of model, yshift=-0.3cm] {\textit{[baza podataka]} \\ PostgreSQL / SQLite};
 
 				% Connections
 				\draw [dependency] (route) -- (controller);
@@ -554,12 +554,12 @@
 				\tikzstyle{association} = [thick, -]
 
 				% Nodes with absolute coordinates (planar layout)
-				\node (user) [class] at (0, 6) {User};
-				\node (member) [class] at (4.5, 4.75) {WorkspaceUser};
-				\node (workspace) [class] at (0, 3.5) {Workspace};
-				\node (account) [class] at (-3.5, 1.5) {Account};
-				\node (category) [class] at (3.5, 1.5) {Category};
-				\node (transaction) [class] at (0, -1) {Transaction};
+				\node (user) [class] at (0, 6) {Korisnik};
+				\node (member) [class] at (4.5, 4.75) {Član prostora};
+				\node (workspace) [class] at (0, 3.5) {Radni prostor};
+				\node (account) [class] at (-3.5, 1.5) {Račun};
+				\node (category) [class] at (3.5, 1.5) {Kategorija};
+				\node (transaction) [class] at (0, -1) {Transakcija};
 
 				% Connections
 				\draw [association] (user) -- node[pos=0.15, left, font=\scriptsize] {1} node[pos=0.85, left, font=\scriptsize] {0..*} (workspace);

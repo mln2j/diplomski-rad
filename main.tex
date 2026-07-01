@@ -371,7 +371,7 @@
 	
 	Za definiranje dizajnerskih smjernica, logotipa, tipografije i palete boja korištena je platforma \textbf{Logology}. Logology je specijalizirani alat za automatizirano brendiranje i kreiranje vizualnog identiteta softverskih proizvoda. 
 	
-	Na temelju dizajnerskog profila sustava Allocento, odabrana je paleta boja s naglašenim tamnim i svijetlim tonovima te specifični fontovi (\textit{Space Mono} i \textit{Outfit}). Ove su smjernice potom prenesene u klijentski dio sustava u obliku globalnih CSS varijabli (engl. \textit{CSS custom properties}), čime se postigla vizualna dosljednost, responzivnost i vrhunsko korisničko iskustvo (engl. \textit{premium UX}).
+	Na temelju dizajnerskog profila sustava Allocento, odabrana je paleta boja s naglašenim tamnim i svijetlim tonovima te specifični fontovi (\textit{Space Mono} i \textit{Roboto}). Ove su smjernice potom prenesene u klijentski dio sustava u obliku globalnih CSS varijabli (engl. \textit{CSS custom properties}), čime se postigla vizualna dosljednost, responzivnost i vrhunsko korisničko iskustvo (engl. \textit{premium UX}).
 
 	\subsection{Sustav za upravljanje relacijskim bazama podataka i web poslužitelj}
 	
@@ -654,7 +654,7 @@
 	\begin{itemize}
 		\item \textbf{Paleta boja:} Definirane su varijable za primarnu i sekundarnu pozadinu, tekstualni sadržaj, obrube te specifične naglašene boje brenda. Među njima se ističu ljubičasta (\texttt{--color-brand-purple} s heksadecimalnom vrijednošću \texttt{\#7f5af0}) te zelena boja (\texttt{--color-brand-green} s vrijednošću \texttt{\#2cb67d}), preuzete izravno iz definiranih smjernica vizualnog identiteta.
 		
-		\item \textbf{Tipografija:} Za strukturiranje tekstualnih elemenata implementirane su dvije osnovne obitelji fontova. Font \textit{Outfit} primjenjuje se na većinu elemenata korisničkog sučelja, uključujući naslove, izbornike i opise, čime se postiže visoka čitljivost i moderan izgled. S druge strane, font \textit{Space Mono} (proporcionalni font s fiksnom širinom znakova) koristi se isključivo za prikaz brojčanih vrijednosti, transakcija i tabličnih podataka, što pridonosi strukturiranom i tehnički preciznom pregledu financijskih indikatora.
+		\item \textbf{Tipografija:} Za strukturiranje tekstualnih elemenata implementirane su dvije osnovne obitelji fontova. Font \textit{Roboto} primjenjuje se na većinu elemenata korisničkog sučelja, uključujući naslove, izbornike i opise, čime se postiže visoka čitljivost i moderan izgled. S druge strane, font \textit{Space Mono} (proporcionalni font s fiksnom širinom znakova) koristi se isključivo za prikaz brojčanih vrijednosti, transakcija i tabličnih podataka, što pridonosi strukturiranom i tehnički preciznom pregledu financijskih indikatora.
 		
 		\item \textbf{Oblikovanje sučelja:} Definirane su standardizirane vrijednosti za zaobljenost rubova komponenti poput kartica i gumba (npr. \texttt{--border-radius-lg: 12px}) te pripadajući razmaci među elementima, čime je osigurana vizualna konzistentnost kroz cijelu aplikaciju.
 	\end{itemize}
@@ -865,7 +865,7 @@ public function sync(Request $request): JsonResponse
 			$action = $operation['action'];
 			$payload = $operation['payload'] ?? [];
 			$transactionId = $operation['transaction_id'] ?? null;
-			
+			$originalTransactionId = $transactionId;
 			
 			if (in_array($action, ['update', 'delete']) && $transactionId < 0 && isset($idMappings[$transactionId])) {
 				$transactionId = $idMappings[$transactionId];
@@ -875,7 +875,7 @@ public function sync(Request $request): JsonResponse
 				if ($action === 'create') {
 					$accountId = $payload['account_id'] ?? null;
 					if (!$accountId || !in_array($accountId, $accountIds)) {
-						throw new \Exception('Access denied or account not found.');
+						throw new \Exception('Account not found or access denied in active workspace. AccountId: ' . ($accountId ?? 'null'));
 					}
 					$tx = $this->transactionService->createForAccount($request->user(), $accountId, $payload);
 					if (isset($payload['local_id']) && $payload['local_id'] < 0) {
@@ -884,7 +884,13 @@ public function sync(Request $request): JsonResponse
 					$syncedCount++;
 				} elseif ($action === 'update') {
 					$transaction = Transaction::where('id', $transactionId)->whereIn('account_id', $accountIds)->first();
-					if (!$transaction) throw new \Exception('Transaction not found.');
+					if (!$transaction) throw new \Exception('Transaction not found or access denied.');
+					
+					$newAccountId = $payload['account_id'] ?? $transaction->account_id;
+					if (!in_array($newAccountId, $accountIds)) {
+						throw new \Exception('Target account not found or access denied.');
+					}
+					
 					$this->transactionService->updateForAccount($request->user(), $transaction->account_id, $transactionId, $payload);
 					$syncedCount++;
 				} elseif ($action === 'delete') {
@@ -895,6 +901,7 @@ public function sync(Request $request): JsonResponse
 					}
 				}
 			} catch (\Exception $e) {
+				\Illuminate\Support\Facades\Log::error('Sync error for localId ' . ($payload['local_id'] ?? 'unknown') . ': ' . $e->getMessage());
 				$errors[] = [
 				'index' => $index,
 				'error' => $e->getMessage()

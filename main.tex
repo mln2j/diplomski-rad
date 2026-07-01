@@ -408,9 +408,9 @@
 
 			% Nodes
 			\node (browser) [device] {\textit{[uređaj]} \\ Klijentski preglednik};
-			\node (sw) [component, right=of browser, xshift=1.2cm] {\textit{[komponenta]} \\ Service Worker};
+			\node (sw) [component, right=of browser, xshift=0.8cm] {\textit{[komponenta]} \\ Service Worker};
 			\node (cache) [database, fill=yellow!10, below=of sw, yshift=-0.5cm] {\textit{[pohrana]} \\ IndexedDB};
-			\node (nginx) [servernode, right=of sw, xshift=1.2cm] {\textit{[čvor]} \\ Nginx poslužitelj};
+			\node (nginx) [servernode, right=of sw, xshift=0.5cm] {\textit{[čvor]} \\ Nginx poslužitelj};
 			\node (laravel) [component, below=of nginx, yshift=-0.5cm] {\textit{[komponenta]} \\ Laravel API};
 			\node (db) [database, below=of laravel, yshift=-0.5cm] {\textit{[baza podataka]} \\ PostgreSQL};
 
@@ -615,7 +615,7 @@
 	\subsubsection{Pregled ključnih API ruta}
 	Kako bi se omogućila besprijekorna komunikacija između klijentske aplikacije i poslužitelja, definiran je skup RESTful API ruta. U tablici \ref{tab:api_routes} prikazane su najvažnije rute zadužene za upravljanje financijskim transakcijama i sinkronizaciju podataka.
 		
-	\begin{table}[h!]
+	\begin{table}[H]
 		\centering
 		\caption{Pregled ključnih API ruta u sustavu Allocento}
 		\label{tab:api_routes}
@@ -941,7 +941,7 @@ public function sync(Request $request): JsonResponse
 
 		\begin{figure}[H]
 			\centering
-			\includegraphics[width=0.75\textwidth]{assets/login_registration.png}
+			\includegraphics[width=0.7\textwidth]{assets/login_registration.png}
 			\caption{Sučelje za prijavu i registraciju korisnika}
 			\label{fig:login-registration}
 		\end{figure}
@@ -960,7 +960,7 @@ public function sync(Request $request): JsonResponse
 
 		\begin{figure}[H]
 			\centering
-			\includegraphics[width=0.75\textwidth]{assets/workspace_settings.png}
+			\includegraphics[width=0.95\textwidth]{assets/workspace_settings.png}
 			\caption{Upravljanje radnim prostorima i pozivanjem članova tima}
 			\label{fig:workspace-settings}
 		\end{figure}
@@ -988,7 +988,7 @@ public function sync(Request $request): JsonResponse
 
 		\begin{figure}[H]
 			\centering
-			\includegraphics[width=0.75\textwidth]{assets/dashboard.png}
+			\includegraphics[width=0.5\textwidth]{assets/dashboard.png}
 			\caption{Glavna nadzorna ploča sustava Allocento}
 			\label{fig:dashboard}
 		\end{figure}
@@ -1005,7 +1005,7 @@ public function sync(Request $request): JsonResponse
 
 		\begin{figure}[H]
 			\centering
-			\includegraphics[width=0.75\textwidth]{assets/reports.png}
+			\includegraphics[width=0.95\textwidth]{assets/reports.png}
 			\caption{Filtriranje financijskih izvještaja i izvoz u PDF format}
 			\label{fig:reports}
 		\end{figure}
@@ -1027,7 +1027,7 @@ public function sync(Request $request): JsonResponse
  
 		\begin{figure}[H]
 			\centering
-			\includegraphics[width=0.75\textwidth]{assets/offline_state.png}
+			\includegraphics[width=0.8\textwidth]{assets/offline_state.png}
 			\caption{Izgled sučelja i unos transakcije u izvanmrežnom načinu rada}
 			\label{fig:offline-state}
 		\end{figure}
@@ -1046,7 +1046,7 @@ public function sync(Request $request): JsonResponse
 
 		\begin{figure}[H]
 			\centering
-			\includegraphics[width=0.75\textwidth]{assets/sync_notification.png}
+			\includegraphics[width=0.85\textwidth]{assets/sync_notification.png}
 			\caption{Prikaz obavijesti nakon uspješne sinkronizacije podataka}
 			\label{fig:sync-notification}
 		\end{figure}

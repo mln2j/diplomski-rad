@@ -760,55 +760,45 @@ class ResolveWorkspace
 		Primjer koda \ref{lst:angular_create} ilustrira metodu u Angular repozitoriju \texttt{TransactionRepository} koja detektira offline način rada, stvara privremenu transakciju s negativnim ID-jem, sprema je lokalno radi trenutačnog prikaza u sučelju i dodaje je u red čekanja za naknadnu sinkronizaciju.
 
 \begin{lstlisting}[language=Java, caption={Klijentsko kreiranje transakcije i pohrana u offline red čekanja}, label={lst:angular_create}]
-create(accountId: number, payload: Partial<Transaction>): Observable<Transaction> {
-  if (!this.appInitializer.isOnlineMode) {
-    const localId = -Date.now(); // Negativni ID za offline zapise
-    const localTx: Transaction = {
-      id: localId,
-      accountId: accountId,
-      type: payload.type || 'expense',
-      amount: payload.amount || 0,
-      date: payload.date || new Date().toISOString(),
-      description: payload.description || null,
-      categoryId: payload.categoryId || null,
-      projectId: payload.projectId || null,
-      targetAccountId: payload.targetAccountId || null,
-      excludeFromAnalytics: payload.excludeFromAnalytics || null,
-      user: null
-    };
+private createOffline(accountId: number, payload: Partial<Transaction>): Observable<Transaction> {
+  const localId = -Date.now();
+  
+  const localTx: Transaction = {
+    id: localId,
+    accountId: accountId,
+    type: payload.type || 'expense',
+    amount: payload.amount || 0,
+    date: payload.date || new Date().toISOString(),
+    description: payload.description || null,
+    categoryId: payload.categoryId || null,
+    targetAccountId: payload.targetAccountId || null,
+    excludeFromAnalytics: payload.excludeFromAnalytics ?? false,
+    user: null
+  };
 
-    return from(
-      (async () => {
-        await this.localDb.put('transactions', this.mapTransactionToLocal(localTx));
-        const queueItem = {
-          action: 'create',
-          payload: {
-            account_id: accountId,
-            type: localTx.type,
-            amount: localTx.amount,
-            date: localTx.date,
-            description: localTx.description,
-            category_id: localTx.categoryId,
-            project_id: localTx.projectId,
-            target_account_id: localTx.targetAccountId,
-            exclude_from_analytics: localTx.excludeFromAnalytics,
-            local_id: localId
-          }
-        };
-        await this.localDb.put('offline_queue', queueItem);
-        return localTx;
-      })()
-    );
-  }
-  
-  
-  return this.api.post<any>(`/accounts/${accountId}/transactions`, payload).pipe(
-    map(api => this.mapApiToTransaction(api)),
-    tap(async (tx) => {
-      await this.localDb.put('transactions', this.mapTransactionToLocal(tx));
-    })
+  return from(
+    (async () => {
+      await this.localDb.put('transactions', this.mapTransactionToLocal(localTx));
+      const queueItem = {
+        action: 'create',
+        payload: {
+          account_id: accountId,
+          type: localTx.type,
+          amount: localTx.amount,
+          date: localTx.date,
+          description: localTx.description,
+          category_id: localTx.categoryId,
+          target_account_id: localTx.targetAccountId,
+          exclude_from_analytics: localTx.excludeFromAnalytics ?? false,
+          local_id: localId
+        }
+      };
+      await this.localDb.put('offline_queue', queueItem);
+      return localTx;
+    })()
   );
 }
+
 \end{lstlisting}
 
 
@@ -817,8 +807,8 @@ create(accountId: number, payload: Partial<Transaction>): Observable<Transaction
 \begin{lstlisting}[language=PHP, caption={Laravel kontroler za skupnu sinkronizaciju i mapiranje ID-jeva}, label={lst:laravel_sync}]
 public function sync(Request $request): JsonResponse
 {
-    $workspace = $request->get('_workspace');
-    $accountIds = $workspace->accounts()->pluck('accounts.id')->toArray();
+    $accountIds = $request->user()->workspaces()->with('accounts')->get()
+        ->pluck('accounts.*.id')->flatten()->unique()->toArray();
 
     $data = $request->validate([
         'operations' => ['required', 'array', 'max:500'],
@@ -830,14 +820,14 @@ public function sync(Request $request): JsonResponse
     $results = DB::transaction(function () use ($data, $request, $accountIds) {
         $syncedCount = 0;
         $errors = [];
-        $idMappings = []; // Karta: negativni ID => stvarni ID iz baze
+        $idMappings = [];
 
         foreach ($data['operations'] as $index => $operation) {
             $action = $operation['action'];
             $payload = $operation['payload'] ?? [];
             $transactionId = $operation['transaction_id'] ?? null;
             
-            // Mapiranje ako je transakcija stvorena offline u istom paketu
+            
             if (in_array($action, ['update', 'delete']) && $transactionId < 0 && isset($idMappings[$transactionId])) {
                 $transactionId = $idMappings[$transactionId];
             }

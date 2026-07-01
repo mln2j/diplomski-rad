@@ -131,7 +131,6 @@
 	\renewcommand{\thefigure}{\thesection.\arabic{figure}}  %postavke za imenovanje slika po poglavljima%
 	\renewcommand{\thetable}{\thesection.\arabic{table}}   %postavke za imenovanje tablica po poglavljima%
 	\renewcommand{\theequation}{\thesection-\arabic{equation}} %postavke za brojanje jednadzbi po poglavljima%
-	\renewcommand{\refname}{LITERATURA}						% Uppercase Literatura
 	
 	%**************************************************************************************************************
 	
@@ -1044,6 +1043,7 @@ public function sync(Request $request): JsonResponse
 	
 	\newpage
 	\addcontentsline{toc}{section}{LITERATURA}
+	\nocite{*}
 	\bibliographystyle{unsrt}
 	\bibliography{bibtex_baza}
 	

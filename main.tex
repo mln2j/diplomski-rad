@@ -390,12 +390,12 @@
 				\tikzstyle{dependency} = [thick, dashed, ->, >=stealth]
 
 				% Nodes
-				\node (browser) [device] {\textbf{<<device>>} \\ Klijentski preglednik};
-				\node (sw) [component, right=of browser, xshift=1.2cm] {\textbf{<<component>>} \\ Service Worker};
-				\node (cache) [database, fill=yellow!10, below=of sw, yshift=-0.5cm] {\textbf{<<storage>>} \\ IndexedDB};
-				\node (nginx) [servernode, right=of sw, xshift=1.2cm] {\textbf{<<node>>} \\ Nginx Proxy};
-				\node (laravel) [component, below=of nginx, yshift=-0.5cm] {\textbf{<<component>>} \\ Laravel API};
-				\node (db) [database, below=of laravel, yshift=-0.5cm] {\textbf{<<database>>} \\ PostgreSQL};
+				\node (browser) [device] {\textbf{\textless\textless device\textgreater\textgreater} \\ Klijentski preglednik};
+				\node (sw) [component, right=of browser, xshift=1.2cm] {\textbf{\textless\textless component\textgreater\textgreater} \\ Service Worker};
+				\node (cache) [database, fill=yellow!10, below=of sw, yshift=-0.5cm] {\textbf{\textless\textless storage\textgreater\textgreater} \\ IndexedDB};
+				\node (nginx) [servernode, right=of sw, xshift=1.2cm] {\textbf{\textless\textless node\textgreater\textgreater} \\ Nginx Proxy};
+				\node (laravel) [component, below=of nginx, yshift=-0.5cm] {\textbf{\textless\textless component\textgreater\textgreater} \\ Laravel API};
+				\node (db) [database, below=of laravel, yshift=-0.5cm] {\textbf{\textless\textless database\textgreater\textgreater} \\ PostgreSQL};
 
 				% Connections
 				\draw [dependency] (browser) -- node[above, font=\scriptsize] {HTTP/HTTPS} (sw);
@@ -430,11 +430,11 @@
 				\tikzstyle{dependency} = [thick, dashed, ->, >=stealth]
 
 				% Nodes
-				\node (ui) [layer, fill=blue!5] {\textbf{<<layer>>} \\ Prezentacijski sloj (Angular UI)};
-				\node (services) [layer, fill=orange!5, below=of ui] {\textbf{<<layer>>} \\ Sloj poslovne logike (Servisi)};
-				\node (repos) [layer, fill=purple!5, below=of services] {\textbf{<<layer>>} \\ Sloj pristupa podacima (Repozitoriji)};
-				\node (localdb) [infrastructure, below=of repos, xshift=-4em] {\textbf{<<infrastructure>>} \\ IndexedDB};
-				\node (http) [infrastructure, below=of repos, xshift=4em] {\textbf{<<infrastructure>>} \\ HttpClient};
+				\node (ui) [layer, fill=blue!5] {\textbf{\textless\textless layer\textgreater\textgreater} \\ Prezentacijski sloj (Angular UI)};
+				\node (services) [layer, fill=orange!5, below=of ui] {\textbf{\textless\textless layer\textgreater\textgreater} \\ Sloj poslovne logike (Servisi)};
+				\node (repos) [layer, fill=purple!5, below=of services] {\textbf{\textless\textless layer\textgreater\textgreater} \\ Sloj pristupa podacima (Repozitoriji)};
+				\node (localdb) [infrastructure, below=of repos, xshift=-4em] {\textbf{\textless\textless infrastructure\textgreater\textgreater} \\ IndexedDB};
+				\node (http) [infrastructure, below=of repos, xshift=4em] {\textbf{\textless\textless infrastructure\textgreater\textgreater} \\ HttpClient};
 
 				% Connections
 				\draw [dependency] (ui) -- node[right, font=\scriptsize] {koristi} (services);
@@ -470,11 +470,11 @@
 				\tikzstyle{dependency} = [thick, dashed, ->, >=stealth]
 
 				% Nodes
-				\node (route) [layer] {\textbf{<<layer>>} \\ Rute i Middleware};
-				\node (controller) [layer, below=of route] {\textbf{<<layer>>} \\ Prezentacijski API sloj (Kontroleri)};
-				\node (service) [layer, below=of controller] {\textbf{<<layer>>} \\ Sloj poslovne logike (Servisi)};
-				\node (model) [layer, below=of service] {\textbf{<<layer>>} \\ Sloj pristupa podacima (Eloquent ORM)};
-				\node (db) [database, below=of model, yshift=-0.3cm] {\textbf{<<database>>} \\ PostgreSQL / SQLite};
+				\node (route) [layer] {\textbf{\textless\textless layer\textgreater\textgreater} \\ Rute i Middleware};
+				\node (controller) [layer, below=of route] {\textbf{\textless\textless layer\textgreater\textgreater} \\ Prezentacijski API sloj (Kontroleri)};
+				\node (service) [layer, below=of controller] {\textbf{\textless\textless layer\textgreater\textgreater} \\ Sloj poslovne logike (Servisi)};
+				\node (model) [layer, below=of service] {\textbf{\textless\textless layer\textgreater\textgreater} \\ Sloj pristupa podacima (Eloquent ORM)};
+				\node (db) [database, below=of model, yshift=-0.3cm] {\textbf{\textless\textless database\textgreater\textgreater} \\ PostgreSQL / SQLite};
 
 				% Connections
 				\draw [dependency] (route) -- (controller);
@@ -554,21 +554,21 @@
 				\tikzstyle{association} = [thick, -]
 
 				% Nodes with absolute coordinates (planar layout)
-				\node (user) [class] at (0, 5.5) {User};
-				\node (member) [class] at (4.5, 4.5) {WorkspaceUser};
+				\node (user) [class] at (0, 6) {User};
+				\node (member) [class] at (4.5, 4.75) {WorkspaceUser};
 				\node (workspace) [class] at (0, 3.5) {Workspace};
-				\node (account) [class] at (-3, 1.5) {Account};
-				\node (category) [class] at (3, 1.5) {Category};
-				\node (transaction) [class] at (0, -0.5) {Transaction};
+				\node (account) [class] at (-3.5, 1.5) {Account};
+				\node (category) [class] at (3.5, 1.5) {Category};
+				\node (transaction) [class] at (0, -1) {Transaction};
 
 				% Connections
-				\draw [association] (user) -- node[pos=0.1, left, font=\scriptsize] {1} node[pos=0.9, left, font=\scriptsize] {0..*} (workspace);
-				\draw [association] (user) -- node[pos=0.1, above, font=\scriptsize] {1} node[pos=0.9, above, font=\scriptsize] {0..*} (member);
-				\draw [association] (workspace) -- node[pos=0.1, below, font=\scriptsize] {1} node[pos=0.9, below, font=\scriptsize] {0..*} (member);
-				\draw [association] (workspace) -- node[pos=0.1, above left, font=\scriptsize] {1} node[pos=0.9, above left, font=\scriptsize] {0..*} (account);
-				\draw [association] (workspace) -- node[pos=0.1, above right, font=\scriptsize] {1} node[pos=0.9, above right, font=\scriptsize] {0..*} (category);
-				\draw [association] (account) -- node[pos=0.1, below left, font=\scriptsize] {1} node[pos=0.9, below left, font=\scriptsize] {0..*} (transaction);
-				\draw [association] (category) -- node[pos=0.1, below right, font=\scriptsize] {1} node[pos=0.9, below right, font=\scriptsize] {0..*} (transaction);
+				\draw [association] (user) -- node[pos=0.15, left, font=\scriptsize] {1} node[pos=0.85, left, font=\scriptsize] {0..*} (workspace);
+				\draw [association] (user) -- node[pos=0.15, above right, font=\scriptsize] {1} node[pos=0.85, above right, font=\scriptsize] {0..*} (member);
+				\draw [association] (workspace) -- node[pos=0.15, below right, font=\scriptsize] {1} node[pos=0.85, below right, font=\scriptsize] {0..*} (member);
+				\draw [association] (workspace) -- node[pos=0.15, above left, font=\scriptsize] {1} node[pos=0.85, above left, font=\scriptsize] {0..*} (account);
+				\draw [association] (workspace) -- node[pos=0.15, above right, font=\scriptsize] {1} node[pos=0.85, above right, font=\scriptsize] {0..*} (category);
+				\draw [association] (account) -- node[pos=0.15, below right, font=\scriptsize] {1} node[pos=0.85, below right, font=\scriptsize] {0..*} (transaction);
+				\draw [association] (category) -- node[pos=0.15, below left, font=\scriptsize] {1} node[pos=0.85, below left, font=\scriptsize] {0..*} (transaction);
 
 			\end{tikzpicture}
 			\caption{Pojednostavljeni ER dijagram baze podataka sustava Allocento}

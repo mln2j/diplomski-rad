@@ -279,8 +279,6 @@
 	
 	Dok se za statičke resurse (HTML, CSS, JavaScript datoteke, ikone) koristi \textit{Cache API} koji je direktno integriran sa servisnim radnikom, za strukturirane i transakcijske podatke (poput financijskih transakcija u sustavu Allocento) to nije adekvatno rješenje. Za takve dinamičke poslovne podatke koristi se klijentska objektna baza podataka \textbf{IndexedDB}. IndexedDB je snažna, asinkrona, transakcijska NoSQL baza podataka ugrađena u sve moderne preglednike, koja omogućuje pohranu velikih količina strukturiranih objekata izravno na klijentu uz napredno filtriranje preko indeksa \cite{w_mdn_indexeddb}. Kombinacijom servisnog radnika za statičke resurse i IndexedDB-a za poslovne podatke, aplikacija ostvaruje arhitekturu \textit{offline-first} i postaje robusna na ispade mrežne veze.
 	
-	\newpage
-	
 	\subsection{Funkcionalni zahtjevi na sustav "Allocento"}
 	
 	Funkcionalni zahtjevi definiraju specifične radnje, ponašanja i usluge koje sustav mora pružiti krajnjem korisniku \cite{b_sommerville}. Na temelju analize poslovnih potreba i službenog zadatka rada, identificirani su sljedeći funkcionalni zahtjevi na sustav "Allocento":
@@ -572,8 +570,7 @@
 			\item \texttt{type} (Tip transakcije: prihod, rashod, prijenos)
 			\item \texttt{amount} (Točan iznos pohranjen u najnižoj denominaciji valute, npr. centima)
 			\item \texttt{date} (Datum i vrijeme izvršenja transakcije)
-			\item \texttt{description}, \texttt{tags} (Opis i oznake)
-			\item \texttt{is\_recurring}, \texttt{recurring\_rule} (Konfiguracija ponavljajućih transakcija)
+			\item \texttt{description} (Opis transakcije)
 			\item \texttt{exclude\_from\_analytics} (Zastavica za izuzimanje internih prijenosa iz opće statistike)
 		\end{itemize}
 		

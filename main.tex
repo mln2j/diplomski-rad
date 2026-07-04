@@ -45,8 +45,8 @@
 % Dva paketa za imenovanje slika i tablica
 \usepackage{subcaption}
 \usepackage[labelfont=bf,textfont=it,labelsep = colon]{caption}
-\captionsetup[figure]{name=SL.}
-\captionsetup[table]{name=Tab.}
+\captionsetup[figure]{name=Slika}
+\captionsetup[table]{name=Tablica}
 
 % Paket sa bojama za formatiranje svega gdje se mjenja boja
 \usepackage{xcolor}
@@ -199,16 +199,14 @@
 	\section{UVOD}
 	Moderno programsko inženjerstvo kontinuirano teži razvoju softverskih rješenja koja uspješno spajaju visoke performanse nativnih mobilnih aplikacija sa širokom dostupnošću klasičnih web platformi \cite{w_angular}. U dinamičnim okruženjima, gdje je kvaliteta mrežne veze upitna, tradicionalne web aplikacije pokazuju značajne nedostatke, potencijalni gubitak podataka ili potpuni prekid rada zbog ispadanja iz mreže. Kao odgovor na te izazove, razvijen je koncept progresivnih web aplikacija (engl. \textit{Progressive Web Apps} – PWA) \cite{w_pwa_alex_russell}. Korištenjem naprednih mehanizama poput servisnih radnika (engl. \textit{Service Workers}) \cite{w_mdn_serviceworker} i lokalnog predmemoriranja putem IndexedDB baze \cite{w_mdn_indexeddb}, ovaj koncept omogućuje neometan rad aplikacije u izvanmrežnom načinu rada (engl. \textit{offline mode}) te naknadnu asinkronu sinkronizaciju podataka.
 
-	Glavna motivacija za razvoj financijskog sustava "Allocento" proizlazi iz potrebe za osiguravanjem kontinuiteta u upravljanju podacima tijekom nestabilne mrežne povezanosti, pri čemu sustav mora ostati kolaborativan i višeslojan. U klasičnim klijent-poslužitelj arhitekturama, prekid veze tijekom CRUD (engl. \textit{Create, Read, Update, Delete}) operacija često rezultira pogreškama i nepovratnim gubitkom unesenih financijskih informacija \cite{w_rest_api}. Implementacijom inovativne PWA arhitekture temeljene na \textit{offline-first} pristupu, korisnicima Allocenta omogućeno je nesmetano obavljanje poslovnih procesa i unos novih transakcija neovisno o trenutnom statusu mreže. Složeni procesi sinkronizacije, rješavanje sukoba i razmjena podataka s centralnom bazom u potpunosti su automatizirani na razini pozadinskih servisa klijentske aplikacije.
+	Glavna motivacija za razvoj financijskog sustava \textit{Allocento} proizlazi iz potrebe za osiguravanjem kontinuiteta u upravljanju podacima tijekom nestabilne mrežne povezanosti, pri čemu sustav mora ostati kolaborativan i višeslojan. U klasičnim klijent-poslužitelj arhitekturama, prekid veze tijekom CRUD (engl. \textit{Create, Read, Update, Delete}) operacija često rezultira pogreškama i nepovratnim gubitkom unesenih financijskih informacija \cite{w_rest_api}. Implementacijom inovativne PWA arhitekture temeljene na \textit{offline-first} pristupu, korisnicima \textit{Allocenta} omogućeno je nesmetano obavljanje poslovnih procesa i unos novih transakcija neovisno o trenutnom statusu mreže. Složeni procesi sinkronizacije, rješavanje sukoba i razmjena podataka s centralnom bazom u potpunosti su automatizirani na razini pozadinskih servisa klijentske aplikacije.
 
 	Arhitektura sustava pomno je osmišljena kako bi podržala navedene zahtjeve. Pozadinski dio sustava (engl. \textit{backend}) temelji se na razvojnom okviru Laravel \cite{w_laravel,b_php_mvc}, koji omogućuje izgradnju sigurnog i skalabilnog REST API-ja te efikasno upravljanje relacijskom bazom podataka PostgreSQL \cite{w_postgresql}. Prednji dio sustava (engl. \textit{frontend}) implementiran je pomoću programskog jezika TypeScript \cite{w_typescript} i radnog okvira Angular \cite{w_angular,b_html5}. Angularova napredna modularna arhitektura olakšava integraciju PWA modula, upravljanje stanjima putem reaktivnog modela \textit{Signals}, te dinamičko lokalizirano formatiranje podataka. Vizualni identitet i konzistentnost sučelja definirani su primjenom Tailwind CSS-a \cite{w_tailwind}, čime se osigurava moderno i responzivno korisničko iskustvo na svim uređajima.
 
-
-	\newpage
 	Struktura ovog diplomskog rada koncipirana je na sljedeći način:
 	
 	\begin{itemize}
-		\item U \textbf{drugom poglavlju} daje se pregled i analiza srodnih web aplikacija na tržištu, detaljno se objašnjava koncept progresivnih web aplikacija s fokusom na različite strategije predmemoriranja te se definiraju funkcionalni i nefunkcionalni zahtjevi postavljeni pred sustav Allocento.
+		\item U \textbf{drugom poglavlju} daje se pregled i analiza srodnih web aplikacija na tržištu, detaljno se objašnjava koncept progresivnih web aplikacija s fokusom na različite strategije predmemoriranja te se definiraju funkcionalni i nefunkcionalni zahtjevi postavljeni pred sustav \textit{Allocento}.
 		
 		\item U \textbf{trećem poglavlju} opisane su i obrazložene tehnologije korištene na klijentskoj i poslužiteljskoj strani, te alati za kontinuiranu integraciju i sustavi relacijskih baza podataka.
 		
@@ -232,9 +230,11 @@
 	\newpage
 	\section{ANALIZA PODRUČJA I DEFINICIJA ZAHTJEVA}
 	
+	Ovo poglavlje postavlja temelje za razvoj sustava \textit{Allocento} kroz analizu domene i specifikaciju zahtjeva. Uvodno se analiziraju srodna rješenja na tržištu i tehnološki koncept progresivnih web aplikacija, nakon čega se detaljno definiraju funkcionalni i nefunkcionalni zahtjevi koje sustav mora zadovoljiti.
+	
 	\subsection{Pregled srodnih web aplikacija}
 	
-	Trenutno je na tržištu prisutan širok spektar softverskih rješenja namijenjenih upravljanju financijama, proračunima i troškovima. Postojeća se rješenja razlikuju prema ciljanoj publici, od alata za osobne financije do složenih poslovnih sustava, te prema razini tehničke kompleksnosti. Kako bi se jasno definirao položaj i opravdala potreba za razvojem sustava "Allocento", u nastavku je prikazana analiza nekoliko srodnih rješenja.
+	Trenutno je na tržištu prisutan širok spektar softverskih rješenja namijenjenih upravljanju financijama, proračunima i troškovima. Postojeća se rješenja razlikuju prema ciljanoj publici, od alata za osobne financije do složenih poslovnih sustava, te prema razini tehničke kompleksnosti. Kako bi se jasno definirao položaj i opravdala potreba za razvojem sustava \textit{Allocento}, u nastavku je prikazana analiza nekoliko srodnih rješenja.
 	
 	\begin{enumerate}
 		
@@ -248,7 +248,7 @@
 		
 	\end{enumerate}
 	
-	Sustav "Allocento" nalazi se između jednostavnih alata za osobne financije (poput aplikacija Toshl i Hootz) i kompleksnih računovodstvenih sustava (poput QuickBooksa). Dizajniran je kao lagano kolaborativno rješenje koje organizacijama i timovima omogućuje praćenje financija po odjelima i projektima kroz koncept radnih prostora (engl. \textit{workspaces}). Istovremeno, sustav učinkovito rješava problem nestabilne mrežne povezanosti primjenom PWA arhitekture i \textit{offline-first} pristupa.
+	Sustav \textit{Allocento} nalazi se između jednostavnih alata za osobne financije (poput aplikacija Toshl i Hootz) i kompleksnih računovodstvenih sustava (poput QuickBooksa). Dizajniran je kao lagano kolaborativno rješenje koje organizacijama i timovima omogućuje praćenje financija po odjelima i projektima kroz koncept radnih prostora (engl. \textit{workspaces}). Istovremeno, sustav učinkovito rješava problem nestabilne mrežne povezanosti primjenom PWA arhitekture i \textit{offline-first} pristupa.
 	
 	\newpage
 	
@@ -277,11 +277,11 @@
 		\item \textbf{Stale-While-Revalidate (Stari podaci uz revalidaciju u pozadini):} Kombinirana strategija koja korisniku trenutno prikazuje starije podatke iz predmemorije (osiguravajući brzinu odziva), dok se u pozadini paralelno šalje mrežni zahtjev za dohvaćanje svježih podataka. Kada novi podaci stignu, predmemorija se tiho ažurira za sljedeći prikaz.
 	\end{itemize}
 	
-	Dok se za statičke resurse (HTML, CSS, JavaScript datoteke, ikone) koristi \textit{Cache API} koji je direktno integriran sa servisnim radnikom, za strukturirane i transakcijske podatke (poput financijskih transakcija u sustavu Allocento) to nije adekvatno rješenje. Za takve dinamičke poslovne podatke koristi se klijentska objektna baza podataka \textbf{IndexedDB}. IndexedDB je snažna, asinkrona, transakcijska NoSQL baza podataka ugrađena u sve moderne preglednike, koja omogućuje pohranu velikih količina strukturiranih objekata izravno na klijentu uz napredno filtriranje preko indeksa \cite{w_mdn_indexeddb}. Kombinacijom servisnog radnika za statičke resurse i IndexedDB-a za poslovne podatke, aplikacija ostvaruje arhitekturu \textit{offline-first} i postaje robusna na ispade mrežne veze.
+	Dok se za statičke resurse (HTML, CSS, JavaScript datoteke, ikone) koristi \textit{Cache API} koji je direktno integriran sa servisnim radnikom, za strukturirane i transakcijske podatke (poput financijskih transakcija u sustavu \textit{Allocento}) to nije adekvatno rješenje. Za takve dinamičke poslovne podatke koristi se klijentska objektna baza podataka \textbf{IndexedDB}. IndexedDB je snažna, asinkrona, transakcijska NoSQL baza podataka ugrađena u sve moderne preglednike, koja omogućuje pohranu velikih količina strukturiranih objekata izravno na klijentu uz napredno filtriranje preko indeksa \cite{w_mdn_indexeddb}. Kombinacijom servisnog radnika za statičke resurse i IndexedDB-a za poslovne podatke, aplikacija ostvaruje arhitekturu \textit{offline-first} i postaje robusna na ispade mrežne veze.
 	
-	\subsection{Funkcionalni zahtjevi na sustav "Allocento"}
+	\subsection{Funkcionalni zahtjevi na sustav Allocento}
 	
-	Funkcionalni zahtjevi definiraju specifične radnje, ponašanja i usluge koje sustav mora pružiti krajnjem korisniku \cite{b_sommerville}. Na temelju analize poslovnih potreba i službenog zadatka rada, identificirani su sljedeći funkcionalni zahtjevi na sustav "Allocento":
+	Funkcionalni zahtjevi definiraju specifične radnje, ponašanja i usluge koje sustav mora pružiti krajnjem korisniku \cite{b_sommerville}. Na temelju analize poslovnih potreba i službenog zadatka rada, identificirani su sljedeći funkcionalni zahtjevi na sustav \textit{Allocento}:
 	
 	\begin{itemize}
 		\item \textbf{Upravljanje korisničkim računima i autentifikacija:} Sustav mora omogućiti registraciju novih korisnika, prijavu postojećih te siguran oporavak zaporke. Također, obvezna je podrška za verifikaciju adrese e-pošte slanjem jedinstvenih verifikacijskih kodova.
@@ -305,7 +305,7 @@
 		\item \textbf{Web Push obavijesti:} Sustav mora osigurati primanje obavijesti u stvarnom vremenu (primjerice, kod primitka pozivnice za novi radni prostor), neovisno o tome je li aplikacija u tom trenutku aktivno otvorena u web pregledniku.
 	\end{itemize}
 	
-	\subsection{Nefunkcionalni zahtjevi na sustav "Allocento"}
+	\subsection{Nefunkcionalni zahtjevi na sustav Allocento}
 	
 	Nefunkcionalni zahtjevi definiraju atribute kvalitete, tehnička ograničenja te standarde koje sustav mora zadovoljiti kako bi osigurao optimalan rad, visoku razinu sigurnosti i kvalitetno korisničko iskustvo. U skladu s tim, definirani su sljedeći nefunkcionalni zahtjevi na sustav:
 	
@@ -326,8 +326,10 @@
 	
 	\section{TEHNOLOGIJE, ALATI I RAZVOJNO OKRUŽENJE}
 	
+	Ovo poglavlje daje detaljan pregled tehnološkog stoga i alata korištenih u procesu dizajna, razvoja te isporuke sustava \textit{Allocento}. Kroz iduća potpoglavlja opisane su odabrane tehnologije na poslužiteljskoj i klijentskoj strani, sustavi za upravljanje relacijskim bazama podataka, alati za oblikovanje vizualnog identiteta te DevOps platforme za kontinuiranu integraciju i isporuku koda.
+	
 	\subsection{Tehnologije na strani poslužitelja}
-	Razvoj pozadinskog dijela (engl. \textit{backend}) sustava "Allocento" zahtijevao je odabir tehnološkog stoga koji omogućuje brzu izgradnju sigurnog, skalabilnog REST API-ja visokih performansi. Za tu je svrhu odabran programski jezik PHP te radni okvir Laravel, u kombinaciji sa sustavom za autentifikaciju Laravel Sanctum.
+	Razvoj pozadinskog dijela (engl. \textit{backend}) sustava \textit{Allocento} zahtijevao je odabir tehnološkog stoga koji omogućuje brzu izgradnju sigurnog, skalabilnog REST API-ja visokih performansi. Za tu je svrhu odabran programski jezik PHP te radni okvir Laravel, u kombinaciji sa sustavom za autentifikaciju Laravel Sanctum.
 	
 	\textbf{PHP} (engl. \textit{Hypertext Preprocessor}) je široko rasprostranjeni skriptni jezik opće namjene koji se izvršava na strani poslužitelja te je primarno dizajniran za razvoj web aplikacija. Moderni PHP (inačica 8 i novije) donosi značajna poboljšanja u performansama, strogo tipiziranje podataka te podršku za moderne objektno orijentirane paradigme, što ga čini izuzetno prikladnim za razvoj složenih poslovnih sustava.
 	
@@ -344,15 +346,15 @@
 	
 	\textbf{Laravel Sanctum} pruža jednostavan i siguran sustav za autentifikaciju jednostraničnih web aplikacija (engl. \textit{Single Page Applications} – SPA) i mobilnih aplikacija. U sustavu Allocento, Sanctum se koristi za autentifikaciju klijenta izdavanjem API tokena (engl. \textit{API tokens}) nakon uspješne prijave korisnika. Ti se tokeni pohranjuju na klijentskoj strani te šalju u zaglavlju svakog HTTP zahtjeva (\texttt{Authorization: Bearer token}), omogućujući siguran pristup zaštićenim API rutama.
 	
-	\textbf{REST API} (engl. \textit{Representational State Transfer}) predstavlja arhitektonski stil za razvoj distribuiranih hipermedijskih sustava. API u sustavu Allocento temelji se na principima REST-a, što podrazumijeva upotrebu standardnih HTTP metoda (GET za dohvaćanje, POST za kreiranje, PUT za ažuriranje i DELETE za brisanje resursa) i razmjenu podataka isključivo u strukturiranom formatu JSON (engl. \textit{JavaScript Object Notation}).
+	\textbf{REST API} (engl. \textit{Representational State Transfer}) predstavlja arhitektonski stil za razvoj distribuiranih hipermedijskih sustava. API u sustavu \textit{Allocento} temelji se na principima REST-a, što podrazumijeva upotrebu standardnih HTTP metoda (GET za dohvaćanje, POST za kreiranje, PUT za ažuriranje i DELETE za brisanje resursa) i razmjenu podataka isključivo u strukturiranom formatu JSON (engl. \textit{JavaScript Object Notation}).
 	
 	\newpage
 
 	\subsection{Tehnologije na strani klijenta}
 	
-	Klijentski dio (engl. \textit{frontend}) sustava Allocento razvijen je kao progresivna web aplikacija pomoću razvojnog okvira Angular, programskog jezika TypeScript te tehnologija za lokalnu pohranu i konfiguraciju PWA značajki.
+	Klijentski dio (engl. \textit{frontend}) sustava \textit{Allocento} razvijen je kao progresivna web aplikacija pomoću razvojnog okvira Angular, programskog jezika TypeScript te tehnologija za lokalnu pohranu i konfiguraciju PWA značajki.
 	
-	\textbf{Angular} je klijentski radni okvir otvorenog koda temeljen na programskom jeziku TypeScript, koji razvija i održava tvrtka Google. Angular se odlikuje modularnom arhitekturom i prikladan je za izgradnju robusnih jednostraničnih web aplikacija (SPA). U razvoju sustava Allocento korištene su moderne značajke Angulara:
+	\textbf{Angular} je klijentski radni okvir otvorenog koda temeljen na programskom jeziku TypeScript, koji razvija i održava tvrtka Google. Angular se odlikuje modularnom arhitekturom i prikladan je za izgradnju robusnih jednostraničnih web aplikacija (SPA). U razvoju sustava \textit{Allocento} korištene su moderne značajke Angulara:
 	\begin{itemize}
 		\item \textbf{Samostalne komponente (engl. \textit{Standalone Components}):} Pojednostavljuju strukturu projekta eliminirajući potrebu za klasičnim modulima (\texttt{NgModule}), čime se smanjuje količina popratnog koda (engl. \textit{boilerplate}) i ubrzava učitavanje.
 		
@@ -361,7 +363,7 @@
 	
 	\textbf{TypeScript} je programski jezik otvorenog koda koji predstavlja strogo tipizirani nadskup (engl. \textit{superset}) jezika JavaScript. Sav programski kôd pisan u TypeScriptu prevodi se u standardni JavaScript kako bi se mogao izvršavati u bilo kojem web pregledniku. Glavne prednosti TypeScripta obuhvaćaju statičku provjeru tipova, poboljšanu podršku u razvojnim okruženjima (automatsko dovršavanje koda, refaktoriranje) te bolju čitljivost i održivost koda u većim i složenijim projektima.
 	
-	\textbf{IndexedDB i prilagođeni LocalDbService:} IndexedDB je klijentski NoSQL sustav baze podataka ugrađen u web preglednik, a namijenjen je pohrani strukturiranih podataka. Za razliku od \textit{LocalStoragea}, koji ima ograničen kapacitet i sinkronu izvedbu, IndexedDB radi asinkrono i podržava transakcije. U sustavu Allocento, radi lakšeg upravljanja ovim asinkronim operacijama, razvijena je namjenska klijentska klasa \textbf{LocalDbService}. Navedena klasa enkapsulira nativne IndexedDB pozive i transakcije u asinkrone JavaScript objekte (engl. \textit{Promises}). Ovaj se servis koristi za privremeno spremanje transakcija kada je uređaj izvan mreže te za lokalno predmemoriranje podataka.
+	\textbf{IndexedDB i prilagođeni LocalDbService:} IndexedDB je klijentski NoSQL sustav baze podataka ugrađen u web preglednik, a namijenjen je pohrani strukturiranih podataka. Za razliku od \textit{LocalStoragea}, koji ima ograničen kapacitet i sinkronu izvedbu, IndexedDB radi asinkrono i podržava transakcije. U sustavu \textit{Allocento}, radi lakšeg upravljanja ovim asinkronim operacijama, razvijena je namjenska klijentska klasa \textbf{LocalDbService}. Navedena klasa enkapsulira nativne IndexedDB pozive i transakcije u asinkrone JavaScript objekte (engl. \textit{Promises}). Ovaj se servis koristi za privremeno spremanje transakcija kada je uređaj izvan mreže te za lokalno predmemoriranje podataka.
 	
 	\textbf{Angular Service Worker (ngsw):} Za konfiguraciju PWA funkcionalnosti korišten je službeni Angularov paket \texttt{@angular/service-worker}. On automatski generira servisnog radnika na temelju konfiguracijske datoteke \texttt{ngsw-config.json}, upravlja lokalnim predmemoriranjem statičkih resursa (HTML, CSS, JavaScript datoteke, ikone) te omogućuje integraciju s preglednikovim sustavom za primanje pozadinskih obavijesti (engl. \textit{Web Push Notifications}) putem servisa \texttt{SwPush}.
 
@@ -369,13 +371,13 @@
 	
 	Za definiranje dizajnerskih smjernica, logotipa, tipografije i palete boja korištena je platforma \textbf{Logology}. Logology je specijalizirani alat za automatizirano brendiranje i kreiranje vizualnog identiteta softverskih proizvoda. 
 	
-	Na temelju dizajnerskog profila sustava Allocento, odabrana je paleta boja s naglašenim tamnim i svijetlim tonovima te specifični fontovi (\textit{Space Mono} i \textit{Roboto}). Ove su smjernice potom prenesene u klijentski dio sustava u obliku globalnih CSS varijabli (engl. \textit{CSS custom properties}), čime se postigla vizualna dosljednost, responzivnost i vrhunsko korisničko iskustvo (engl. \textit{premium UX}).
+	Na temelju dizajnerskog profila sustava \textit{Allocento}, odabrana je paleta boja s naglašenim tamnim i svijetlim tonovima te specifični fontovi (\textit{Space Mono} i \textit{Roboto}). Ove su smjernice potom prenesene u klijentski dio sustava u obliku globalnih CSS varijabli (engl. \textit{CSS custom properties}), čime se postigla vizualna dosljednost, responzivnost i vrhunsko korisničko iskustvo (engl. \textit{premium UX}).
 
 	\subsection{Sustav za upravljanje relacijskim bazama podataka i web poslužitelj}
 	
 	Upravljanje podacima na strani poslužitelja organizirano je kroz hibridni pristup, ovisno o okruženju u kojem se aplikacija izvršava. Za posluživanje aplikacije i usmjeravanje prometa odabran je Nginx \cite{w_nginx}.
 	
-	\textbf{SQLite} je lagana, ugrađena relacijska baza podataka koja ne zahtijeva zaseban poslužiteljski proces niti složenu konfiguraciju \cite{w_sqlite}. U sustavu Allocento koristi se isključivo u lokalnom razvojnom okruženju i za izvođenje automatiziranih testova. Glavna prednost ovakvog pristupa je jednostavnost postavljanja i brza inicijalizacija testova bez potrebe za održavanjem kompleksnog poslužitelja.
+	\textbf{SQLite} je lagana, ugrađena relacijska baza podataka koja ne zahtijeva zaseban poslužiteljski proces niti složenu konfiguraciju \cite{w_sqlite}. U sustavu \textit{Allocento} koristi se isključivo u lokalnom razvojnom okruženju i za izvođenje automatiziranih testova. Glavna prednost ovakvog pristupa je jednostavnost postavljanja i brza inicijalizacija testova bez potrebe za održavanjem kompleksnog poslužitelja.
 	
 	\textbf{PostgreSQL} je napredni objektno-relacijski sustav poznat po pouzdanosti i usklađenosti s ACID standardima \cite{w_postgresql}, stoga se koristi isključivo u produkcijskom okruženju. Za razliku od SQLite-a koji zaključava cijelu datoteku, PostgreSQL koristi napredni sustav upravljanja konkurentnošću (MVCC), što osigurava visoke performanse pri pristupu velikog broja korisnika. Također, podržava napredne metode indeksiranja i omogućuje sigurno skaliranje cjelokupnog sustava. Prebacivanje između sustava izvedeno je besprijekorno kroz apstrakcijski sloj Eloquent ORM-a u okviru Laravel.
 	
@@ -385,7 +387,7 @@
 	
 	Kontinuirana integracija i isporuka (CI/CD), kao i suradnja na razvoju koda, ostvareni su primjenom sustava Git, platforme GitHub te GitHub Actions servisa.
 	
-	\textbf{Git} je distribuirani sustav kontrole verzija koji omogućuje grananje koda (engl. \textit{branching}) radi neovisnog razvoja značajki i njihovo naknadno spajanje (engl. \textit{merging}). \textbf{GitHub} služi kao centralno mjesto za pohranu kôda sustava Allocento te olakšava timski rad i sustavni pregled kôda (engl. \textit{code review}).
+	\textbf{Git} je distribuirani sustav kontrole verzija koji omogućuje grananje koda (engl. \textit{branching}) radi neovisnog razvoja značajki i njihovo naknadno spajanje (engl. \textit{merging}). \textbf{GitHub} služi kao centralno mjesto za pohranu kôda sustava \textit{Allocento} te olakšava timski rad i sustavni pregled kôda (engl. \textit{code review}).
 	
 	\textbf{GitHub Actions} platforma automatizira proces razvoja na GitHubovim poslužiteljima \cite{w_github_actions}. Automatizirani radni tijek (\textit{workflow}) definiran u datoteci \texttt{deploy.yml} pokreće se pri svakom prijenosu novih izmjena. On obuhvaća proces izgradnje klijentske aplikacije, provjeru ispravnosti kôda poslužiteljske strane te prijenos artefakata na produkcijski poslužitelj, čime se osigurava automatizirana isporuka programske podrške.
 	
@@ -393,9 +395,11 @@
 	
 	\section{ARHITEKTURA I DIZAJN SUSTAVA}
 	
+	Ovo poglavlje detaljno opisuje cjelokupnu arhitekturu i dizajn sustava \textit{Allocento}. Kroz iduća potpoglavlja razrađena je konceptualna arhitektura, slojevita struktura klijentskog i poslužiteljskog dijela aplikacije te model relacijske baze podataka koji osigurava pouzdano i sigurno upravljanje financijskim entitetima.
+	
 	\subsection{Konceptualna arhitektura}
 		
-	Sustav "Allocento" temelji se na klijent-poslužitelj (engl. \textit{client-server}) arhitekturi s jasnim razdvajanjem odgovornosti. Klijentski dio sustava razvijen je kao jednostranična progresivna web aplikacija (PWA), dok pozadinska strana funkcionira kao REST API bez stanja (engl. \textit{stateless}).
+	Sustav \textit{Allocento} temelji se na klijent-poslužitelj (engl. \textit{client-server}) arhitekturi s jasnim razdvajanjem odgovornosti. Klijentski dio sustava razvijen je kao jednostranična progresivna web aplikacija (PWA), dok pozadinska strana funkcionira kao REST API bez stanja (engl. \textit{stateless}).
 	
 	Koncept PWA donosi specifičnu arhitektonsku strukturu u kojoj klijentski dio ne komunicira izravno s računalnom mrežom, već sve mrežne interakcije na razini web preglednika presreće servisni radnik (engl. \textit{Service Worker}). Servisni radnik djeluje kao mrežni posrednik i samostalno upravlja lokalnim predmemoriranjem statičkih resursa sustava.
 	
@@ -607,15 +611,17 @@
 	
 	
 	\newpage
-	\section{IMPLEMENTACIJA SUSTAVA "ALLOCENTO"}
+	\section{IMPLEMENTACIJA SUSTAVA Allocento}
+	
+	U ovom je poglavlju detaljno opisana tehnička izvedba i praktična implementacija svih slojeva programskog sustava \textit{Allocento}. Razmatra se razvoj pozadinskog REST API-ja i mehanizama za sinkronizaciju podataka, strukturiranje klijentskih komponenti i reaktivnog upravljanja stanjima, primjena vizualnog identiteta te uspostava automatiziranog cjevovoda za kontinuiranu integraciju i isporuku aplikacije.
 	
 	\subsection{Implementacija REST API-ja i upravljanje tokovima podataka}
 	
-	Pozadinski dio sustava (engl. \textit{backend}) Allocento razvijen je kao usluga REST API koja klijentskoj strani pruža kontrolirani pristup resursima baze podataka na temelju sigurnih i standardiziranih komunikacijskih protokola. 
+	Pozadinski dio sustava (engl. \textit{backend}) \textit{Allocento} razvijen je kao usluga REST API koja klijentskoj strani pruža kontrolirani pristup resursima baze podataka na temelju sigurnih i standardiziranih komunikacijskih protokola. 
 	
 	Autentifikacija korisnika temelji se na tokenima, a ostvarena je primjenom paketa \textbf{Laravel Sanctum}. Nakon uspješne registracije ili prijave korisnika, poslužitelj generira jedinstveni token i vraća ga klijentu. Klijentski dio sustava pohranjuje zaprimljeni token u lokalnu pohranu uređaja te ga prilaže u zaglavlju svakog sljedećeg HTTP zahtjeva (\texttt{Authorization: Bearer token}). API rute koje zahtijevaju autorizaciju zaštićene su ugrađenom posredničkom programskom opremom (engl. \textit{middleware}) \texttt{auth:sanctum}, koja provjerava valjanost tokena prije dopuštanja izvršavanja same logike unutar kontrolera.
 	
-	Ključni aspekt implementacije aplikacijskog programskog sučelja (API) u sustavu Allocento je osiguravanje stroge izolacije radnih prostora (engl. \textit{workspace scoping}). Budući da korisnici mogu sudjelovati u više različitih domena (osobni, zajednički ili poslovni prostori), sustav mora jamčiti da trenutni korisnik može pristupati ili modificirati isključivo one podatke koji pripadaju trenutno aktivnom prostoru. U tu svrhu razvijen je prilagođeni posrednički sloj \textbf{WorkspaceMiddleware}.
+	Ključni aspekt implementacije aplikacijskog programskog sučelja (API) u sustavu Allocento je osiguravanje stroge izolacije radnih prostora (engl. \textit{workspace scoping}). Budući da korisnici mogu sudjelovati u više različitih domena (osobni, zajednički ili poslovni prostori), sustav mora jamčiti da trenutni korisnik može pristupati ili modificirati isključivo one podatke koji pripadaju trenutno aktivnom prostoru. U tu svrhu razvijen je prilagođeni posrednički sloj \texttt{WorkspaceMiddleware}.
 	
 	Navedena posrednička programska oprema presreće svaki HTTP zahtjev upućen prema zaštićenim rutama. Iz zaglavlja zahtjeva dohvaća se parametar \texttt{X-Workspace-Id}, nakon čega se provjerava postoji li definirani radni prostor u bazi podataka te posjeduje li prijavljeni korisnik valjanu ulogu i članstvo unutar njega. Ako su provjere uspješne, posrednik učitava objekt radnog prostora iz baze podataka i sprema ga izravno u atribute zahtjeva pod ključem \texttt{\_workspace}. Time je kontrolerima omogućeno da trenutno pristupe podacima aktivnog konteksta putem poziva \texttt{\$request->get('\_workspace')}, bez potrebe za ponavljanjem upita i redundantnim provjerama prava pristupa.
 	
@@ -645,7 +651,7 @@
 		
 	\subsection{Primjena vizualnog identiteta}
 	
-	Dizajnerske smjernice i vizualni identitet sustava Allocento definirani su pomoću platforme Logology, s ciljem oblikovanja modernog, intuitivnog i prepoznatljivog korisničkog sučelja koje osigurava visoku razinu interakcije i zadovoljstva korisnika.
+	Dizajnerske smjernice i vizualni identitet sustava \textit{Allocento} definirani su pomoću platforme Logology, s ciljem oblikovanja modernog, intuitivnog i prepoznatljivog korisničkog sučelja koje osigurava visoku razinu interakcije i zadovoljstva korisnika.
 	
 	Integracija vizualnog identiteta u programski kôd klijentskog dijela aplikacije ostvarena je definiranjem elemenata dizajnerskog sustava (engl. \textit{design tokens}) unutar globalne CSS datoteke. Unutar pseudo-klase \texttt{:root} deklarirane su prilagođene CSS varijable (engl. \textit{CSS custom properties}) koje predstavljaju temeljne dizajnerske atribute aplikacije:
 	\begin{itemize}
@@ -666,7 +672,7 @@
 	
 	Usmjeravanje (engl. \textit{routing}) unutar aplikacije definirano je u konfiguracijskoj datoteci \texttt{app.routes.ts}. U svrhu optimizacije performansi i brzine odziva sučelja, implementirano je odgođeno učitavanje (engl. \textit{lazy loading}) pomoću funkcije \texttt{loadComponent}. Navedeni mehanizam osigurava da preglednik preuzima programski kôd za specifične segmente aplikacije (poput nadzorne ploče, izvještaja ili postavki) tek u trenutku kada korisnik inicira navigaciju prema njima. Time se značajno reducira veličina početnog paketa aplikacije (engl. \textit{initial bundle size}) i ubrzava inicijalno iscrtavanje stranice.
 	
-	Upravljanje stanjem aplikacije i reaktivnost korisničkog sučelja u potpunosti su realizirani primjenom \textbf{Angular Signala} (engl. \textit{Angular Signals}), novog reaktivnog primitiva koji omogućuje granularnu kontrolu nad promjenama stanja. Unutar sustava Allocento, signali su primijenjeni za sljedeće ključne funkcionalnosti:
+	Upravljanje stanjem aplikacije i reaktivnost korisničkog sučelja u potpunosti su realizirani primjenom \textbf{Angular Signala} (engl. \textit{Angular Signals}), novog reaktivnog primitiva koji omogućuje granularnu kontrolu nad promjenama stanja. Unutar sustava \textit{Allocento}, signali su primijenjeni za sljedeće ključne funkcionalnosti:
 	\begin{itemize}
 		\item \textbf{Praćenje aktivnog konteksta:} Servis \texttt{WorkspaceService} izlaže signal \texttt{activeWorkspace}, deklariran kao \texttt{signal<Workspace | null>(null)}. Prilikom korisničkog prebacivanja u drugi radni prostor, vrijednost signala se ažurira, što potiče automatsko i trenutačno ponovno iscrtavanje svih komponenti koje ovise o tom signalu s novim, kontekstualno relevantnim podacima.
 		
@@ -678,7 +684,7 @@
 	\newpage
 		
 	\subsection{Konfiguracija PWA funkcionalnosti i servisnih radnika}
-	Razvoj progresivne web aplikacije zahtijeva konfigurisanje servisnog radnika (engl. \textit{Service Worker}) koji upravlja predmemoriranjem (engl. \textit{caching}) statičkih resursa kako bi aplikacija bila dostupna u izvanmrežnom načinu rada. U klijentskom dijelu sustava Allocento, ova se konfiguracija nalazi unutar datoteke \texttt{ngsw-config.json}.
+	Razvoj progresivne web aplikacije zahtijeva konfigurisanje servisnog radnika (engl. \textit{Service Worker}) koji upravlja predmemoriranjem (engl. \textit{caching}) statičkih resursa kako bi aplikacija bila dostupna u izvanmrežnom načinu rada. U klijentskom dijelu sustava \textit{Allocento}, ova se konfiguracija nalazi unutar datoteke \texttt{ngsw-config.json}.
 	
 	Konfiguracijska datoteka definira pravila predmemoriranja podijeljena u dvije glavne skupine:
 	\begin{enumerate}
@@ -694,7 +700,7 @@
 
 	\subsubsection{Integracija i konfiguracija Web Push obavijesti}
 	
-	Obavijesti sustava (engl. \textit{Web Push Notifications}) omogućuju poslužitelju asinkrono slanje informacija klijentu čak i kada aplikacija nije aktivna u pregledniku. Implementacija ovog podsustava u Allocentu koristi \textit{Push API} i \textit{Notification API} standarde te se temelji na tri entiteta: klijentskom pregledniku, posredničkom Push servisu preglednika i Laravel poslužitelju aplikacije.
+	Obavijesti sustava (engl. \textit{Web Push Notifications}) omogućuju poslužitelju asinkrono slanje informacija klijentu čak i kada aplikacija nije aktivna u pregledniku. Implementacija ovog podsustava u \textit{Allocentu} koristi \textit{Push API} i \textit{Notification API} standarde te se temelji na tri entiteta: klijentskom pregledniku, posredničkom Push servisu preglednika i Laravel poslužitelju aplikacije.
 	
 	Za osiguravanje privatnosti i autentičnosti pošiljatelja koristi se protokol \textbf{VAPID} (engl. \textit{Voluntary Application Server Identification}) \cite{w_rfc8292_vapid}. Na poslužiteljskoj strani generira se par kriptografskih ključeva: javni i privatni VAPID ključ.
 	
@@ -709,9 +715,9 @@
 		\item Kada na poslužitelju nastupi definirani događaj (npr. slanje pozivnice za radni prostor), Laravel pokreće pozadinski posao (engl. \textit{background job}) koji uz pomoć privatnog VAPID ključa šifrira poruku i šalje je na adresu definiranu u objektu pretplate. Push servis zaprima poruku, identificira ciljani uređaj i isporučuje je pregledniku, koji potom pokreće servisnog radnika u pozadini u svrhu vizualnog prikaza obavijesti korisniku.
 	\end{enumerate}
 
-	\subsubsection{Sinkronizacija podataka u izvanmrežnom načinu rada (Bulk Sync)}
+	\subsubsection{Sinkronizacija podataka u izvanmrežnom načinu rada}
 	
-	Jedan od kompleksnijih izazova pri razvoju sustava Allocento bio je osiguravanje konzistentnosti podataka i kontinuiranog rada u uvjetima mrežne nedostupnosti. Rješenje je implementirano kombinacijom klijentske \textit{IndexedDB} baze podataka (putem prilagođenog servisa \texttt{LocalDbService}), upravljanjem lokalnim stanjima te jedinstvenom krajnjom točkom (engl. \textit{endpoint}) za skupnu sinkronizaciju na poslužitelju.
+	Jedan od kompleksnijih izazova pri razvoju sustava \textit{Allocento} bio je osiguravanje konzistentnosti podataka i kontinuiranog rada u uvjetima mrežne nedostupnosti. Rješenje je implementirano kombinacijom klijentske \texttt{IndexedDB} baze podataka (putem prilagođenog servisa \texttt{LocalDbService}), upravljanjem lokalnim stanjima te jedinstvenom krajnjom točkom (engl. \textit{endpoint}) za skupnu sinkronizaciju (engl. \textit{bulk sync}) na poslužitelju.
 	
 	Kada korisnik izvrši CRUD operaciju (npr. unos nove transakcije) dok je uređaj u izvanmrežnom načinu rada, proces se odvija kroz sljedeće korake:
 	\begin{enumerate}
@@ -912,9 +918,8 @@ public function sync(Request $request): JsonResponse
 }
 \end{lstlisting}
 
-		\newpage
 
-	\subsection{Automatizacija implementacije aplikacije (CI/CD cjevovod)}
+	\subsection{Automatizacija implementacije aplikacije}
 
 	Uvođenje suvremenih DevOps praksi osigurano je konfiguracijom CI/CD cjevovoda (engl. \textit{CI/CD pipeline}) pomoću platforme GitHub Actions. Datoteka \texttt{deploy.yml} definira automatizirani proces isporuke kôda na produkcijski poslužitelj čim se promjene spoje (engl. \textit{merge}) s glavnom granom (\texttt{main}) repozitorija.
 	
@@ -951,11 +956,11 @@ public function sync(Request $request): JsonResponse
 	\newpage
 	\section{KORISNIČKO SUČELJE I PRIKAZ RADA APLIKACIJE}
 	
-	U ovom je poglavlju prikazan praktični rad i vizualni izgled aplikacije Allocento kroz ključne korisničke tokove. Prikazi zaslona (engl. \textit{screenshots}) demonstriraju primjenu definiranog vizualnog identiteta i izgled korisničkog sučelja optimiziranog za mobilne uređaje.
+	U ovom je poglavlju prikazan praktični rad i vizualni izgled aplikacije \textit{Allocento} kroz ključne korisničke tokove. Prikazi zaslona (engl. \textit{screenshots}) demonstriraju primjenu definiranog vizualnog identiteta i izgled korisničkog sučelja optimiziranog za mobilne uređaje.
 	
 	\subsection{Autentifikacija, autorizacija i upravljanje ulogama u timu}
 	
-	Inicijalni korak pri korištenju aplikacije Allocento je autentifikacija korisnika. Korisničko sučelje za prijavu i registraciju oblikovano je s fokusom na jednostavnost i preglednost, u potpunosti usklađeno s brendiranim bojama.
+	Inicijalni korak pri korištenju aplikacije \textit{Allocento} je autentifikacija korisnika. Korisničko sučelje za prijavu i registraciju oblikovano je s fokusom na jednostavnost i preglednost, u potpunosti usklađeno s brendiranim bojama.
 	
 	Stranica za registraciju zahtijeva unos imena, adrese elektroničke pošte i lozinke. Nakon slanja podataka, pozadinski dio sustava u Laravelu šalje verifikacijsku e-poruku koja sadrži jedinstveni kod za potvrdu računa. Korisnik navedeni kod mora unijeti unutar sučelja aplikacije kako bi uspješno verificirao svoju adresu elektroničke pošte. Dok adresa elektroničke pošte nije verificirana, klijentski dio sustava onemogućuje pristup glavnim financijskim funkcijama i prikazuje obavijest o potrebi verifikacije. Prijava se izvršava unosom adrese elektroničke pošte i lozinke, nakon čega se generira Sanctum token koji klijent pohranjuje u lokalnu memoriju uređaja, a korisnik se preusmjerava na nadzornu ploču. Sučelje za autentifikaciju prikazano je na slici \ref{fig:login-registration}.
 
@@ -1014,8 +1019,8 @@ public function sync(Request $request): JsonResponse
 	
 	\newpage
 
-	\subsubsection{Formatiranje iznosa i \texttt{AmountInputDirective}}
-	Obzirom na to da financijske aplikacije zahtijevaju visoku preciznost, implementirana je prilagođena Angular direktiva \texttt{AmountInputDirective}. Navedena direktiva osigurava formatiranje unosa iznosa u stvarnom vremenu prilikom tipkanja. Uneseni brojevi automatski se pretvaraju u standardizirani financijski format s dvije decimale te se sprječava unos nevaljanih znakova, pružajući korisniku intuitivno iskustvo u potpunosti prilagođeno njegovim regionalnim postavkama (engl. \textit{locale}).
+	\subsubsection{Oblikovanje novčanih iznosa i direktiva za unos}
+	Obzirom na to da financijske aplikacije zahtijevaju visoku preciznost, unutar sustava \textit{Allocento} implementirana je prilagođena Angular direktiva za unos iznosa (\texttt{AmountInputDirective}). Navedena direktiva osigurava oblikovanje (engl. \textit{formatting}) unosa iznosa u stvarnom vremenu prilikom tipkanja. Uneseni brojevi automatski se pretvaraju u standardizirani financijski format s dvije decimale te se ujedno sprječava unos nevaljanih znakova. Time se korisniku pruža intuitivno iskustvo koje je u potpunosti prilagođeno njegovim regionalnim postavkama (engl. \textit{locale}).
 	
 	\subsubsection{Detaljni izvještaji i izvoz podataka}
 
@@ -1033,15 +1038,15 @@ public function sync(Request $request): JsonResponse
 	\newpage
 
 	\subsection{Prikaz rada sustava u izvanmrežnom načinu rada}
-	Ključna prednost progresivne web aplikacije Allocento je sposobnost rada bez internetske veze. Kada klijentski uređaj izgubi mrežnu vezu, aplikacija ne prekida rad niti prikazuje standardnu pogrešku preglednika o nedostupnosti mreže, već se ponaša na sljedeći način:
+	Ključna prednost progresivne web aplikacije \textit{Allocento} je sposobnost rada bez internetske veze. Kada klijentski uređaj izgubi mrežnu vezu, aplikacija ne prekida rad niti prikazuje standardnu pogrešku preglednika o nedostupnosti mreže, već se ponaša na sljedeći način:
 	\begin{itemize}
-		\item \textbf{Indikator izvanmrežnog rada:} U zaglavlju aplikacije pokraj logotipa pojavljuje se uočljiva narančasta značka s natpisom "Izvanmrežno" (engl. \textit{offline indicator}).
+		\item \textbf{Indikator izvanmrežnog rada:} U zaglavlju aplikacije pokraj logotipa pojavljuje se uočljiva narančasta značka s natpisom \textit{Izvanmrežno} (engl. \textit{offline indicator}).
 		
 		\item \textbf{Ograničenje sinkronizacijskih akcija:} Izbornik za promjenu radnog prostora se privremeno zaključava ili se prikazuju isključivo predmemorirani podaci, budući da prelazak u novi radni prostor zahtijeva dohvaćanje svježih podataka s poslužitelja.
 		
-		\item \textbf{Unos transakcije u izvanmrežnom načinu rada:} Korisnik može nesmetano otvoriti formu za dodavanje transakcije, odabrati račun, iznos i kategoriju (koji su učitani iz lokalne baze IndexedDB) te potvrditi unos.
+		\item \textbf{Unos transakcije u izvanmrežnom načinu rada:} Korisnik može nesmetano otvoriti formu za dodavanje transakcije, odabrati račun, iznos i kategoriju (koji su učitani iz lokalne baze \texttt{IndexedDB}) te potvrditi unos.
 		
-		\item \textbf{Prikaz u povijesti:} Transakcija se trenutačno iscrtava na popisu transakcija i izravno utječe na ukupni saldo prikazan na ekranu, ali je vizualno označena oznakom "izvanmrežno" (ili "offline"), čime se korisniku jasno signalizira da zapis još nije sinkroniziran s poslužiteljem.
+		\item \textbf{Prikaz u povijesti:} Transakcija se trenutačno iscrtava na popisu transakcija i izravno utječe na ukupni saldo prikazan na ekranu, ali je vizualno označena oznakom \textit{Izvanmrežno} (ili engl. \textit{Offline}), čime se korisniku jasno signalizira da zapis još nije sinkroniziran s poslužiteljem.
 	\end{itemize}
 	Prikaz sučelja u izvanmrežnom načinu rada s vidljivim indikatorom i transakcijom na čekanju prikazan je na slici \ref{fig:offline-state}.
 
@@ -1054,11 +1059,11 @@ public function sync(Request $request): JsonResponse
 
 	U trenutku kada se mrežna veza ponovno uspostavi, sustav automatski inicira proces sinkronizacije:
 	\begin{itemize}
-		\item Značka "Izvanmrežno" u zaglavlju nestaje čim se uspostavi veza, vizualno označavajući povratak u mrežni rad.
+		\item Značka \textit{Izvanmrežno} u zaglavlju nestaje čim se uspostavi veza, vizualno označavajući povratak u mrežni rad.
 		
 		\item Klijent šalje skupni paket podataka (engl. \textit{Bulk Sync}) na poslužitelj. Nakon uspješne obrade na poslužitelju, klijent zaprima stvarni identifikator (ID) transakcije i njime zamjenjuje privremeni negativni ID unutar lokalne IndexedDB pohrane.
 		
-		\item Značka "Izvanmrežno" (\textit{pending sync}) pokraj transakcije nestaje, što označava da je podatak uspješno sinkroniziran s glavnom PostgreSQL bazom podataka.
+		\item Značka \textit{Izvanmrežno} (engl. \textit{pending sync}) pokraj transakcije nestaje, što označava da je podatak uspješno sinkroniziran s glavnom PostgreSQL bazom podataka.
 		
 		\item Korisniku se isporučuje obavijest sustava (engl. \textit{Web Push Notification}) koja potvrđuje uspješnu sinkronizaciju svih lokalnih unosa, čak i ukoliko je u tom trenutku minimizirao aplikaciju.
 	\end{itemize}
@@ -1075,26 +1080,26 @@ public function sync(Request $request): JsonResponse
 	\newpage
 	
 	
-	\section{ZAKLJUČAK I BUDUĆI RAD}
+	\section{ZAKLJUČAK}
 	
-	U ovom je diplomskom radu osmišljen, dizajniran i implementiran sustav "Allocento" – progresivna web aplikacija (PWA) namijenjena naprednom upravljanju financijskim tokovima za pojedince, timove i mala poduzeća. Razvoj sustava uspješno je odgovorio na ključne izazove suvremenih web aplikacija: osiguravanje visoke reaktivnosti korisničkog sučelja, podršku za timsku kolaboraciju uz strogu izolaciju radnih prostora te postizanje kontinuiteta rada u uvjetima nestabilne internetske veze.
+	U ovom je diplomskom radu osmišljen, dizajniran i implementiran sustav \textit{Allocento} – progresivna web aplikacija (PWA) namijenjena naprednom upravljanju financijskim tokovima za pojedince, timove i mala poduzeća. Razvoj sustava uspješno je odgovorio na ključne izazove suvremenih web aplikacija: osiguravanje visoke reaktivnosti korisničkog sučelja, podršku za timsku kolaboraciju uz strogu izolaciju radnih prostora te postizanje kontinuiteta rada u uvjetima nestabilne internetske veze.
 	
 	Odabrani tehnološki stog pokazao se iznimno sinergijskim. Pozadinski sustav temeljen na radnom okviru Laravel (PHP) omogućio je brz i siguran razvoj REST API-ja, robusnu validaciju podataka te jednostavnu integraciju Web Push protokola. Klijentski dio, razvijen u radnom okviru Angular 17+, iskoristio je prednosti samostalnih komponenti za postizanje modularnosti i učinkovitog učitavanja, dok je primjena Angular Signala omogućila preciznu reaktivnost, čime se eliminirala potreba za složenim vanjskim bibliotekama za upravljanje stanjem aplikacije.
 	
-	Tehnički doprinos rada ponajprije se očituje u implementaciji izvanmrežnog rada (\textit{offline mode}) i sinkronizacijskog mehanizma. Korištenjem IndexedDB-a, integriranog putem klijentske servisne klase \texttt{LocalDbService}, kreiran je repozitorijski sloj koji presreće mrežne zahtjeve i omogućuje neprekidno izvođenje CRUD operacija. Implementacijom privremenih negativnih primarnih ključeva i lokalnog reda čekanja postignuto je trenutačno ažuriranje korisničkog sučelja. Pri ponovnoj uspostavi internetske veze, razvijeni algoritam za skupnu sinkronizaciju (\textit{Bulk Sync}) objedinjuje sve promjene unutar jednog HTTP zahtjeva, koje se potom na poslužitelju obrađuju unutar jedne SQL transakcije i povezuju uz trajne identifikatore u bazi podataka PostgreSQL. Time je osigurana konzistentnost podataka uz minimalno opterećenje mrežnih resursa.
+	Tehnički doprinos rada ponajprije se očituje u implementaciji izvanmrežnog rada (\textit{offline mode}) i sinkronizacijskog mehanizma. Korištenjem IndexedDB-a, integriranog putem klijentske servisne klase \texttt{LocalDbService}, kreiran je repozitorijski sloj koji presreće mrežne zahtjeve i omogućuje neprekidno izvođenje CRUD operacija. Implementacijom privremenih negativnih primarnih ključeva i lokalnog reda čekanja postignuto je trenutačno ažuriranje korisničkog sučelja. Pri ponovnoj uspostavi internetske veze, razvijeni algoritam za skupnu sinkronizaciju (engl. \textit{Bulk Sync}) objedinjuje sve promjene unutar jednog HTTP zahtjeva, koje se potom na poslužitelju obrađuju unutar jedne SQL transakcije i povezuju uz trajne identifikatore u bazi podataka PostgreSQL. Time je osigurana konzistentnost podataka uz minimalno opterećenje mrežnih resursa.
 	
 	Uspostavljeni CI/CD cjevovod na platformi GitHub Actions automatizirao je proces izgradnje i isporuke na produkcijski poslužitelj, čime su znatno skraćeni ciklusi razvoja i smanjena mogućnost ljudske pogreške pri implementaciji.
 	
-	Iako sustav "Allocento" u trenutačnom stanju predstavlja potpuno funkcionalnu aplikaciju, identificirano je nekoliko smjernica za budući razvoj i nadogradnju:
+	Iako sustav \textit{Allocento} u trenutačnom stanju predstavlja potpuno funkcionalnu aplikaciju, identificirano je nekoliko smjernica za budući razvoj i nadogradnju:
 	
 	\begin{enumerate}
 		\item \textbf{Korisničko sučelje za spajanje kategorija:} Iako pozadinski sustav u potpunosti podržava logiku spajanja kategorija transakcija (prenoseći sve povezane entitete uz brisanje stare kategorije), potrebno je razviti intuitivno sučelje koje će korisnicima olakšati ovu operaciju tijekom reorganizacije financijskih izvještaja.
 		
-		\item \textbf{Sučelje za predloške transakcija:} Implementacija sučelja za upravljanje predlošcima ponavljajućih transakcija (\textit{RecurringTemplate}), čime bi se korisnicima olakšalo definiranje periodičkih obveza (npr. najamnine, pretplate).
+		\item \textbf{Sučelje za predloške transakcija:} Implementacija sučelja za upravljanje predlošcima ponavljajućih transakcija (\texttt{RecurringTemplate}), čime bi se korisnicima olakšalo definiranje periodičkih obveza (npr. najamnine, pretplate).
 		
-		\item \textbf{Automatsko prepoznavanje računa (OCR):} Integracija tehnologija računalnog vida i optičkog prepoznavanja znakova (\textit{OCR}), što bi omogućilo automatsko izdvajanje podataka (iznos, datum, naziv trgovca) s fotografija računa izravno u formu za unos transakcije.
+		\item \textbf{Automatsko prepoznavanje računa:} Integracija tehnologija računalnog vida i optičkog prepoznavanja znakova (engl. \textit{Optical Character Recognition} – OCR), što bi omogućilo automatsko izdvajanje podataka (iznos, datum, naziv trgovca) s fotografija računa izravno u formu za unos transakcije.
 		
-		\item \textbf{Integracija s otvorenim bankarstvom (PSD2):} Povezivanje aplikacije sa bankarskim sustavima putem PSD2 protokola radi omogućavanja automatskog uvoza i sinkronizacije transakcija sa stvarnih bankovnih računa korisnika.
+		\item \textbf{Integracija s otvorenim bankarstvom:} Povezivanje aplikacije s bankarskim sustavima putem protokola za otvaranje bankovnih podataka (engl. \textit{Revised Payment Services Directive} – PSD2) radi omogućavanja automatskog uvoza i sinkronizacije transakcija sa stvarnih bankovnih računa korisnika.
 		
 		\item \textbf{Prediktivna analitika i strojno učenje:} Razvoj naprednih analitičkih modela koji bi na temelju povijesnih podataka mogli predviđati buduću potrošnju i pravovremeno upozoriti korisnike na rizik prekoračenja proračuna.
 	\end{enumerate}
@@ -1108,26 +1113,32 @@ public function sync(Request $request): JsonResponse
 	\newpage
 	\section*{SAŽETAK}
 	\addcontentsline{toc}{section}{Sažetak}
-	Tema ovog diplomskog rada je razvoj i implementacija sustava "Allocento", progresivne web aplikacije (PWA) namijenjene naprednom upravljanju osobnim i timskim financijskim tokovima. Cilj rada bio je kreirati rješenje koje korisnicima pruža reaktivno, sigurno i moderno sučelje, uz potpunu podršku za kolaboraciju te kontinuitet rada u uvjetima nestabilne internetske veze.
+	Tema ovog diplomskog rada je razvoj i implementacija sustava \textit{Allocento}, progresivne web aplikacije (PWA) namijenjene naprednom upravljanju osobnim i timskim financijskim tokovima. Cilj rada bio je kreirati rješenje koje korisnicima pruža reaktivno, sigurno i moderno sučelje, uz potpunu podršku za kolaboraciju te kontinuitet rada u uvjetima nestabilne internetske veze.
 	
 	Pozadinski sustav razvijen je primjenom programskog jezika PHP i radnog okvira Laravel, koji omogućuje implementaciju REST API-ja, autentifikaciju (Laravel Sanctum), autorizaciju te strogu izolaciju radnih prostora putem prilagođenog \textit{middleware} sloja. Klijentski dio aplikacije izgrađen je pomoću jezika TypeScript i radnog okvira Angular, pri čemu se za učinkovito reaktivno upravljanje stanjima i optimalno iscrtavanje sučelja koriste Angular Signali.
 	
 	Poseban je naglasak stavljen na izvanmrežni rad (\textit{offline mode}) i mehanizam sinkronizacije podataka. Korištenjem lokalne baze podataka IndexedDB i specijalizirane klijentske klase \texttt{LocalDbService}, sustav bilježi sve korisničke operacije tijekom prekida mrežne veze. Pri ponovnoj uspostavi veze, razvijeni algoritam za skupnu sinkronizaciju (\textit{Bulk Sync}) objedinjuje sve promjene unutar jednog HTTP zahtjeva koji se na poslužitelju obrađuje kroz jedinstvenu SQL transakciju. Automatizirani CI/CD cjevovod na platformi GitHub Actions osigurava kontinuiranu i pouzdanu isporuku aplikacije na produkcijski poslužitelj.
 	
 	\bigskip
-	\noindent\textbf{Ključne riječi:} Angular, IndexedDB, financijsko upravljanje, Laravel, progresivna web aplikacija, sinkronizacija podataka, Web Push obavijesti.
+	\noindent\textbf{Ključne riječi:} Angular, financijsko upravljanje, IndexedDB, Laravel, sinkronizacija podataka.
 	
 	\newpage
 	\section*{Abstract}
+	
 	\addcontentsline{toc}{section}{Abstract}
-	The subject of this master's thesis is the development and implementation of "Allocento", a progressive web application (PWA) for advanced personal and team financial management. The primary objective was to create a solution providing users with a reactive, secure, and modern interface, while ensuring seamless collaboration and operational continuity under unstable network conditions.
+	
+	\textbf{\large WEB APPLICATION FOR FINANCIAL RESOURCE AND PROJECT MANAGEMENT IN TEAMS}
+	
+	\vspace{0.5cm}
+	
+	The subject of this master's thesis is the development and implementation of \textit{Allocento}, a progressive web application (PWA) for advanced personal and team financial management. The primary objective was to create a solution providing users with a reactive, secure, and modern interface, while ensuring seamless collaboration and operational continuity under unstable network conditions.
 	
 	The backend system was developed using PHP and the Laravel framework, serving as a REST API and facilitating authentication (Laravel Sanctum), authorization, and strict workspace isolation through custom middleware. The client-side application, built with TypeScript and the Angular framework, utilizes Angular Signals for efficient reactive state management and optimized UI rendering.
 	
 	Special emphasis is placed on offline functionality and data synchronization. By leveraging IndexedDB local storage and a custom \texttt{LocalDbService} wrapper, the application captures all user operations while offline. Upon reconnection, a custom bulk synchronization algorithm consolidates all changes into a single HTTP request, which is processed on the server within a single database transaction. Finally, an automated CI/CD pipeline via GitHub Actions facilitates continuous and reliable deployment to the production server.
 	
 	\bigskip
-	\noindent\textbf{Keywords:} Angular, IndexedDB, financial management, Laravel, progressive web application, data synchronization, Web Push notifications.
+	\noindent\textbf{Keywords:} Angular, data synchronization, financial management, IndexedDB, Laravel.
 	
 	
 	\newpage
@@ -1147,11 +1158,15 @@ public function sync(Request $request): JsonResponse
 	\noindent
 	Tijekom cjelokupnog obrazovnog procesa intenzivno se bavi razvojem web aplikacija, s naglaskom na moderne razvojne okvire i arhitekturu programskih sustava. Kroz kontinuirani rad na nizu praktičnih projekata usavršio je vještine u primjeni suvremenih tehnologija za izradu kompleksnih i skalabilnih web rješenja.
 	
+	\vspace{2.5cm} % Vertikalni razmak koji odvaja tekst od potpisa
+	
+	\hfill \begin{tabular}{c} \makebox[5cm]{\hrulefill} \\ (potpis studenta) \end{tabular}
+	
 	\newpage
 	\section*{Prilozi}
 	\addcontentsline{toc}{section}{Prilozi}
 	
-	Izvorni kod aplikacije Allocento (klijentski i poslužiteljski dio) te cjelokupna konfiguracija dostupni su na platformi GitHub.
+	Izvorni kod aplikacije \textit{Allocento} (klijentski i poslužiteljski dio) te cjelokupna konfiguracija dostupni su na platformi GitHub.
 	\begin{itemize}
 		\item Repozitorij aplikacije: \url{https://github.com/mln2j/allocento}
 	\end{itemize}
